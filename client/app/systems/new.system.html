@@ -1,0 +1,44 @@
+<div class="container">
+<div class="row">
+    <div class="col-sm-12">
+    <form class="login-form" name="form" ng-submit="create(form)">
+        <!-- Ugly way of preventing autofill -->
+        <input type="password" name="password_fake" id="password_fake" value="" style="display:none;" />
+        <div class="form-group abacash" >
+            <div class="abacash-input input">
+                <input on-focussed ng-model="newSystem.name" pattern=".{5,16}" required name="systemName" auto-fill-sync on-filled type="text" class="form-control">
+                <label for="undefined">System navn</label>
+            </div>
+        </div>
+        <div class="form-group abacash" >
+            <div class="abacash-input input">
+                <input on-focussed ng-model="newSystem.displayName"  pattern=".{5,16}" required name="systemDisplayName" auto-fill-sync on-filled type="text" class="form-control">
+                <label for="undefined">Display navn</label>
+            </div>
+        </div>
+        <div class="form-group abacash" >
+            <div class="abacash-input input">
+                <input name="email"  on-focussed required ng-model="newSystem.email" name="systemEmail" auto-fill-sync on-filled type="email" class="form-control">
+                <label for="undefined">Epost</label>
+            </div>
+        </div>
+        <div class="form-group has-error">
+          <p class="help-block" ng-show="form.email.$error.systemName && submitted">
+             Systemet har ikke et gyldig navn.
+          </p>
+          <p class="help-block" ng-show="form.role.$error.systemDisplayName && submitted">
+             Systemet har ikke et gyldig display navn.
+          </p>
+          <p class="help-block" ng-show="form.role.$error.systemEmail && submitted">
+            Systemet trenger en epost.
+          </p>
+        </div>
+        <div>
+            <button  ng-click="abort()" class="abacash-button red">Avbryt</button>
+            <button  type="submit" class="abacash-button dark-gray">Inviter</button>
+        </div>
+    </form>
+    </div>
+</div>
+    
+</div>

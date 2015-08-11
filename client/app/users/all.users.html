@@ -1,0 +1,23 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<table class="abacash-table">
+	    <thead>
+	        <tr>
+	            <th><a ng-click="order('name')">Navn</a></th>
+	            <th><a ng-click="order('email')">Epost</a></th>
+	            <th><a ng-click="order('role')">Systemer</a></th>
+	            <th><a ng-click="order('role')">Brukerrolle</a></th>
+	        </tr>
+	    </thead>
+	    <tbody ng-repeat="user in users | filter: search | orderBy:predicate:reverse">    <tr class="clickable" ng-click="select(user._id)">
+	            <td>{{user.name}}</td>
+	            <td>{{user.email}}</td>
+	            <td>{{user.systems}}</td>
+	            <td>{{user.role}}</td>
+	        </tr >
+	    </tbody>
+	</table>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,197 @@
+.abacash-navbar{
+
+	height: $navbar-height;
+	background-color: $dark-gray;
+
+	.navbar-container{
+
+		width: 100%;
+		height: $navbar-height;
+		padding: 5px 10px;
+
+		.logo-container{
+
+			float: left;
+            padding: 5px 0px;
+			
+			img{
+
+				height: 50px;
+
+			}
+
+		}
+
+		.menu-container{
+
+			padding: 0px 0px 0px 30px;
+            padding-top: 4px;
+            display: inline-block;
+
+			li {
+            float: left;
+            list-style-type: none;
+            cursor: pointer;
+
+            a {
+                font-weight: 300;
+                font-size: 16px;
+                float: left;
+                padding: 19px 0 10px;
+                margin: 0 30px 0 0;
+                color: mix($white, $gray, 50%);
+                border-bottom: 10px solid $dark-gray;
+                text-decoration: none;
+                @include transition(color, 0.2s, ease-in-out);
+
+                &:hover {
+                    color: $white;
+                    border-color: $white;
+                }
+                &.active {
+                color: $white;
+                border-bottom-color: $white;
+                }
+            }
+           
+        }
+		}
+        .pull-right{
+                  .user-container{
+                    cursor: pointer;
+          padding: 16px 0px;
+          font-size: 18px;
+          font-weight: 300;
+          color: mix($white, $gray, 50%);
+          &:hover{
+            color: $white;
+          }
+    }
+    li {
+            float: left;
+            list-style-type: none;
+            cursor: pointer;
+
+            a {
+                font-weight: 300;
+                font-size: 18px;
+                float: left;
+                padding: 20px 0 10px;
+                margin: 0 40px 0 0;
+                color: mix($white, $gray, 50%);
+                border-bottom: 10px solid $dark-gray;
+                text-decoration: none;
+                @include transition(color, 0.2s, ease-in-out);
+
+                &:hover {
+                    color: $white;
+                    border-color: $white;
+                }
+                &.active {
+                color: $white;
+                border-bottom-color: $white;
+                }
+            }
+           
+        }
+        }
+    
+    
+	}
+}
+
+.abacash-subnavbar{
+
+    margin-bottom: 40px;
+    background-color: $white;
+    min-height: 10px;
+    
+
+        .container{
+
+            .row-subnavbar{
+
+            @include make-row();
+
+                .column-subnavbar {
+                display: inline-block;
+                float: left;
+                margin-left: 15px;
+                    min-width: 100px;
+    width: 20%;
+
+                    h2.title{
+
+                        color: $dark-gray;
+                        cursor: pointer;
+                        display: block;
+                        font-weight: 300;
+                        padding-bottom: 18px;
+                        font-size: 18px;
+                        margin-top: 26px;
+                        margin-right: 20px;
+                        a{
+                            color: $dark-gray;
+                            &:hover{
+                                color: $dark-red;
+                            }
+                            &.active{
+                                color: $dark-red;
+                            }
+                        }
+                    
+
+                }
+            }
+        }
+    }
+}
+
+.abacash-user-subnavbar{
+
+    margin-bottom: 40px;
+    background-color: $white;
+    min-height: 10px;
+    position: relative;
+
+        .container{
+
+            .row-subnavbar{
+
+            @include make-row();
+
+                .column-subnavbar {
+                display: inline-block;
+                float: right;
+                margin-left: 15px;
+                    min-width: 100px;
+                    width: 20%;
+
+                    h2.title{
+
+                        color: $dark-gray;
+                        cursor: pointer;
+                        display: block;
+                        font-weight: 300;
+                        padding-bottom: 18px;
+                        font-size: 18px;
+                        margin-top: 26px;
+                        margin-right: 20px;
+                        a{
+                            color: $dark-gray;
+                            &:hover{
+                                color: $dark-red;
+                            }
+                            &.active{
+                                color: $dark-red;
+                            }
+                        }
+                    
+
+                }
+            }
+        }
+    }
+}
+
+

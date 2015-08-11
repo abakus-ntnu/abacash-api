@@ -1,0 +1,290 @@
+select.abacash-select{
+    width: 100%;
+        padding: 4px 0px;
+    height: 34px;
+    outline: 0;
+    font-size: 14px;
+    -webkit-box-shadow: 0 0 0px 1000px #F5F5F5 inset !important;
+    border: none;
+    border-radius: 0;
+    border-bottom: 2px solid #252323 !important;
+    -webkit-appearance: none;
+    margin: 0px;
+    option{
+
+    }
+}
+
+.toggle-button{
+    position: relative;
+    margin-right: 16px;
+    .tgl{
+        
+        display: none;
+        // add default box-sizing for this scope
+        &, &:after, &:before,
+        & *, & *:after, & *:before,
+        & + .tgl-btn{
+            box-sizing: border-box;
+            &::selection{
+                background: none;
+            }
+        }
+        + .tgl-btn{
+            outline: 0;
+            display: block;
+            width: 4em;
+            height: 2em;
+            position: relative;
+            cursor: pointer;
+         user-select: none;
+            &:after, &:before{
+                position: relative;
+                display: block;
+                content: "";
+                width: 50%;
+                height: 100%;
+            }
+            &:after{
+                left: 0;
+            }
+            &:before{
+                display: none;
+            }
+        }
+        &:checked{
+            + .tgl-btn{
+                &:after{
+                    left: 50%;
+                }
+            }
+        }
+    }
+
+
+    // themes
+    .tgl-light{
+        + .tgl-btn{
+            background: lighten($gray, 10%);
+            border-radius: 0em;
+            padding: 2px;
+            transition: all .4s ease;
+            &:after{
+                border-radius: 0;
+                background: #fff;
+                transition: all .2s ease;
+            }
+        }
+        &:checked{
+            + .tgl-btn{
+                background: $dark-red;
+            }
+        }
+    }
+}
+
+
+.abacash-radio,
+.abacash-radio-inline {
+
+    font-weight: normal;
+    padding-left: 0;
+    margin-right: 16px;
+    margin-top: 30px;
+
+    input {
+
+        margin: 6px 0px 0px;
+        width: 1px;
+        height: -1px;
+        opacity: 0;
+
+    }
+
+    input:focus,
+    input:checked {
+
+        + .outer .inner {
+
+            opacity: 1;
+            background-color: $dark-red;
+
+        }
+
+        + .outer {
+
+            border-color: $dark-red;
+
+        }
+
+    }
+
+    /**
+     *
+     *  @TODO: this isn't working!
+     *
+     */
+    input:disabled &:hover & {
+        cursor: not-allowed !important;
+    }
+
+    input:disabled {
+
+        color: $gray;
+
+        + .inner {
+            background: none;
+        }
+
+        + .outer {
+            border-color: $gray;
+        }
+
+    }
+
+    &:hover {
+
+        cursor: pointer;
+
+        .outer .inner {
+
+            opacity: 1;
+            background-color: $gray;
+
+        }
+
+    }
+
+    .inner {
+
+        width: 10px;
+        height: 10px;
+        display: block;
+        margin: 3px;
+        border-radius: 50%;
+        background-color: $dark-gray;
+        opacity: 0;
+
+        @include transition(all .28s cubic-bezier(0.4,0,.2,1));
+
+    }
+
+    .outer {
+
+        width: 20px;
+        height: 20px;
+        display: block;
+        float: left;
+        margin-right: 8px;
+        margin-top: 2px;
+        border: 2px solid $dark-gray;
+        border-radius: 50%;
+
+        @include transition(all .28s cubic-bezier(0.4,0,.2,1));
+
+    }
+
+}
+
+.abacash-button{
+	border: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    background: none;
+    cursor: pointer;
+    padding: 25px 80px;
+    display: inline-block;
+    margin: 15px 0px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    outline: none;
+    position: relative;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+
+    &:disabled{
+        &:hover, :active{
+            background-color:none;
+            color: none;
+        }
+        color: $black;
+        border: 3px solid $black;
+        background: $gray;
+    }
+
+    &.dark-gray{
+        &:disabled{
+            &:hover, :active{
+                background-color:none !important;
+                color: none !important;
+            }
+        color: $black;
+        border: 3px solid $black;
+        background: $gray;
+    }
+    	border: 3px solid $dark-gray;
+        color: $dark-gray;
+        &:active{
+        	color: $white-smoke;
+    		background: $dark-gray;
+        }
+        &:hover{
+        	color: $white-smoke;
+    		background: $dark-gray;
+        }
+    }
+
+    &.red{
+        &:disabled{
+        color: $black;
+        border: 3px solid $black;
+        background: $gray;
+        &:hover{
+            color: $black;
+            background: $gray;
+        }
+    }
+    	border: 3px solid $red;
+        color: $red;
+        &:active{
+        	color: $white-smoke;
+    		background: $red;
+        }
+        &:hover{
+        	color: $white-smoke;
+    		background: $red;
+        }
+    }
+
+    &.dark-red{
+        &:disabled{
+            &:hover, :active{
+                background-color:none !important;
+                color: none !important;
+            }
+            color: $black;
+            border: 3px solid $black;
+            background: $gray;
+        }
+    	border: 3px solid $dark-red;
+        color: $dark-red;
+        &:active{
+        	color: $white-smoke;
+    		background: $dark-red;
+        }
+        &:hover{
+        	color: $white-smoke;
+    		background: $dark-red;
+        }
+    }
+
+    &.table{
+        width: initial;
+        padding: 3px 30px;
+        margin: 0px 10px;
+        float: right;
+    }
+}

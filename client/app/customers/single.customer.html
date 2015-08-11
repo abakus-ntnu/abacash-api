@@ -1,0 +1,41 @@
+<div class="container">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group abacash" >
+            <div class="abacash-input input">
+                <input name="displayname"  on-focussed ng-disabled="!isEdit" ng-model="customer.displayname" auto-fill-sync on-filled type="text" class="form-control">
+                <label for="undefined">Display navn</label>
+            </div>
+        </div>
+        <div class="form-group abacash" >
+            <div class="abacash-input input">
+                <input name="username"  on-focussed ng-disabled="!isEdit" ng-model="customer.username" auto-fill-sync on-filled type="text" class="form-control">
+                <label for="undefined">Brukernavn</label>
+            </div>
+        </div>
+        <div class="form-group abacash" >
+            <div class="abacash-input input">
+                <select class="abacash-select form-control filled" ng-disabled="!isEdit" on-select-focussed ng-options="role.role for role in roles" ng-model="customer.role"></select>
+                <label for="undefined">Brukerrolle</label>
+            </div>
+        </div>
+        <div class="form-group abacash" >
+            <div class="abacash-input input">
+                <input name="rfid"  on-focussed disabled ng-model="customer.rfid" auto-fill-sync on-filled type="text" class="form-control">
+                <label for="undefined">Rfid</label>
+            </div>
+        </div>
+        <div class="form-group abacash" >
+            <div class="abacash-input input">
+                <input name="balance"  on-focussed disabled ng-model="customer.balance" auto-fill-sync on-filled type="number" class="form-control">
+                <label for="undefined">Saldo</label>
+            </div>
+        </div>
+        <button  ng-click="edit()" ng-hide="isEdit" class="abacash-button dark-gray">Rediger</button>
+        <button  ng-click="save()" ng-show="isEdit" class="abacash-button dark-gray">Lagre</button>
+        <button  ng-click="abort()" ng-show="isEdit" class="abacash-button red">Avbryt</button>
+        <button  ng-click="charge()" ng-hide="isEdit" class="abacash-button dark-gray">Endre Saldo</button>  
+    </div>
+</div>
+    
+</div>

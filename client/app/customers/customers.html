@@ -1,0 +1,31 @@
+
+<div class="abacash-subnavbar">
+	<div class="container">
+		<div class="row-subnavbar">
+
+	    <!-- USERS ADMIN-->
+		<div class="column-subnavbar">
+	    	<h2 class="title"><a ui-sref="app.customers" ng-class="{active: isActive('app.customers')}">Alle</a></h2>
+		</div>
+	    <!-- END USERS ADMIN-->
+
+	    <!-- USERS ADMIN-->
+		<div class="column-subnavbar">
+	    	<h2 class="title"><a ui-sref="app.customers.roles" ng-class="{active: isActive('app.customers.roles')}">Kunde roller</a></h2>
+		</div>
+	    <!-- END USERS ADMIN-->
+
+	    <!-- USERS ADMIN-->
+		<div class="column-subnavbar">
+	    	<h2 class="title"><a ui-sref="app.customers.roles.new" ng-class="{active: isActive('app.customers.roles.new')}">Ny Kunde rolle</a></h2>
+		</div>
+	    <!-- END USERS ADMIN-->
+
+	    
+	    
+		</div>
+	</div>
+</div>
+
+<div ui-view="content"></div>
+

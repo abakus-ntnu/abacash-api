@@ -1,0 +1,45 @@
+<div class="container">
+<div class="row">
+    <div class="col-sm-12">
+        <form class="login-form" name="form" ng-submit="create(form)" novalidate>
+        <div class="form-group abacash" >
+            <div class="abacash-input input">
+                <input name="name"  on-focussed required ng-model="newProduct.name" auto-fill-sync on-filled type="text" class="form-control">
+                <label for="undefined">Navn</label>
+            </div>
+        </div>
+        <div class="form-group abacash" >
+            <div class="abacash-input input">
+                <select class="abacash-select form-control filled" on-select-focussed ng-options="type for type in types" ng-model="newProduct.type"></select>
+                <label for="undefined">Produkt type</label>
+            </div>
+        </div>
+        <div class="form-group abacash" >
+            <div class="abacash-input input">
+                <input name="price"  on-focussed required ng-model="newProduct.price" auto-fill-sync on-filled type="number" class="form-control">
+                <label for="undefined">Pris</label>
+            </div>
+        </div>  
+        <div class="form-group abacash"  ng-show="hasInternalSales">
+            <div class="abacash-input input">
+                <input name="internalPrice"  on-focussed required ng-model="newProduct.internalPrice" auto-fill-sync on-filled type="number" class="form-control">
+                <label for="undefined">Intern pris</label>
+            </div>
+        </div>
+        <div class="form-group abacash">
+            <div class="toggle-button">
+            <p>Produkt aktiv:</p>
+                        <input ng-model="newProduct.active" class='tgl tgl-light' id='active' type='checkbox'>
+                        <label class='tgl-btn' for='active'></label>
+                    </div>
+        </div>
+
+        <div>
+            <button  ng-click="abort()" class="abacash-button red">Avbryt</button>
+            <button  type="submit" class="abacash-button dark-gray">Inviter</button>
+        </div>
+    </form>
+    </div>
+</div>
+    
+</div>

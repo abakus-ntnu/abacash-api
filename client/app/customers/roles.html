@@ -1,0 +1,30 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<table class="abacash-table">
+			    <thead>
+			        <tr>
+			            <th><a ng-click="order('role')">Brukerrolle</a></th>
+			            <th><a ng-click="order('customers.length')">Kunder</a></th>
+			            <th><a ng-click="order('hasInternalPrice')">Internpris</a></th>
+			            <th><a ng-click="order('isSeller')">Selger</a></th>
+			            <th></th>
+			        </tr>
+			    </thead>
+			    <tbody ng-repeat="role in roles track by $index | orderBy:predicate:reverse">
+			    	<tr>
+			            <td>{{role.role}}</td>
+			            <td>{{role.customers.length}}</td>
+			            <td>{{role.hasInternalPrice}}</td>
+			            <td>{{role.isSeller}}</td>
+			            <td>
+			            	
+			            	<button  ng-click="delete(role.role)" ng-disabled="role.customers != 0" class="abacash-button red table">Slett</button>
+			            	<button  ng-click="edit(role.role)" class="abacash-button table dark-gray">Rediger</button>
+			            </td>
+			        </tr>
+			    </tbody>
+			</table>
+		</div>
+	</div>
+</div>

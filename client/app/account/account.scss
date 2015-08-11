@@ -1,0 +1,28 @@
+/* 
+
+STYLINGS FOR PAGES:
+/invite
+/reset
+/restore
+/login
+ 
+*/
+
+.login-form, .reset-form, .restore-form, .invite-form{
+	padding-top: 40px;
+}
+
+.login-link{
+	color: $dark-gray;
+	&:hover{
+		cursor: pointer;
+		color: inherit;
+	}
+}
+
+/* 
+
+STYLINGS FOR PAGES:
+/me
+ 
+*/

@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="row">
+    <div class="col-sm-4 col-sm-push-8 abacash-form-information text-center">
+        <img src="assets/icons/user.svg" style="width: 150px; margin-bottom: 20px;">
+    </div>
+    <div class="col-sm-8 col-sm-pull-4">
+        <form class="login-form">
+        <!-- Ugly way of preventing autofill -->
+        
+        <input type="password" name="password_fake" id="password_fake" value="" style="display:none;" />
+        <div class="form-group abacash" >
+            <div class="abacash-input input">
+                <input name="email"  on-focussed required disabled ng-model="user._id" auto-fill-sync on-filled type="email" class="form-control">
+                <label for="undefined">ID</label>
+            </div>
+        </div>
+        <div class="form-group abacash" >
+            <div class="abacash-input input">
+                <input on-focussed disabled ng-model="user.name" auto-fill-sync on-filled type="text" class="form-control" typeahead="role for role in roles">
+                <label for="undefined">Navn</label>
+            </div>
+        </div>
+        <div class="form-group abacash" >
+            <div class="abacash-input input">
+                <input on-focussed disabled ng-model="user.email" auto-fill-sync on-filled type="text" class="form-control" typeahead="system for system in systems">
+                <label for="undefined">Epost</label>
+            </div>
+        </div>
+        <div class="form-group abacash" >
+            <div class="abacash-input input">
+                <input name="email"  on-focussed required disabled ng-model="user.role" auto-fill-sync on-filled type="email" class="form-control">
+                <label for="undefined">Brukerrolle</label>
+            </div>
+        </div>
+        <div class="form-group abacash" >
+            <div class="abacash-input input">
+                <input on-focussed disabled ng-model="user.systems" auto-fill-sync on-filled type="text" class="form-control" typeahead="role for role in roles">
+                <label for="undefined">Systemer</label>
+            </div>
+        </div>
+        <div class="form-group abacash" >
+            <div class="abacash-input input">
+                <input on-focussed disabled ng-model="user.status" auto-fill-sync on-filled type="text" class="form-control" typeahead="system for system in systems">
+                <label for="undefined">Brukerstatus</label>
+            </div>
+        </div>
+    </form>
+    </div>
+    </div>
+</div>

@@ -1,0 +1,304 @@
+
+.abacash-input{
+	max-width: 500px;
+	tags-input{
+		padding: 5px 0px;
+		    padding-bottom: 0px;
+    padding-top: 2px;
+		.host{
+			margin-top: 0px;
+    		margin-bottom: 0px;
+			.tags{
+				padding: 1px;
+    overflow: hidden;
+    word-wrap: break-word;
+    cursor: text;
+    background-color: inherit;
+    border: none;
+    box-shadow: inherit;
+    height: 100%;
+    
+				&.focused{
+					
+				}
+				ul{
+					    display: list-item;
+					li{
+    height: 26px;
+    line-height: 22px;
+    border: 2px solid $dark-gray;
+    border-radius: none;
+        background: none;
+    background: none;
+					}
+				}
+			}
+		}
+	}
+}
+
+.abacash-form-information{
+	padding-top: 50px;
+}
+
+.form-control {
+	width: 100%;
+	max-width: 500px;
+	border-radius: 0 !important;
+	background-color: rgba(0,0,0,0) !important;
+	box-shadow: none !important;
+	border: none !important;
+	border-bottom: 2px solid $dark-gray !important;
+	padding-left: 0;
+	padding-right: 0;
+	@include placeholder($dark-gray);
+}
+
+.form-control:focus, .form-control.focussed{
+	outline: 0 !important;
+	border-bottom: 2px solid $dark-red !important;
+	box-shadow: none !important;
+	@include placeholder($dark-red);
+}
+
+.form-control:focus::-webkit-input-placeholder {
+	transition: color ease-in-out 0.3s; 
+}
+
+.form-control::-webkit-input-placeholder {
+	transition: color ease-in-out 0.4s; 
+}
+
+.help-block {
+	color: $dark-gray;
+}
+
+textarea.autosize {
+	resize: none;
+}
+
+.form-group {
+	position: relative;
+}
+
+.full-width {
+
+	.form-control {
+
+		padding: 14px;
+		border-bottom: none;
+
+	}
+
+	.form-control:focus {
+
+		@include placeholder($dark-gray);
+		border-bottom: none;
+
+	}
+
+}
+
+
+
+/* abacash input */
+
+.abacash {
+
+	&.focussed {
+
+		&.with-icon {
+
+			.icon {
+				color: $dark-red;
+			}
+
+		}
+
+		label {
+			color: $dark-red !important;
+		}
+
+	}
+
+	.chars-remaining {
+		margin-top: -10px;
+	}
+
+	&.full-width {
+
+		.chars-remaining {
+			margin-top: -30px;
+		}
+
+		input[type="text"].character-count {
+			padding-right: 70px;
+		}
+
+		textarea.character-count {
+			margin-bottom: 10px;
+			margin-top: -10px;
+		}
+
+	}
+
+	&.count-low {
+
+		.abacash-input label {
+			color: get-color(orange, 500) !important;
+		}
+
+		.form-control {
+			border-color: get-color(orange, 500);
+		}
+
+		.chars-remaining {
+			color: get-color(orange, 500) !important;
+		}
+
+	}
+
+	&.error {
+
+		.abacash-input label {
+			color: $dark-red !important;
+		}
+
+		.form-control {
+			border-color: $dark-red;
+		}
+
+		.chars-remaining {
+			color: $dark-red !important;
+		}
+
+	}
+
+	&.with-icon {
+
+		@include clearfix();
+
+		&.count-low {
+
+			.icon {
+				color: get-color(amber, 700) !important;
+			}
+
+		}
+
+		&.error {
+
+			.icon {
+				color: $dark-red !important;
+			}
+
+		}
+
+		.icon {
+
+			float: left;
+			width: 30px;
+			margin-top: 24px;
+			color: $dark-gray;
+
+			&.icon-right {
+				text-align: right;
+				float: right;
+			}
+
+		}
+
+		.abacash-input {
+			float: left;
+			width: calc(100% - 30px);
+		}
+
+	}
+
+	.chars-remaining {
+
+		color: $dark-gray;
+		position: relative;
+		top: 0px;
+		right: 0px;
+		float: right;
+		width: 60px;
+
+		> span {
+
+			position: relative;
+			right: 0px;
+			top: 0;
+			float: right;
+
+		}
+		
+	}
+
+	.abacash-input {
+
+		position: relative;
+		padding-top: 18px;
+		margin-bottom: 10px;
+		@include clearfix();
+
+		label {
+			pointer-events: none;
+		}
+
+	}
+	
+	.abacash-input:after {
+		display: block;
+		clear: both;
+		content: "";
+	}
+	
+	.abacash-input input, 
+	.abacash-input tags-input, 
+	.abacash-input textarea {
+		width: 100%;
+		max-width: 500px;
+		outline: none;
+		background: 0;
+		float: left;
+	}
+	
+	.abacash-input input,
+	.abacash-input tags-input, {
+    -webkit-box-shadow: 0 0 0px 1000px $white-smoke inset !important;
+	}
+	
+	.abacash-input label:not(.error) {
+		font-weight: normal;
+		line-height: 32px;
+	}
+	
+	.abacash-input label:not(.error) {
+		color: $dark-gray;
+		position: absolute;
+		left: 0;
+		top: 18px;
+	}
+	
+	.abacash-input :focus ~ label:not(.error),
+	.abacash-input .focussed ~ label:not(.error),
+	.abacash-input .filled ~ label:not(.error),
+	.error:focus ~ label:not(.error) {
+		color: $dark-gray;
+		font-size: 12px;
+		top: 0;
+		line-height: 24px;
+	}
+	
+	
+	/* Animation */
+	.abacash-bar:before, 
+	.abacash-bar:after,
+	.abacash-input label:not(.error) {
+		transition: .2s ease all; 
+		-moz-transition: .2s ease all; 
+		-webkit-transition: .2s ease all;
+	}
+
+}

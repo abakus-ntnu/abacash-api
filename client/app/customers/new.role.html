@@ -1,0 +1,28 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="form-group abacash" >
+	            <div class="abacash-input input">
+	                <input name="type"  on-focussed required ng-model="role.role" auto-fill-sync on-filled type="text" class="form-control">
+	                <label for="undefined">Rollenavn</label>
+	            </div>
+	        </div>
+	        <div class="form-group abacash">
+            	<div class="toggle-button">
+	            <p>Brukere har internpris</p>
+	                <input ng-model="role.hasInternalPrice" class='tgl tgl-light' id='hasInternalPrice' type='checkbox'>
+	                <label class='tgl-btn' for='hasInternalPrice'></label>
+	            </div>
+        	</div>
+        	<div class="form-group abacash">
+            	<div class="toggle-button">
+	            <p>Brukere er sellere</p>
+	                <input ng-model="role.isSeller" class='tgl tgl-light' id='isSeller' type='checkbox'>
+	                <label class='tgl-btn' for='isSeller'></label>
+	            </div>
+        	</div>
+	        <button  ng-click="abort()" class="abacash-button red">Avbryt</button>
+	        <button  ng-click="create()" class="abacash-button dark-gray">Lagre</button>
+		</div>
+	</div>
+</div>
