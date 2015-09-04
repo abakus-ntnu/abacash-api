@@ -8,6 +8,7 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var express = require('express');
+var cors = require('cors');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var morgan = require('morgan');
@@ -27,6 +28,7 @@ app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(cookieParser());
 app.use(passport.initialize());
+app.use(cors());
 app.use(morgan('dev'));
 
 if (app.get('env') === 'development') {
