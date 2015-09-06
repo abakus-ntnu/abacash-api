@@ -9,6 +9,7 @@ var errors = require('./components/errors');
 module.exports = function(app) {
 
   app.use('/auth', require('./auth'));
+  app.use('/api/auth', require('./api/authToken'));
 
   // Insert routes below
   app.use('/api/users', require('./api/user'));
@@ -18,7 +19,7 @@ module.exports = function(app) {
   app.use('/api/products', require('./api/product'));
   app.use('/api/transactions', require('./api/transaction'));
   app.use('/api/customers', require('./api/customer'));
-  app.use('/api/auth', require('./api/authToken'));
+
 
   app.use(errors[404]);
 };

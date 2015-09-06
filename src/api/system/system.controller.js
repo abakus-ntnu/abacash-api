@@ -44,9 +44,7 @@ exports.use = function(req, res) {
   Systems.findById(req.params.id, function (err, system) {
     if(err) { return handleError(res, err); }
     if(!system) { return res.send(404); }
-    res.cookie('system', system.name);
-    res.cookie('systemId', system._id.toString());
-    res.cookie('systemDisplayName', system.displayName);
+    res.cookie('system', system._id.toString());
     return res.json(200, system);
   });
 };
@@ -77,6 +75,10 @@ exports.destroy = function(req, res) {
   });
 };
 
+exports.connect = function(req, res){
+  return res.send(200)
+}
+
 exports.createRole = function(req, res){
   return res.send(200)
 }
@@ -84,6 +86,9 @@ exports.createType = function(req, res){
   return res.send(200)
 }
 exports.updateRole = function(req, res){
+  return res.send(200)
+}
+exports.updateType = function(req, res){
   return res.send(200)
 }
 exports.deleteRole = function(req, res){

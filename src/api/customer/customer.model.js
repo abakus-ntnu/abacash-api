@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
 
 var CustomerSchema = new Schema({
   role: {
+    id: String,
     role: String,
     hasInternalPrice: Boolean,
     isSeller: Boolean

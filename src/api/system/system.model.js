@@ -12,6 +12,7 @@ var SystemSchema = new Schema({
   productTypes: [String],
   customerRoles: 
   [{
+    id: String,
     role: String,
     hasInternalPrice: Boolean,
     isSeller: Boolean
