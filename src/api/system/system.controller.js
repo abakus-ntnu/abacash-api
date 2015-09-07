@@ -81,14 +81,22 @@ exports.destroy = function(req, res, next) {
 };
 
 
-exports.createRole = function(req, res){
-  Systems.findOneAndUpdate({_id: req.params.id}, {$push: {customerRoles: req.params.role}}, {safe: true, upsert: true}, function(err, system) {
-    if (err) { return handleError(res, err); }
-    if(!system) { return res.send(404); }
-    return res.json(200, req.body);
-  });
-}
+exports.createRole = function(req, res, next) {
+    if (_.isEmpty(req.body)) return next(new errors.ValidationError());
 
+    Systems.findByIdAndUpdate(
+        req.params.id,
+        { $push: { customerRoles: req.body } },
+        { new: true }
+    ).exec().then(function(system) {
+        if (!system) throw new errors.NotFoundError('system');
+        return res.json(system);
+    })
+    .catch(mongoose.Error.CastError, function(err) {
+        throw new errors.NotFoundError('system');
+    })
+    .catch(next);
+}
 
 exports.updateRole = function(req, res){
   var role = req.body;
