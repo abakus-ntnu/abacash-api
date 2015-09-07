@@ -50,19 +50,19 @@ exports.inviteUser = function (req, res, next) {
 };
 
 /**
- * Get a invite 
+ * Get a invite
  */
 exports.getInvite = function(req, res, next) {
   User.findOne({'meta.invite': req.params.id},function (err, user) {
     if(err) { return validationError(res, err); }
     if (!user) { return res.json(422, {'message': 'This user does not exist'})}
-    if (user.meta.status != 'invited') { return res.json(422, {'message': 'This user has already signed up'})}
+    if (user.meta.status !== 'invited') { return res.json(422, {'message': 'This user has already signed up'})}
     return res.json(200, user.profile);
   });
 };
 
 /**
- * 
+ *
  */
 exports.restore = function(req, res, next){
   User.findOne({'email': req.body.email},function (err, user) {
@@ -76,14 +76,14 @@ exports.restore = function(req, res, next){
       mailer.restore(user);
       res.send(200);
     });
-      
+
     return res.json(200, user.profile);
   });
 };
 
 
 /**
- * 
+ *
  */
 exports.getRestore = function(req, res, next){
   User.findOne({'meta.restore': req.params.id}, function (err, user) {
@@ -93,14 +93,14 @@ exports.getRestore = function(req, res, next){
     if(date < user.meta.restoreExpires){
       res.json(user.profile);
     }else{
-      res.json(422, {'message': 'This ticket has expired'})  
+      res.json(422, {'message': 'This ticket has expired'})
     }
   });
 };
 
 
 /**
- *  
+ *
  */
 exports.reset = function(req, res, next){
   User.findById(req.body.user._id, function (err, user) {
