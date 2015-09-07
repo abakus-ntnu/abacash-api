@@ -2,19 +2,21 @@
 
 var express = require('express');
 var controller = require('./system.controller');
-
+var connection = require('../../components/connection.factory.js');
 var router = express.Router();
 
 router.get('/', controller.index);
-router.get('/:id', controller.show);
 router.post('/', controller.create);
+router.get('/use/:id', controller.use);
+router.get('/connect/:system', controller.connect);
+router.get('/:id', controller.show);
 router.put('/:id', controller.update);
 router.delete('/:id', controller.destroy);
-router.get('/use/:id', controller.use);
-router.post('/role', controller.createRole);
-router.post('/type', controller.createType);
-router.put('/role/:role', controller.updateRole);
-router.delete('/role/:role', controller.deleteRole);
-router.delete('/type/:type', controller.deleteType);
+router.post('/role/:id', controller.createRole);
+router.post('/type/:id', controller.createType);
+router.put('/role/:id/:system', connection.tenantMiddleware() ,controller.updateRole);
+router.put('/type/:id', controller.updateType);
+router.delete('/role/:role/:id', controller.deleteRole);
+router.delete('/type/:id', controller.deleteType);
 
 module.exports = router;

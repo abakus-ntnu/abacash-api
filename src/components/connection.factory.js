@@ -27,8 +27,8 @@ function addModels(system, connection){
 exports.tenantMiddleware = function() {  
 	return compose()
 	.use(function(req, res, next) {
-		if(connections[req.cookies.system]){
-			req.connection = connections[req.cookies.system].connection;
+		if(connections[req.params.system]){
+			req.connection = connections[req.params.system].connection;
 			next()
 		}else{
 			next()
