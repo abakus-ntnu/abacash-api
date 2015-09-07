@@ -7,7 +7,6 @@ var router = express.Router();
 
 router.get('/', controller.index);
 router.post('/', controller.create);
-router.get('/use/:id', controller.use);
 router.get('/connect/:system', controller.connect);
 router.get('/:id', controller.show);
 router.put('/:id', controller.update);

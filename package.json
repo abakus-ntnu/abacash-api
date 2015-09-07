@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "dependencies": {
     "async": "*",
+    "bluebird": "~2.9.34",
     "body-parser": "~1.5.0",
     "composable-middleware": "^0.3.0",
     "compression": "~1.0.1",
@@ -18,7 +19,7 @@
     "jsonwebtoken": "^0.3.0",
     "lodash": "~2.4.1",
     "method-override": "~1.0.0",
-    "mongoose": "~3.8.8",
+    "mongoose": "~4.1.5",
     "morgan": "~1.0.0",
     "nodemailer": "0.7",
     "nodemailer-ses-transport": "*",

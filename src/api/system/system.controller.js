@@ -10,70 +10,74 @@
 'use strict';
 
 var _ = require('lodash');
+var mongoose = require('mongoose');
 var Systems = require('./system.model');
+var errors = require('../../components/errors');
 var connection = require('../../components/connection.factory.js');
 var async = require('async');
 
 // Get list of systems
-exports.index = function(req, res) {
-  Systems.find(function (err, systems) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, systems);
-  });
+exports.index = function(req, res, next) {
+  Systems.find()
+    .exec()
+    .then(res.json.bind(res))
+    .catch(next);
 };
+
+function retrieveSystem(id) {
+    return Systems.findById(id)
+        .then(function(system) {
+            if (!system) throw new errors.NotFoundError('system');
+            return system;
+        })
+        .catch(mongoose.Error.CastError, function(err) {
+            throw new errors.NotFoundError('system');
+        });
+}
 
 // Get a single system
-exports.show = function(req, res) {
-  Systems.findById(req.params.id).lean().exec( function (err, system) {
-    if(err) { return handleError(res, err); }
-    if(!system) { return res.send(404); }
-    return res.json(system);
-  });
+exports.show = function(req, res, next) {
+    retrieveSystem(req.params.id)
+        .then(res.json.bind(res))
+        .catch(next);
 };
 
-// Creates a new system in the DB.
-exports.create = function(req, res) {
-  Systems.create(req.body, function(err, system) {
-    if(err) { return handleError(res, err); }
-    connection.createSystem(system);
-    return res.json(201, system);
-  });
-};
-
-// The webapplication selects which system to work agianst
-exports.use = function(req, res) {
-  Systems.findById(req.params.id, function (err, system) {
-    if(err) { return handleError(res, err); }
-    if(!system) { return res.send(404); }
-    res.cookie('system', system._id.toString());
-    return res.json(200, system);
-  });
+exports.create = function(req, res, next) {
+    Systems.create(req.body)
+        .then(function(system) {
+            connection.createSystem(system);
+            res.status(201).json(system);
+        })
+        .catch(mongoose.Error.ValidationError, function(err) {
+            throw new errors.ValidationError(err.errors);
+        })
+        .catch(next);
 };
 
 // Updates an existing system in the DB.
-exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
-  Systems.findById(req.params.id, function (err, system) {
-    if (err) { return handleError(res, err); }
-    if(!system) { return res.send(404); }
-    var updated = _.merge(system, req.body);
-    updated.save(function (err) {
-      if (err) { return handleError(res, err); }
-      return res.json(200, system);
-    });
-  });
+exports.update = function(req, res, next) {
+    retrieveSystem(req.params.id)
+        .then(function(system) {
+            var updated = _.merge(system, req.body);
+            return updated.save();
+        })
+        .then(res.json.bind(res))
+        .catch(next);
 };
 
 // Deletes a system from the DB.
-exports.destroy = function(req, res) {
-  Systems.findById(req.params.id, function (err, system) {
-    if(err) { return handleError(res, err); }
-    if(!system) { return res.send(404); }
-    Systems.remove(function(err) {
-      if(err) { return handleError(res, err); }
-      return res.send(204);
-    });
-  });
+exports.destroy = function(req, res, next) {
+    Systems.findByIdAndRemove(req.params.id)
+        .exec()
+        .then(function() {
+            res.json({
+                message: req.params.id + ' deleted'
+            });
+        })
+        .catch(mongoose.Error.CastError, function(err) {
+            throw new errors.NotFoundError('system');
+        })
+        .catch(next);
 };
 
 
@@ -122,7 +126,7 @@ exports.deleteRole = function(req, res){
 exports.connect = function(req, res){
   return res.send(200)
 }
-  
+
 exports.updateType = function(req, res){
   return res.send(200)
 }
@@ -131,7 +135,4 @@ exports.createType = function(req, res){
 }
 exports.deleteType = function(req, res){
   return res.send(200)
-}
-function handleError(res, err) {
-  return res.send(500, err);
 }

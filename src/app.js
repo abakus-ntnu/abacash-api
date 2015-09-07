@@ -17,6 +17,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var cookieParser = require('cookie-parser');
 var config = require('./config/environment');
+mongoose.Promise = require('bluebird');
 
 // Connect to database
 mongoose.connect(config.mongo.uri, config.mongo.options);

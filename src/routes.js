@@ -22,4 +22,5 @@ module.exports = function(app) {
 
 
   app.use(errors[404]);
+  app.use(errors.errorMiddleware);
 };
