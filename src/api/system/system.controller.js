@@ -12,6 +12,7 @@
 var _ = require('lodash');
 var Systems = require('./system.model');
 var connection = require('../../components/connection.factory.js');
+var async = require('async');
 
 // Get list of systems
 exports.index = function(req, res) {
@@ -75,23 +76,57 @@ exports.destroy = function(req, res) {
   });
 };
 
+
+exports.createRole = function(req, res){
+  Systems.findOneAndUpdate({_id: req.params.id}, {$push: {customerRoles: req.params.role}}, {safe: true, upsert: true}, function(err, system) {
+    if (err) { return handleError(res, err); }
+    if(!system) { return res.send(404); }
+    return res.json(200, req.body);
+  });
+}
+
+
+exports.updateRole = function(req, res){
+  var role = req.body;
+  Systems.update({'customerRoles.id': role.id}, { $set: { 'customerRoles.$': role  } }, function(err, system) {
+    if (err) { return handleError(res, err); }
+    if(!system) { return res.send(404); }
+    async.each(role.customers, function(customerRole, callback) {
+      req.connection.model('Customer').findById(customerRole._id, function (err, customer) {
+        if (err) { return handleError(res, err); }
+        if(!customer) { return res.send(404); }
+        customer.role = role;
+        customer.save(function (err) {
+          if (err) { return handleError(res, err); }
+          callback();
+        });
+      });
+    }, function(err){
+      if (err) { return handleError(res, err); }
+      return res.json(200, role);
+    });
+
+  });
+}
+
+
+exports.deleteRole = function(req, res){
+  Systems.findOneAndUpdate({_id: req.params.id}, { $pull: { customerRoles: {  id: req.params.role } } }, function(err, system) {
+    if (err) { return handleError(res, err); }
+    if(!system) { return res.send(404); }
+    return res.send(204);
+  });
+}
+
+
 exports.connect = function(req, res){
   return res.send(200)
 }
-
-exports.createRole = function(req, res){
-  return res.send(200)
-}
-exports.createType = function(req, res){
-  return res.send(200)
-}
-exports.updateRole = function(req, res){
-  return res.send(200)
-}
+  
 exports.updateType = function(req, res){
   return res.send(200)
 }
-exports.deleteRole = function(req, res){
+exports.createType = function(req, res){
   return res.send(200)
 }
 exports.deleteType = function(req, res){

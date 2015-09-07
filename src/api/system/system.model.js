@@ -14,7 +14,7 @@ var SystemSchema = new Schema({
   [{
     id: String,
     role: String,
-    hasInternalPrice: Boolean,
+    internalSales: Boolean,
     isSeller: Boolean
   }],
   needSeller: { type: Boolean, default: true },

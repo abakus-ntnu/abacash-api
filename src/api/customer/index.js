@@ -12,6 +12,6 @@ router.post('/:system', connection.tenantMiddleware(), controller.create);
 router.get('/:system/:id', connection.tenantMiddleware(), controller.show);
 router.put('/:system/:id', connection.tenantMiddleware(), controller.update);
 router.delete('/:system/:id', connection.tenantMiddleware(), controller.destroy);
-router.get('/:system/role/:role', connection.tenantMiddleware(), controller.role);
+router.get('/:system/role/:id', connection.tenantMiddleware(), controller.role);
 
 module.exports = router;

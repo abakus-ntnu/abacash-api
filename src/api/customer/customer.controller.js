@@ -20,7 +20,7 @@ exports.index = function(req, res) {
 
 
 exports.role = function(req, res) {
-  req.connection.model('Customer').find({'role.role': req.params.role}, function (err, customers) {
+  req.connection.model('Customer').find({'role.id': req.params.id}, function (err, customers) {
     if(err) { return handleError(res, err); }
     if(!customers) { return res.send(404); }
     return res.json(customers);

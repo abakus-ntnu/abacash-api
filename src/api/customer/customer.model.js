@@ -7,7 +7,7 @@ var CustomerSchema = new Schema({
   role: {
     id: String,
     role: String,
-    hasInternalPrice: Boolean,
+    internalSales: Boolean,
     isSeller: Boolean
   },
   rfid: {type: String, required: true},
