@@ -7,15 +7,8 @@ var router = express.Router();
 
 router.get('/', controller.index);
 router.post('/', controller.create);
-router.get('/connect/:system', controller.connect);
-router.get('/:id', controller.show);
-router.put('/:id', controller.update);
-router.delete('/:id', controller.destroy);
-router.post('/:id/roles', controller.createRole);
-router.post('/:id/type', controller.createType);
-router.put('/role/:id/:system', connection.tenantMiddleware(), controller.updateRole);
-router.put('/type/:id', controller.updateType);
-router.delete('/role/:role/:id', controller.deleteRole);
-router.delete('/type/:id', controller.deleteType);
+router.put('/:system', controller.update);
+router.get('/:system', connection.tenantMiddleware(), controller.show);
+router.post('/:system/roles', connection.tenantMiddleware(), controller.createRole);
 
 module.exports = router;

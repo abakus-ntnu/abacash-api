@@ -36,7 +36,7 @@ if (app.get('env') === 'development') {
   app.use(errorHandler());
 }
 
-require('./routes')(app);
+app.use(require('./routes'));
 
 app.listen(config.port, config.ip, function () {
   console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));

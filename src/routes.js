@@ -1,26 +1,29 @@
 /**
- * Main application routes
+ * Main routerlication routes
  */
 
 'use strict';
 
+var express = require('express');
 var errors = require('./components/errors');
+var connection = require('./components/connection.factory.js');
 
-module.exports = function(app) {
+var router = express.Router();
 
-  app.use('/auth', require('./auth'));
-  app.use('/api/auth', require('./api/authToken'));
+router.use('/auth', require('./auth'));
+router.use('/api/auth', require('./api/authToken'));
 
-  // Insert routes below
-  app.use('/api/users', require('./api/user'));
-  app.use('/api/systems', require('./api/system'));
+router.use('/api/users', require('./api/user'));
+router.use('/api/systems', require('./api/system'));
 
-  // There routes have a connectionManager middleware that changes the system database based on a cookie token.
-  app.use('/api/products', require('./api/product'));
-  app.use('/api/transactions', require('./api/transaction'));
-  app.use('/api/customers', require('./api/customer'));
+// There routes have a connectionManager middleware that changes the system database based on a cookie token.
+router.param('system', connection.tenantMiddleware());
+router.use('/api/:system/roles', require('./api/role'));
+router.use('/api/:system/products', require('./api/product'));
+router.use('/api/:system/transactions', require('./api/transaction'));
+router.use('/api/:system/customers', require('./api/customer'));
 
+router.use(errors[404]);
+router.use(errors.errorMiddleware);
 
-  app.use(errors[404]);
-  app.use(errors.errorMiddleware);
-};
+module.exports = router;

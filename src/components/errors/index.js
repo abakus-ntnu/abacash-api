@@ -21,6 +21,14 @@ function ValidationError(errors) {
 util.inherits(ValidationError, Error);
 exports.ValidationError = ValidationError;
 
+function RequestError(message) {
+    this.name = 'RequestError';
+    this.message = message;
+    this.status = 400;
+}
+util.inherits(RequestError, Error);
+exports.RequestError = RequestError;
+
 function NotFoundError(type) {
     this.name = 'NotFoundError';
     this.message = 'Couldn\'t find ' + type + '.';
@@ -30,6 +38,10 @@ util.inherits(NotFoundError, Error);
 exports.NotFoundError = NotFoundError;
 
 exports.errorMiddleware = function(err, req, res, next) {
+    if (process.env.NODE_ENV === 'development') {
+        console.log(err.stack);
+    }
+
     var status = err.status || 500;
 
     return res

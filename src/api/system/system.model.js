@@ -34,7 +34,6 @@ var SystemSchema = new Schema({
 
 SystemSchema.statics.retrieveById = function(id) {
     return this.findById(id)
-        .populate('roles')
         .then(function(system) {
             if (!system) throw new errors.NotFoundError('system');
             return system;

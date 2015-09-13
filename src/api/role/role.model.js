@@ -9,4 +9,7 @@ var RoleSchema = new Schema({
     isSeller: Boolean
 });
 
-module.exports = mongoose.model('Role', RoleSchema);
+mongoose.model('Role', RoleSchema);
+module.exports = function(connection) {
+	return connection.model('Role', RoleSchema);
+};
