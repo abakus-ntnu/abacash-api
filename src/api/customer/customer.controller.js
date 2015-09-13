@@ -32,13 +32,13 @@ exports.role = function(req, res) {
 exports.show = function(req, res, next) {
   req.connection.model('Customer').findById(req.params.id)
     .then(customer => {
-      if (customer === null) {
-        throw new errors.NotFoundError('user');
+      if (!customer) {
+        throw new errors.NotFoundError('customer');
       }
       return res.json(customer);
     })
     .catch(mongoose.Error.CastError, () => {
-        throw new errors.NotFoundError('user');
+        throw new errors.NotFoundError('customer');
     })
     .catch(next);
 };
