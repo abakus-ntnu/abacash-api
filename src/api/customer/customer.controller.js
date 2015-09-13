@@ -20,12 +20,10 @@ exports.index = function(req, res, next) {
 };
 
 
-exports.role = function(req, res) {
-  req.connection.model('Customer').find({'role.id': req.params.id}, function (err, customers) {
-    if(err) { return handleError(res, err); }
-    if(!customers) { return res.send(404); }
-    return res.json(customers);
-  });
+exports.role = function(req, res, next) {
+  req.connection.model('Customer').find({'role.id': req.params.id})
+    .then(res.json.bind(res))
+    .catch(next);
 };
 
 // Get a single customer
@@ -44,39 +42,46 @@ exports.show = function(req, res, next) {
 };
 
 // Creates a new customer in the DB.
-exports.create = function(req, res) {
-  req.connection.model('Customer').create(req.body, function(err, customer) {
-    if(err) { return handleError(res, err); }
-    return res.json(201, customer);
-  });
+exports.create = function(req, res, next) {
+  req.connection.model('Customer').create(req.body)
+    .then(customer => {
+      return res.json(201, customer);
+    })
+    .catch(next);
 };
 
 // Updates an existing customer in the DB.
-exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
-  req.connection.model('Customer').findById(req.params.id, function (err, customer) {
-    if (err) { return handleError(res, err); }
-    if(!customer) { return res.send(404); }
-    var updated = _.merge(customer, req.body);
-    updated.save(function (err) {
-      if (err) { return handleError(res, err); }
-      return res.json(200, customer);
-    });
-  });
+exports.update = function(req, res, next) {
+  if (req.body._id) { 
+    delete req.body._id;
+  }
+  req.connection.model('Customer').findById(req.params.id)
+    .then(customer => {
+      if (!customer) {
+        throw new errors.NotFoundError('customer');
+      }
+      var updatedCustomer = _.merge(customer, req.body);
+      return updatedCustomer.save()
+       
+    })
+    .then(res.json.bind(res))
+    .catch(mongoose.Error.CastError, () => {
+        throw new errors.NotFoundError('customer');
+    })
+    .catch(next);
 };
 
 // Deletes a customer from the DB.
-exports.destroy = function(req, res) {
-  req.connection.model('Customer').findById(req.params.id, function (err, customer) {
-    if(err) { return handleError(res, err); }
-    if(!customer) { return res.send(404); }
-    req.connection.model('Customer').remove(function(err) {
-      if(err) { return handleError(res, err); }
-      return res.send(204);
-    });
-  });
+exports.destroy = function(req, res, next) {
+  req.connection.model('Customer').findById(req.params.id)
+    .then(customer => {
+      if (!customer) {
+        throw new errors.NotFoundError('customer');
+      }
+      return customer.remove();
+    })
+    .then(() => {
+      res.send(204);
+    })
+    .catch(next);
 };
-
-function handleError(res, err) {
-  return res.send(500, err);
-}
