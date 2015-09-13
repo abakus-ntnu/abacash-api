@@ -9,6 +9,8 @@
 
 'use strict';
 var _ = require('lodash');
+var errors = require('../../components/errors');
+var mongoose = require('mongoose');
 
 // Get list of customers
 exports.index = function(req, res, next) {
@@ -27,12 +29,18 @@ exports.role = function(req, res) {
 };
 
 // Get a single customer
-exports.show = function(req, res) {
-  req.connection.model('Customer').findById(req.params.id, function (err, customer) {
-    if(err) { return handleError(res, err); }
-    if(!customer) { return res.send(404); }
-    return res.json(customer);
-  });
+exports.show = function(req, res, next) {
+  req.connection.model('Customer').findById(req.params.id)
+    .then(customer => {
+      if (customer === null) {
+        throw new errors.NotFoundError('user');
+      }
+      return res.json(customer);
+    })
+    .catch(mongoose.Error.CastError, () => {
+        throw new errors.NotFoundError('user');
+    })
+    .catch(next);
 };
 
 // Creates a new customer in the DB.
