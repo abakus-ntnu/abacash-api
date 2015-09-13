@@ -32,8 +32,8 @@
     "supertest": "~0.11.0"
   },
   "scripts": {
-    "watch": "nodemon src/app.js",
-    "start": "node src/app.js",
+    "watch": "nodemon --exec npm start",
+    "start": "babel-node src/app.js",
     "test": "mocha src/api/**/test",
     "lint": "jshint --exclude-path .gitignore ."
   },
