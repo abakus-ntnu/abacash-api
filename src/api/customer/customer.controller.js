@@ -44,17 +44,13 @@ exports.show = function(req, res, next) {
 // Creates a new customer in the DB.
 exports.create = function(req, res, next) {
   req.connection.model('Customer').create(req.body)
-    .then(customer => {
-      return res.json(201, customer);
-    })
+    .then(res.status(201).json.bind(res))
     .catch(next);
 };
 
 // Updates an existing customer in the DB.
 exports.update = function(req, res, next) {
-  if (req.body._id) { 
-    delete req.body._id;
-  }
+  delete req.body._id;
   req.connection.model('Customer').findById(req.params.id)
     .then(customer => {
       if (!customer) {
@@ -80,8 +76,6 @@ exports.destroy = function(req, res, next) {
       }
       return customer.remove();
     })
-    .then(() => {
-      res.send(204);
-    })
+    .then(() => res.status(204).json())
     .catch(next);
 };
