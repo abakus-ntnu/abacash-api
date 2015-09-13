@@ -11,7 +11,7 @@ router.get('/connect/:system', controller.connect);
 router.get('/:id', controller.show);
 router.put('/:id', controller.update);
 router.delete('/:id', controller.destroy);
-router.post('/:id/role', controller.createRole);
+router.post('/:id/roles', controller.createRole);
 router.post('/:id/type', controller.createType);
 router.put('/role/:id/:system', connection.tenantMiddleware(), controller.updateRole);
 router.put('/type/:id', controller.updateType);

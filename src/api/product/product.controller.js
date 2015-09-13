@@ -12,11 +12,11 @@
 var _ = require('lodash');
 
 // Get list of all products
-exports.index = function(req, res) {
-  req.connection.model('Product').find(function (err, products) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, products);
-  });
+exports.index = function(req, res, next) {
+    req.connection.model('Product')
+        .find()
+        .then(res.json.bind(res))
+        .catch(next);
 };
 
 // Get list of active products

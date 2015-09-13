@@ -11,44 +11,34 @@
 
 var _ = require('lodash');
 var mongoose = require('mongoose');
-var Systems = require('./system.model');
+var System = require('./system.model');
+var Role = require('./role.model');
 var errors = require('../../components/errors');
 var connection = require('../../components/connection.factory.js');
 var async = require('async');
 
 // Get list of systems
 exports.index = function(req, res, next) {
-  Systems.find()
-    .exec()
+  System.find()
+    .populate('roles')
     .then(res.json.bind(res))
     .catch(next);
 };
 
-function retrieveSystem(id) {
-    return Systems.findById(id)
-        .then(function(system) {
-            if (!system) throw new errors.NotFoundError('system');
-            return system;
-        })
-        .catch(mongoose.Error.CastError, function(err) {
-            throw new errors.NotFoundError('system');
-        });
-}
-
 // Get a single system
 exports.show = function(req, res, next) {
-    retrieveSystem(req.params.id)
+    System.retrieveById(req.params.id)
         .then(res.json.bind(res))
         .catch(next);
 };
 
 exports.create = function(req, res, next) {
-    Systems.create(req.body)
-        .then(function(system) {
+    System.create(req.body)
+        .then(system => {
             connection.createSystem(system);
             res.status(201).json(system);
         })
-        .catch(mongoose.Error.ValidationError, function(err) {
+        .catch(mongoose.Error.ValidationError, err => {
             throw new errors.ValidationError(err.errors);
         })
         .catch(next);
@@ -56,8 +46,8 @@ exports.create = function(req, res, next) {
 
 // Updates an existing system in the DB.
 exports.update = function(req, res, next) {
-    retrieveSystem(req.params.id)
-        .then(function(system) {
+    System.retrieveById(req.params.id)
+        .then(system => {
             var updated = _.merge(system, req.body);
             return updated.save();
         })
@@ -67,9 +57,9 @@ exports.update = function(req, res, next) {
 
 // Deletes a system from the DB.
 exports.destroy = function(req, res, next) {
-    Systems.findByIdAndRemove(req.params.id)
+    System.findByIdAndRemove(req.params.id)
         .exec()
-        .then(function() {
+        .then(() => {
             res.json({
                 message: req.params.id + ' deleted'
             });
@@ -83,24 +73,20 @@ exports.destroy = function(req, res, next) {
 
 exports.createRole = function(req, res, next) {
     if (_.isEmpty(req.body)) return next(new errors.ValidationError());
+    var system;
 
-    Systems.findByIdAndUpdate(
-        req.params.id,
-        { $push: { customerRoles: req.body } },
-        { new: true }
-    ).exec().then(function(system) {
-        if (!system) throw new errors.NotFoundError('system');
-        return res.json(system);
-    })
-    .catch(mongoose.Error.CastError, function(err) {
-        throw new errors.NotFoundError('system');
-    })
-    .catch(next);
+    System.retrieveById(req.params.id)
+        .then(system => {
+            var role = new Role(req.body);
+            return system.addRole(role);
+        })
+        .then(res.json.bind(res))
+        .catch(next);
 }
 
 exports.updateRole = function(req, res){
   var role = req.body;
-  Systems.update({'customerRoles.id': role.id}, { $set: { 'customerRoles.$': role  } }, function(err, system) {
+  System.update({'customerRoles.id': role.id}, { $set: { 'customerRoles.$': role  } }, function(err, system) {
     if (err) { return handleError(res, err); }
     if(!system) { return res.send(404); }
     async.each(role.customers, function(customerRole, callback) {
@@ -123,7 +109,7 @@ exports.updateRole = function(req, res){
 
 
 exports.deleteRole = function(req, res){
-  Systems.findOneAndUpdate({_id: req.params.id}, { $pull: { customerRoles: {  id: req.params.role } } }, function(err, system) {
+  System.findOneAndUpdate({_id: req.params.id}, { $pull: { customerRoles: {  id: req.params.role } } }, function(err, system) {
     if (err) { return handleError(res, err); }
     if(!system) { return res.send(404); }
     return res.send(204);
