@@ -6,46 +6,48 @@ var mongoose = require('mongoose');
 
 var connections = {};
 
-function init(){
-	System.find({},'name', function (err, systems) {
-		async.each(systems, function (system, callback) { 
-			addModels(system, mongoose.createConnection(config.mongo.host+system.name));
+var models = [
+	'../api/product/product.model.js',
+	'../api/customer/customer.model.js',
+	'../api/role/role.model.js'
+];
+
+function init() {
+	System.find({}, 'name')
+		.exec()
+		.map(system => {
+			console.log('hei', system.name, config.mongo.host);
+			const connection = mongoose.createConnection(config.mongo.host + system.name);
+			return addModels(system, connection);
 		});
-	});
 }
 
-function addModels(system, connection){
-	require('../api/product/product.model.js')(connection);
-	require('../api/customer/customer.model.js')(connection);
-	connections[system.name] = {
-		'connection': connection,
-		'_id': system._id
-	} 
+function addModels(system, connection) {
+	models.forEach(model => require(model)(connection));
+	connections[system.id] = connection;
 }
 
 // Middleware that finds the right tenant, based on cookies from the user
-exports.tenantMiddleware = function() {  
+exports.tenantMiddleware = function() {
 	return compose()
 	.use(function(req, res, next) {
-		if(connections[req.params.system]){
-			req.connection = connections[req.params.system].connection;
-			next()
-		}else{
-			next()
-		}	  
+		if (connections[req.params.system]) {
+			req.connection = connections[req.params.system];
+		}
+
+		next();
 	});
 };
 
 //A System has been created, we need to append it to the tenant connections
-exports.createSystem = function(system) {  
-	addModels(system, mongoose.createConnection(config.mongo.host+system.name));
+exports.createSystem = function(system) {
+	addModels(system, mongoose.createConnection(config.mongo.host + system.name));
 };
 
 //A System is deleted we need to remove it from the tenant connections
-exports.deleteConnection = function() {  
-	
+exports.deleteConnection = function() {
+
 };
 
 // Function that connects to all the tenant databases at startup
 init();
-
