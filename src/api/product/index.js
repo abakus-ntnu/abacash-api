@@ -6,12 +6,12 @@ var connection = require('../../components/connection.factory.js');
 
 var router = express.Router();
 
-router.get('/', connection.tenantMiddleware(), controller.active);
-router.post('/', connection.tenantMiddleware(), controller.create);
-router.get('/all', connection.tenantMiddleware(), controller.index);
-router.get('/:id', connection.tenantMiddleware(), controller.show);
-router.put('/:id', connection.tenantMiddleware(), controller.update);
-router.delete('/:id', connection.tenantMiddleware(), controller.destroy);
-router.get('/type/:type', connection.tenantMiddleware(), controller.type);
+router.get('/:system', connection.tenantMiddleware(), controller.active);
+router.post('/:system', connection.tenantMiddleware(), controller.create);
+router.get('/:system/all', connection.tenantMiddleware(), controller.index);
+router.get('/:system/:id', connection.tenantMiddleware(), controller.show);
+router.put('/:system/:id', connection.tenantMiddleware(), controller.update);
+router.delete('/:system/:id', connection.tenantMiddleware(), controller.destroy);
+router.get('/:system/type/:type', connection.tenantMiddleware(), controller.type);
 
 module.exports = router;
