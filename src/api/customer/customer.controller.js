@@ -13,9 +13,7 @@ var _ = require('lodash');
 // Get list of customers
 exports.index = function(req, res, next) {
   req.connection.model('Customer').find()
-    .then((customers) => {
-      return res.json(200, customers);
-    })
+    .then(res.json.bind(res))
     .catch(next);
 };
 
