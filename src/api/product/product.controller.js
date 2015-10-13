@@ -1,7 +1,7 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /products              ->  index
- * GET     /products/all          ->  indexAll
+ * GET     /products              ->  active
+ * GET     /products/all          ->  index
  * POST    /products              ->  create
  * GET     /products/:id          ->  show
  * PUT     /products/:id          ->  update
@@ -10,83 +10,82 @@
 
 'use strict';
 var _ = require('lodash');
+var errors = require('../../components/errors');
+var mongoose = require('mongoose');
 
 // Get list of all products
 exports.index = function(req, res, next) {
-    req.connection.model('Product')
-        .find()
-        .then(res.json.bind(res))
-        .catch(next);
+  req.connection.model('Product').find()
+    .then(res.json.bind(res))
+    .catch(next);
 };
 
 // Get list of active products
-exports.active = function(req, res) {
-  req.connection.model('Product').find(function (err, products) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, products);
-  });
-};
-
-// Get list of all products
-exports.indexAll = function(req, res) {
-  req.connection.model('Product').find(function (err, products) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, products);
-  });
+exports.active = function(req, res, next) {
+  req.connection.model('Product').find({
+    active: true
+  }).then(res.json.bind(res))
+    .catch(next);
 };
 
 // Get a single product
-exports.show = function(req, res) {
-  req.connection.model('Product').findById(req.params.id, function (err, product) {
-    if(err) { return handleError(res, err); }
-    if(!product) { return res.send(404); }
-    return res.json(product);
-  });
+exports.show = function(req, res, next) {
+  req.connection.model('Product').findById(req.params.id)
+    .then(product => {
+      if (!product) {
+        throw new errors.NotFoundError('product');
+      }
+      return res.json(product);
+    })
+    .catch(mongoose.Error.CastError, () => {
+        throw new errors.NotFoundError('product');
+    })
+    .catch(next);
 };
 
-// Get a single product
-exports.type = function(req, res) {
-  req.connection.model('Product').find({type: req.params.type}, function (err, products) {
-    if(err) { return handleError(res, err); }
-    if(!products) { return res.send(404); }
-    return res.json(products);
-  });
+// Get a single product by type
+exports.type = function(req, res, next) {
+  req.connection.model('Product').find({
+    type: req.params.type
+  }).then(res.json.bind(res))
+    .catch(next);
 };
 
 // Creates a new product in the DB.
-exports.create = function(req, res) {
-  req.connection.model('Product').create(req.body, function(err, product) {
-    if(err) { return handleError(res, err); }
-    return res.json(201, product);
-  });
+exports.create = function(req, res, next) {
+  req.connection.model('Product').create(req.body)
+    .then(res.status(201).json.bind(res))
+    .catch(next);
 };
 
 // Updates an existing product in the DB.
-exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
-  req.connection.model('Product').findById(req.params.id, function (err, product) {
-    if (err) { return handleError(res, err); }
-    if(!product) { return res.send(404); }
-    var updated = _.merge(product, req.body);
-    updated.save(function (err) {
-      if (err) { return handleError(res, err); }
-      return res.json(200, product);
-    });
-  });
+exports.update = function(req, res, next) {
+  delete req.body._id;
+  req.connection.model('Product').findById(req.params.id)
+    .then(product => {
+      if (!product) {
+        throw new errors.NotFoundError('product');
+      }
+      var updatedProduct = _.merge(product, req.body);
+      return updatedProduct.save()
+       
+    })
+    .then(res.json.bind(res))
+    .catch(mongoose.Error.CastError, () => {
+        throw new errors.NotFoundError('product');
+    })
+    .catch(next);
 };
 
 // Deletes a product from the DB.
 exports.destroy = function(req, res) {
-  req.connection.model('Product').findById(req.params.id, function (err, product) {
-    if(err) { return handleError(res, err); }
-    if(!product) { return res.send(404); }
-    req.connection.model('Product').remove(function(err) {
-      if(err) { return handleError(res, err); }
-      return res.send(204);
-    });
-  });
+  req.connection.model('Product').findById(req.params.id)
+    .then(product => {
+      if (!product) {
+        throw new errors.NotFoundError('product');
+      }
+      return product.remove();
+    })
+    .then(() => res.status(204).json())
+    .catch(next);
 };
-
-function handleError(res, err) {
-  return res.send(500, err);
-}

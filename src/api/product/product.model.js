@@ -7,7 +7,7 @@ var ProductSchema = new Schema({
   type: String,
   price: {type: Number, default: 0},
   internalprice: {type: Number, default: 0},
-  name: String,
+  name: {type: String, required: true},
   active: {type: Boolean, default: false},
   stock: {type: Number, default: 0}
 });
