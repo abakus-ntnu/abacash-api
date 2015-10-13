@@ -1,6 +1,6 @@
-var config = require('../../config/environment');
-var nodemailer = require('nodemailer');
-var ses = require('nodemailer-ses-transport');
+import config from '../../config/environment';
+import nodemailer from 'nodemailer';
+import ses from 'nodemailer-ses-transport';
 
 var templatesDir   = config.root+'/server/components/mailer/templates';
 var emailTemplates = require('email-templates')

@@ -4,9 +4,9 @@
 
 'use strict';
 
-var express = require('express');
-var errors = require('./components/errors');
-var connection = require('./components/connection.factory.js');
+import express from 'express';
+import errors from './components/errors';
+import connection from './components/connection.factory.js';
 
 var router = express.Router();
 

@@ -1,0 +1,7 @@
+{
+    "extends": "webkom",
+    "rules": {
+        "indent": [2, 4],
+        "new-cap": 0
+    }
+}

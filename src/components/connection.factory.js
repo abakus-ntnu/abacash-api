@@ -1,8 +1,8 @@
-var compose = require('composable-middleware');
-var config = require('../config/environment');
-var async = require('async');
-var System = require('../api/system/system.model');
-var mongoose = require('mongoose');
+import compose from 'composable-middleware';
+import config from '../config/environment';
+import async from 'async';
+import System from '../api/system/system.model';
+import mongoose from 'mongoose';
 
 var connections = {};
 

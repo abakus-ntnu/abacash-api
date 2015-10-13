@@ -4,7 +4,7 @@
 
 'use strict';
 
-var util = require('util');
+import util from 'util';
 
 function ValidationError(errors) {
     this.name = 'ValidationError';
