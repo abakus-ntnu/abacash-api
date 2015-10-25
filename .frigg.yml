@@ -6,4 +6,4 @@ tasks:
   - npm run lint
 
 services: 
-  - mongodb
+  - postgresql
