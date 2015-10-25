@@ -1,14 +1,12 @@
 import express from 'express';
 import * as controller from '../controllers/customer.controller';
 
-const router = express.Router({
-    mergeParams: true
-});
+const router = express.Router();
 
 router.get('/', controller.list);
 router.get('/:customerId', controller.retrieve);
-// router.put('/:system/:id', controller.update);
+router.post('/', controller.create);
+router.put('/:customerId', controller.update);
 // router.delete('/:system/:id', controller.destroy);
-// router.get('/:system/role/:id', controller.role);
 
 export default router;

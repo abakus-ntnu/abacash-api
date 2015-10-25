@@ -1,5 +1,6 @@
 import db from '../models';
-import { NotFoundError } from '../components/errors';
+import { NotFoundError, ValidationError } from '../components/errors';
+import Sequelize from 'sequelize';
 
 export function list(req, res, next) {
     req.system.getCustomers()
@@ -19,53 +20,37 @@ export function retrieve(req, res, next) {
     .catch(next);
 }
 
+export function create(req, res, next) {
+    db.Customer.create({
+        ...req.body,
+        systemId: req.system.id
+    })
+    .then(customer => {
+        res.status(201).json(customer);
+    })
+    .catch(Sequelize.ValidationError, err => {
+        throw new ValidationError(err);
+    })
+    .catch(next);
+}
+
+
+export function update(req, res, next) {
+    db.Customer.update({
+        ...req.body,
+        id: req.params.customerId,
+        systemId: req.system.id
+    })
+    .then(customer => {
+        res.status(201).json(customer);
+    })
+    .catch(Sequelize.ValidationError, err => {
+        throw new ValidationError(err);
+    })
+    .catch(next);
+}
+
 /*
-exports.role = function(req, res, next) {
-    req.connection.model('Customer').find({'role.id': req.params.id})
-        .then(res.json.bind(res))
-        .catch(next);
-};
-
-// Get a single customer
-exports.show = function(req, res, next) {
-    req.connection.model('Customer').findById(req.params.id)
-        .then(customer => {
-            if (!customer) {
-                throw new errors.NotFoundError('customer');
-            }
-            return res.json(customer);
-        })
-        .catch(mongoose.Error.CastError, () => {
-                throw new errors.NotFoundError('customer');
-        })
-        .catch(next);
-};
-
-// Creates a new customer in the DB.
-exports.create = function(req, res, next) {
-    req.connection.model('Customer').create(req.body)
-        .then(res.status(201).json.bind(res))
-        .catch(next);
-};
-
-// Updates an existing customer in the DB.
-exports.update = function(req, res, next) {
-    delete req.body._id;
-    req.connection.model('Customer').findById(req.params.id)
-        .then(customer => {
-            if (!customer) {
-                throw new errors.NotFoundError('customer');
-            }
-            var updatedCustomer = _.merge(customer, req.body);
-            return updatedCustomer.save()
-
-        })
-        .then(res.json.bind(res))
-        .catch(mongoose.Error.CastError, () => {
-                throw new errors.NotFoundError('customer');
-        })
-        .catch(next);
-};
 
 // Deletes a customer from the DB.
 exports.destroy = function(req, res, next) {

@@ -62,4 +62,48 @@ describe('Customer API', () => {
             test404('/api/1/customers/1337', done);
         });
     });
+
+    describe('Create a new customer ', () => {
+        beforeEach(() => loadFixtures(fixtures));
+
+        it('should create a new customer', done => {
+            const newCustomer = {
+                displayName: 'New Customer',
+                username: 'newcus',
+                rfid: 'dd:dd:dd:dd',
+                balance: 524
+            };
+            request(app)
+            .post('/api/1/customers/')
+            .send(newCustomer)
+            .expect('Content-Type', /json/)
+            .expect(201)
+            .end((err, res) => {
+                if (err) return done(err);
+                const customer = res.body;
+                customer.displayName.should.equal(newCustomer.displayName);
+                done();
+            });
+        });
+
+        it('should return a validation error for missing rfid', done => {
+            const newCustomer = {
+                username: 'newcus',
+                displayName: 'New Customer',
+                balance: 524
+            };
+            request(app)
+            .post('/api/1/customers/')
+            .send(newCustomer)
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .end((err, res) => {
+                if (err) return done(err);
+                res.body.message.should.equal('notNull Violation: rfid cannot be null');
+                res.body.errors.length.should.equal(1);
+                done();
+            });
+        });
+    });
+
 });

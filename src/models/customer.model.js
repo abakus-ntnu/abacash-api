@@ -1,7 +1,13 @@
 export default function(sequelize, DataTypes) {
     const Customer = sequelize.define('customer', {
-        rfid: DataTypes.STRING,
-        displayName: DataTypes.STRING,
+        rfid: {
+         type: DataTypes.STRING,
+         allowNull: false   
+        },
+        displayName: {
+         type: DataTypes.STRING,
+         allowNull: false   
+        },
         username: DataTypes.STRING,
         balance: DataTypes.DECIMAL
     }, {

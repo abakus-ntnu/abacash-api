@@ -1,14 +1,12 @@
 export class ValidationError extends Error {
     name = 'ValidationError'
-    message = 'Validation failed.'
     status = 400
 
-    constructor(errors) {
-        super();
+    constructor(error) {
+        super(error.message);
         this.payload = {
-            name: this.name,
-            message: this.message,
-            errors: this.errors
+            ...error,
+            name: this.name
         };
     }
 }
@@ -28,6 +26,7 @@ export function errorMiddleware(err, req, res, next) {
     if (process.env.NODE_ENV === 'development') {
         console.log(err.stack);
     }
+
 
     const status = err.status || 500;
 
