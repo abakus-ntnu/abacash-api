@@ -58,7 +58,7 @@ describe('Customer API', () => {
             });
         });
 
-        it('should return 404 for missing customers', done => {
+        it('should return 404 for missing customer', done => {
             test404('/api/1/customers/1337', done);
         });
     });
@@ -101,6 +101,91 @@ describe('Customer API', () => {
                 if (err) return done(err);
                 res.body.message.should.equal('notNull Violation: rfid cannot be null');
                 res.body.errors.length.should.equal(1);
+                done();
+            });
+        });
+    });
+
+    describe('Update a customer ', () => {
+        beforeEach(() => loadFixtures(fixtures));
+
+        it('should update rfid and displayName', done => {
+            const newCustomer = {
+                displayName: 'Updated Customer',
+                rfid: 'dd:dd:dd:dd'
+            };
+            request(app)
+            .put('/api/1/customers/1')
+            .send(newCustomer)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                const customer = res.body;
+                customer.displayName.should.equal(newCustomer.displayName);
+                customer.rfid.should.equal(newCustomer.rfid);
+                done();
+            });
+        });
+
+        it('should not update id', done => {
+            const newCustomer = {
+                id: 1234,
+                displayName: 'Updated Customer'
+            };
+            request(app)
+            .put('/api/1/customers/1')
+            .send(newCustomer)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                const customer = res.body;
+                customer.displayName.should.equal(newCustomer.displayName);
+                customer.id.should.not.equal(newCustomer.id);
+                done();
+            });
+        });
+
+        it('should return 404 for missing customer', done => {
+            const newCustomer = {
+                displayName: 'Updated Customer',
+                rfid: 'dd:dd:dd:dd'
+            };
+            request(app)
+            .put('/api/1/customers/12345')
+            .send(newCustomer)
+            .expect('Content-Type', /json/)
+            .expect(404)
+            .end((err, res) => {
+                if (err) return done(err);
+                res.body.message.should.equal('Could not find the entity');
+                done();
+            });
+        });
+    });
+
+    describe('Delete a customer ', () => {
+        beforeEach(() => loadFixtures(fixtures));
+
+        it('should delete a customer', done => {
+            request(app)
+            .delete('/api/1/customers/1')
+            .expect(204)
+            .end((err, res) => {
+                if (err) return done(err);
+                done();
+            });
+        });
+
+        it('should return 404 for missing customer', done => {
+            request(app)
+            .delete('/api/1/customers/12345')
+            .expect('Content-Type', /json/)
+            .expect(404)
+            .end((err, res) => {
+                if (err) return done(err);
+                res.body.message.should.equal('Could not find the entity');
                 done();
             });
         });
