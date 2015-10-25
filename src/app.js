@@ -13,6 +13,7 @@ import errorHandler from 'errorhandler';
 import bodyParser from 'body-parser';
 import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
+import routes from './routes';
 
 // Setup server
 const app = express();
@@ -28,6 +29,6 @@ if (app.get('env') === 'development') {
     app.use(errorHandler());
 }
 
-// app.use(require('./routes'));
+app.use('/', routes);
 
 export default app;
