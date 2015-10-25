@@ -4,8 +4,7 @@
   "scripts": {
     "watch": "nodemon --exec npm start",
     "start": "babel-node src/index.js",
-    "mocha": "NODE_ENV=test PG_URL='postgres://localhost/abacash-test' mocha --compilers js:babel/register $(find test -name '*.test.js')",
-    "test": "npm run mocha",
+    "test": "NODE_ENV=test PG_URL='postgres://localhost/abacash-test' mocha --compilers js:babel/register $(find test -name '*.test.js')",
     "lint": "eslint --ignore-path .gitignore ."
   },
   "dependencies": {
