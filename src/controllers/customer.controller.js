@@ -1,3 +1,6 @@
+import db from '../models';
+import { NotFoundError } from '../components/errors';
+
 export function list(req, res, next) {
     req.system.getCustomers()
     .then(res.json.bind(res))
@@ -5,11 +8,14 @@ export function list(req, res, next) {
 }
 
 export function retrieve(req, res, next) {
-    const { customerId: id } = req.params;
-    req.system.getCustomers({
-        where: { id }
+    db.Customer.findOne({ where: {
+        id: req.params.customerId,
+        systemId: req.system.id
+    }})
+    .then(customer => {
+        if (!customer) throw new NotFoundError();
+        res.json(customer);
     })
-    .then(customers => res.json(customers[0]))
     .catch(next);
 }
 

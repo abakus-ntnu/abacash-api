@@ -1,21 +1,3 @@
-/**
- * Using Rails-like standard naming convention for endpoints.
- * GET     /systems              ->  index
- * POST    /systems              ->  create
- * GET     /systems/:id          ->  show
- * PUT     /systems/:id          ->  update
- * DELETE  /systems/:id          ->  destroy
- */
-
-'use strict';
-
-import _ from 'lodash';
-import mongoose from 'mongoose';
-import Bluebird from 'bluebird';
-import System from './system.model';
-import errors from '../../components/errors';
-import connection from '../../components/connection.factory.js';
-
 // Get list of systems
 exports.index = function(req, res, next) {
   System.find()
@@ -23,7 +5,7 @@ exports.index = function(req, res, next) {
     .catch(next);
 };
 
-
+/*
 // Get a single system
 exports.show = function(req, res, next) {
     const Role = req.connection.model('Role');
@@ -76,3 +58,4 @@ exports.createRole = function(req, res, next) {
         .then(res.json.bind(res))
         .catch(next);
 }
+*/
