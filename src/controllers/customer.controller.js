@@ -1,10 +1,16 @@
-import db from '../models';
-
-// Get list of customers
-export function index(req, res, next) {
+export function list(req, res, next) {
     req.system.getCustomers()
-        .then(res.json.bind(res))
-        .catch(next);
+    .then(res.json.bind(res))
+    .catch(next);
+}
+
+export function retrieve(req, res, next) {
+    const { customerId: id } = req.params;
+    req.system.getCustomers({
+        where: { id }
+    })
+    .then(customers => res.json(customers[0]))
+    .catch(next);
 }
 
 /*

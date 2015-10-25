@@ -5,8 +5,8 @@ const router = express.Router({
     mergeParams: true
 });
 
-router.get('/', controller.index);
-// router.post('/:system', controller.create);
+router.get('/', controller.list);
+router.get('/:customerId', controller.retrieve);
 // router.get('/:system/:id', controller.show);
 // router.put('/:system/:id', controller.update);
 // router.delete('/:system/:id', controller.destroy);

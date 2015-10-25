@@ -41,4 +41,21 @@ describe('Customer API', () => {
             });
         });
     });
+
+    describe('Retrieve one customer', () => {
+        beforeEach(() => loadFixtures(fixtures));
+
+        it('should retrieve a customer', done => {
+            request(app)
+            .get('/api/1/customers/1')
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                const customer = res.body;
+                customer.displayName.should.equal('test customer');
+                done();
+            });
+        });
+    });
 });
