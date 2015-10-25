@@ -107,7 +107,7 @@ describe('Product API', () => {
                 internalPrice: 1337.00,
                 name: 'Created Product',
                 active: true,
-                stock: 500
+                stock: 0
             })
             .expect(201, done);
         });
@@ -126,5 +126,21 @@ describe('Product API', () => {
             .expect(400, done);
         });
 
+    });
+
+    describe('Destroy product', () => {
+
+        beforeEach(() => loadFixtures(fixtures));
+
+        it('should delete an existing product', done => {
+            request(app)
+            .delete('/api/1/products/1')
+            .expect(204, done);
+        });
+        it('should return not found if product not found', done => {
+            request(app)
+            .delete('/api/1/products/4')
+            .expect(404, done);
+        });
     });
 });

@@ -7,6 +7,7 @@ router.get('/', controller.list);
 router.get('/all', controller.listAll);
 router.post('/', controller.create);
 router.get('/:id', controller.get);
+router.delete('/:id', controller.destroy);
 /*
 router.post('/:system', controller.create);
 router.get('/:system/all', controller.getAll);
