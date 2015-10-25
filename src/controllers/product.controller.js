@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import db from '../models';
-import { NotFoundError } from '../components/errors';
+import { NotFoundError, ValidationError } from '../components/errors';
 
 export function listAll(req, res, next) {
   req.system.getProducts()

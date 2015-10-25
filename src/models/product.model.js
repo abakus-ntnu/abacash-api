@@ -19,7 +19,11 @@ export default function(sequelize, DataTypes) {
             defaultValue: false
         },
         stock: {
-            type: DataTypes.INTEGER, defaultValue: 0
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+            validate: {
+                min: 0
+            }
         }
     }, {
         classMethods: {
