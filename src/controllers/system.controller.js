@@ -1,9 +1,10 @@
-// Get list of systems
-exports.index = function(req, res, next) {
-  System.find()
-    .then(res.json.bind(res))
-    .catch(next);
-};
+import db from '../models';
+
+export function list(req, res, next) {
+    db.System.findAll()
+        .then(res.json.bind(res))
+        .catch(next);
+}
 
 /*
 // Get a single system
