@@ -28,4 +28,21 @@ describe('System API', () => {
             });
         });
     });
+
+    describe('Retrieve a system', () => {
+        beforeEach(() => loadFixtures(fixtures));
+
+        it('should retrieve a system', done => {
+            request(app)
+            .get('/api/systems/1')
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                const system = res.body;
+                system.id.should.equal(1);
+                done();
+            });
+        });
+    });
 });

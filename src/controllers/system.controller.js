@@ -1,9 +1,22 @@
 import db from '../models';
+import NotFoundError from '../components/errors';
 
 export function list(req, res, next) {
     db.System.findAll()
         .then(res.json.bind(res))
         .catch(next);
+}
+
+export function retrieve(req, res, next) {
+    const { id } = req.params;
+    db.System.findOne({
+        where: { id }
+    })
+    .then(system => {
+        if (!system) throw new NotFoundError();
+        res.json(system);
+    })
+    .catch(next);
 }
 
 /*
