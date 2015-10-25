@@ -9,7 +9,7 @@ const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
 
 const db = fs
     .readdirSync(__dirname)
-    .filter(filename => filename !== 'index.js')
+    .filter(filename => /model.js$/.test(filename))
     .reduce((total, filename) => {
         const model = sequelize.import(path.resolve(__dirname, filename));
         total[capitalize(model.name)] = model;
