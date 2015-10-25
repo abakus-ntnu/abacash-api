@@ -1,0 +1,26 @@
+[
+  {
+    "model": "System",
+    "data": {
+      "name": "LaBamba",
+      "info": "Dette er LaBamba sitt awesome system",
+      "status": true,
+      "email": "labamba@abakus.no",
+      "needSeller": true,
+      "internalSales": true,
+      "allowCredit": true
+    }
+  },
+  {
+    "model": "System",
+    "data": {
+      "name": "Kontoret",
+      "info": "Dette er Kontoret sitt awesome system",
+      "status": true,
+      "email": "labamba@abakus.no",
+      "needSeller": false,
+      "internalSales": false,
+      "allowCredit": false
+    }
+  }
+]
