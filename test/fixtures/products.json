@@ -2,7 +2,7 @@
   {
     "model": "Product",
     "data": {
-      "type": "Test Product Type 1",
+      "type": "Type 1",
       "price": 20.0,
       "internalPrice": 10.0,
       "name": "Test product 1",
@@ -14,7 +14,7 @@
   {
     "model": "Product",
     "data": {
-      "type": "Test Product Type 2",
+      "type": "Type 2",
       "price": 200.0,
       "internalPrice": 200.0,
       "name": "Test product 2",
@@ -26,7 +26,7 @@
   {
     "model": "Product",
     "data": {
-      "type": "Test Product Type 1",
+      "type": "Type 2",
       "price": 50.0,
       "internalPrice": 40.0,
       "name": "Test product 3",

@@ -17,7 +17,7 @@ describe('Product API', () => {
 
         it('should list all products', done => {
             request(app)
-            .get('/api/1/products/all')
+            .get('/api/1/products/')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -32,7 +32,7 @@ describe('Product API', () => {
 
         it('should keep systems separate all products', done => {
             request(app)
-            .get('/api/2/products/all')
+            .get('/api/2/products/')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -52,13 +52,31 @@ describe('Product API', () => {
 
         it('should list active products', done => {
             request(app)
-            .get('/api/1/products')
+            .get('/api/1/products/?active=true')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
                 if (err) return done(err);
                 const products = res.body;
                 products.length.should.equal(2);
+                done();
+            });
+        });
+    });
+
+    describe('List all active products of type', () => {
+        beforeEach(() => loadFixtures(fixtures));
+
+        it('should list active products', done => {
+            request(app)
+            .get('/api/1/products/?type=Type 2&active=true')
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                const products = res.body;
+                products.length.should.equal(1);
+                products[0].type.should.equal('Type 2');
                 done();
             });
         });
