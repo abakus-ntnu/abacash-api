@@ -1,0 +1,50 @@
+[
+  {
+    "model": "Product",
+    "data": {
+      "type": "Test Product Type 1",
+      "price": 20.0,
+      "internalPrice": 10.0,
+      "name": "Test product 1",
+      "active": true,
+      "stock": 5,
+      "systemId": 1
+    }
+  },
+  {
+    "model": "Product",
+    "data": {
+      "type": "Test Product Type 2",
+      "price": 200.0,
+      "internalPrice": 200.0,
+      "name": "Test product 2",
+      "active": true,
+      "stock": 10,
+      "systemId": 1
+    }
+  },
+  {
+    "model": "Product",
+    "data": {
+      "type": "Test Product Type 1",
+      "price": 50.0,
+      "internalPrice": 40.0,
+      "name": "Test product 3",
+      "active": false,
+      "stock": 10,
+      "systemId": 1
+    }
+  },
+  {
+    "model": "Product",
+    "data": {
+      "type": "Test Product Type 4 System 2",
+      "price": 200.0,
+      "internalPrice": 150.0,
+      "name": "Test product 3",
+      "active": true,
+      "stock": 0,
+      "systemId": 2
+    }
+  }
+]
