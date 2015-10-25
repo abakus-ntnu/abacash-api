@@ -3,7 +3,8 @@ import path from 'path';
 import Sequelize from 'sequelize';
 import config from '../config';
 
-const sequelize = new Sequelize(config.pgUrl);
+const logging = config.nodeEnv === 'development' ? console.log : false;
+const sequelize = new Sequelize(config.pgUrl, { logging });
 const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
 
 const db = fs

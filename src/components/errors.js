@@ -20,7 +20,7 @@ export class RequestError extends Error {
 
 export class NotFoundError extends Error {
     name = 'NotFoundError'
-    message = 'Couldn\'t find the entity';
+    message = 'Could not find the entity';
     status = 404;
 }
 

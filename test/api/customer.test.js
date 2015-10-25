@@ -2,7 +2,7 @@ import chai from 'chai';
 import request from 'supertest';
 import app from '../../src/app';
 import customerFixtures from '../fixtures/customers.json';
-import { loadFixtures } from '../helpers';
+import { loadFixtures, test404 } from '../helpers';
 
 chai.should();
 
@@ -56,6 +56,10 @@ describe('Customer API', () => {
                 customer.displayName.should.equal('test customer');
                 done();
             });
+        });
+
+        it('should return 404 for missing customers', done => {
+            test404('/api/1/customers/1337', done);
         });
     });
 });
