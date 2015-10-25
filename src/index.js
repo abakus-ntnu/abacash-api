@@ -9,5 +9,5 @@ function listen() {
     });
 }
 
-syncDB({ force: true })
+syncDB()
     .then(() => listen());
