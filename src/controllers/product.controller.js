@@ -49,6 +49,22 @@ export function create(req, res, next) {
     .catch(next);
 };
 
+export function destroy(req, res, next) {
+    db.Product.destroy({
+        where: {
+            systemId: req.system.id,
+            id: req.params.id
+        }
+    })
+    .then(count => {
+        if (count == 0) {
+            throw new NotFoundError();
+        }
+        res.status(204).send();
+    })
+    .catch(next);
+};
+
 
 /*
 // Get list of active products
