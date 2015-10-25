@@ -1,6 +1,7 @@
 import db from '../models';
 import { NotFoundError, ValidationError } from '../components/errors';
 import Sequelize from 'sequelize';
+import _ from 'lodash';
 
 export function list(req, res, next) {
     req.system.getCustomers()
@@ -34,34 +35,30 @@ export function create(req, res, next) {
     .catch(next);
 }
 
-
 export function update(req, res, next) {
-    db.Customer.update({
-        ...req.body,
-        id: req.params.customerId,
-        systemId: req.system.id
+    db.Customer.update(req.body, {
+        where: {
+            id: req.params.customerId,
+            systemId: req.system.id
+        },
+        returning: true,
+        fields: _.without(Object.keys(req.body), 'id')
     })
-    .then(customer => {
-        res.status(201).json(customer);
-    })
-    .catch(Sequelize.ValidationError, err => {
-        throw new ValidationError(err);
+    .spread((count, customer) => {
+        if (!count) throw new NotFoundError();
+        res.json(customer[0]);
     })
     .catch(next);
 }
 
-/*
-
-// Deletes a customer from the DB.
-exports.destroy = function(req, res, next) {
-    req.connection.model('Customer').findById(req.params.id)
-        .then(customer => {
-            if (!customer) {
-                throw new errors.NotFoundError('customer');
-            }
-            return customer.remove();
-        })
-        .then(() => res.status(204).json())
-        .catch(next);
-};
-*/
+export function destroy(req, res, next) {
+    db.Customer.destroy({ where: {
+            id: req.params.customerId,
+            systemId: req.system.id
+    }})
+    .then((count) => {
+        if (!count) throw new NotFoundError();
+        res.status(204).send();
+    })
+    .catch(next);
+}
