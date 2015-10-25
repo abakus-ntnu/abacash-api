@@ -1,9 +1,9 @@
 setup_tasks:
-  - npm install -g grunt-cli
   - npm install
 
 tasks:
-  - grunt mochaTest
+  - npm run mocha
+  - npm run lint
 
 services: 
   - mongodb
