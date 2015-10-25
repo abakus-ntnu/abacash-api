@@ -19,6 +19,14 @@ export function retrieve(req, res, next) {
     .catch(next);
 }
 
+export function create(req, res, next) {
+    db.System.create(req.body)
+    .then(system => {
+        res.status(201).json(system);
+    })
+    .catch(next);
+}
+
 /*
 // Get a single system
 exports.show = function(req, res, next) {

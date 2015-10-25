@@ -45,4 +45,30 @@ describe('System API', () => {
             });
         });
     });
+
+    describe('Create a system', () => {
+        beforeEach(() => loadFixtures(fixtures));
+
+        it('should create a system', done => {
+            const payload = {
+                displayName: 'testuser123',
+                name: 'test user 123',
+                info: 'info',
+                status: false,
+                email: 'hei@hei.com'
+            };
+
+            request(app)
+            .post('/api/systems')
+            .send(payload)
+            .expect('Content-Type', /json/)
+            .expect(201)
+            .end((err, res) => {
+                if (err) return done(err);
+                const system = res.body;
+                system.id.should.equal(3);
+                done();
+            });
+        });
+    });
 });

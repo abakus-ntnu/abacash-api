@@ -2,7 +2,6 @@
   {
     "model": "System",
     "data": {
-      "id": 1,
       "name": "LaBamba",
       "info": "Dette er LaBamba sitt awesome system",
       "status": true,
@@ -15,7 +14,6 @@
   {
     "model": "System",
     "data": {
-      "id": 2,
       "name": "Kontoret",
       "info": "Dette er Kontoret sitt awesome system",
       "status": true,
