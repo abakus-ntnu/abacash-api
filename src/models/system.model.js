@@ -28,6 +28,7 @@ export default function(sequelize, DataTypes) {
             associate(models) {
                 System.hasMany(models.Customer);
                 System.hasMany(models.AuthToken);
+                System.hasMany(models.Product);
                 System.belongsToMany(models.User, {
                     through: models.SystemRole,
                     foreignKey: 'systemId'

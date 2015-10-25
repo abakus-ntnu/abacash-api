@@ -1,9 +1,9 @@
 export default function(sequelize, DataTypes) {
     const Product = sequelize.define('product', {
         type: DataTypes.STRING,
-        price: DataTypes.DECIMAL(2),
+        price: DataTypes.DECIMAL,
         internalPrice: {
-            type: DataTypes.DECIMAL(2),
+            type: DataTypes.DECIMAL,
             allowNull: true,
             get() {
                 if (this.getDataValue('internalPrice') === null) {
@@ -24,7 +24,11 @@ export default function(sequelize, DataTypes) {
     }, {
         classMethods: {
             associate(models) {
-                Product.belongsTo(models.System);
+                Product.belongsTo(models.System, {
+                    foreignKey: { 
+                        allowNull: false
+                    }
+                });
                 Product.belongsToMany(models.Transaction, { through: 'transactionProduct'});
             }
         }

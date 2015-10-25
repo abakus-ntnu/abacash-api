@@ -1,25 +1,56 @@
-/**
- * Using Rails-like standard naming convention for endpoints.
- * GET     /products              ->  active
- * GET     /products/all          ->  index
- * POST    /products              ->  create
- * GET     /products/:id          ->  show
- * PUT     /products/:id          ->  update
- * DELETE  /products/:id          ->  destroy
- */
+import Sequelize from 'sequelize';
+import db from '../models';
+import { NotFoundError } from '../components/errors';
 
-'use strict';
-import _ from 'lodash';
-import errors from '../../components/errors';
-import mongoose from 'mongoose';
+export function listAll(req, res, next) {
+  req.system.getProducts()
+      .then(res.json.bind(res))
+      .catch(next);
+};
 
-// Get list of all products
-exports.index = function(req, res, next) {
-  req.connection.model('Product').find()
+export function list(req, res, next) {
+    req.system.getProducts({
+        where: {
+            active: true
+        }
+    })
     .then(res.json.bind(res))
     .catch(next);
 };
 
+export function get(req, res, next) {
+    db.Product.findOne({
+        where: {
+            systemId: req.system.id,
+            id: req.params.id
+        }
+    })
+    .then(product => {
+        if (!product) {
+            throw new NotFoundError();
+        }
+        res.json(product);
+    })
+    .catch(next);
+
+};
+
+export function create(req, res, next) {
+    db.Product.create({
+        ...req.body,
+        systemId: req.system.id
+    })
+    .then(product => {
+        res.status(201).json(product);
+    })
+    .catch(Sequelize.ValidationError, err => {
+        throw new ValidationError(err);
+    })
+    .catch(next);
+};
+
+
+/*
 // Get list of active products
 exports.active = function(req, res, next) {
   req.connection.model('Product').find({
@@ -89,3 +120,4 @@ exports.destroy = function(req, res) {
     .then(() => res.status(204).json())
     .catch(next);
 };
+*/

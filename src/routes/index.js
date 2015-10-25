@@ -2,6 +2,7 @@ import express from 'express';
 import db from '../models';
 import customer from './customer.routes';
 import system from './system.routes';
+import product from './product.routes';
 import * as errors from '../components/errors';
 // import auth from './auth.routes';
 // import product from './product.routes';
@@ -28,6 +29,7 @@ apiRouter.param('system', (req, res, next, id) => {
 
 apiRouter.use('/:system/customers', customer);
 apiRouter.use('/systems', system);
+apiRouter.use('/:system/products', product);
 
 // apiRouter.use('/users', user);
 // apiRouter.use('/:system/roles', role);
