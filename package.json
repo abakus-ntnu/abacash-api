@@ -4,7 +4,8 @@
   "scripts": {
     "watch": "nodemon --exec npm start",
     "start": "babel-node src/index.js",
-    "test": "mocha -compilers js:babel/register $(find test -name '*.test.js')",
+    "mocha": "PG_URL='postgres://localhost/abacash-test' mocha --compilers js:babel/register $(find test -name '*.test.js')",
+    "test": "npm run mocha && npm run lint",
     "lint": "eslint --ignore-path .gitignore ."
   },
   "dependencies": {
@@ -44,7 +45,7 @@
     "eslint-config-webkom": "0.3.1",
     "mocha": "^2.3.3",
     "sequelize-fixtures": "0.4.8",
-    "supertest": "~0.11.0"
+    "supertest": "1.1.0"
   },
   "private": true
 }

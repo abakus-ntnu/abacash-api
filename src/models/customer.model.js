@@ -3,7 +3,7 @@ export default function(sequelize, DataTypes) {
         rfid: DataTypes.STRING,
         displayName: DataTypes.STRING,
         username: DataTypes.STRING,
-        balance: DataTypes.DECIMAL(2)
+        balance: DataTypes.DECIMAL
     }, {
         classMethods: {
             associate(models) {
