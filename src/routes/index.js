@@ -3,10 +3,10 @@ import db from '../models';
 import customer from './customer.routes';
 import system from './system.routes';
 import product from './product.routes';
+import customerRole from './customer-role.routes';
 import * as errors from '../components/errors';
 // import auth from './auth.routes';
 // import product from './product.routes';
-// import role from './role.routes';
 // import transaction from './transaction.routes';
 // import user from './user.routes';
 
@@ -19,16 +19,17 @@ apiRouter.param('system', (req, res, next, id) => {
     db.System.findOne({
         where: { id }
     })
-    .then(system => {
-        if (!system) throw new errors.NotFoundError();
-        req.system = system;
+    .then(systemInstance => {
+        if (!systemInstance) throw new errors.NotFoundError();
+        req.system = systemInstance;
         next();
     })
     .catch(next);
 });
 
-apiRouter.use('/:system/customers', customer);
 apiRouter.use('/systems', system);
+apiRouter.use('/:system/customers', customer);
+apiRouter.use('/:system/roles', customerRole);
 apiRouter.use('/:system/products', product);
 
 // apiRouter.use('/users', user);

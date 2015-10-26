@@ -41,18 +41,3 @@ export function update(req, res, next) {
     })
     .catch(next);
 }
-
-/*
-exports.createRole = function(req, res, next) {
-    if (_.isEmpty(req.body)) return next(new errors.ValidationError());
-    const Role = req.connection.model('Role');
-
-    System.retrieveById(req.params.system)
-        .then(system => {
-            var role = new Role(req.body);
-            return system.addRole(role);
-        })
-        .then(res.json.bind(res))
-        .catch(next);
-}
-*/
