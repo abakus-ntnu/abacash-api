@@ -13,6 +13,22 @@ describe('Customer Role API', () => {
 
     beforeEach(() => loadFixtures(fixtures));
 
+    describe('List Roles', () => {
+        it('should list roles', done => {
+            request(app)
+            .get('/api/1/roles')
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                const roles = res.body;
+                roles.length.should.equal(1);
+                roles[0].id.should.equal(1);
+                done();
+            });
+        });
+    });
+
     describe('Create Role', () => {
         it('should create a role', done => {
             const payload = {

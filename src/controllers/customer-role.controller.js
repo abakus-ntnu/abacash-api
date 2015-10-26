@@ -2,6 +2,12 @@ import _ from 'lodash';
 import db from '../models';
 import { NotFoundError } from '../components/errors';
 
+export function list(req, res, next) {
+    req.system.getCustomerRoles()
+    .then(res.json.bind(res))
+    .catch(next);
+}
+
 export function create(req, res, next) {
     db.CustomerRole.create({
         ...req.body,

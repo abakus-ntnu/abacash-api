@@ -6,6 +6,7 @@ export default function(sequelize, DataTypes) {
     }, {
         classMethods: {
             associate(models) {
+                CustomerRole.belongsTo(models.System);
                 CustomerRole.hasMany(models.Customer);
             }
         }
