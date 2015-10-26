@@ -7,7 +7,8 @@ const should = chai.should();
 
 describe('Customer Role API', () => {
     const fixtures = [
-        'systems.json'
+        'systems.json',
+        'customer-roles.json'
     ];
 
     beforeEach(() => loadFixtures(fixtures));
@@ -34,6 +35,53 @@ describe('Customer Role API', () => {
                 role.isSeller.should.equal(payload.isSeller);
                 done();
             });
+        });
+    });
+
+    describe('Update Role', () => {
+        it('should update a role', done => {
+            const payload = {
+                role: 'changed'
+            };
+
+            request(app)
+            .put('/api/1/roles/1')
+            .send(payload)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                const role = res.body;
+                role.role.should.equal(payload.role);
+                done();
+            });
+        });
+
+        it('should return 404 for invalid roles', done => {
+            const payload = {
+                role: 'changed'
+            };
+
+            request(app)
+            .put('/api/1/roles/1337')
+            .send(payload)
+            .expect('Content-Type', /json/)
+            .expect(404)
+            .end((err, res) => {
+                if (err) return done(err);
+                const error = res.body;
+                error.message.should.equal('Could not find the entity');
+                done();
+            });
+        });
+    });
+
+    describe('Delete Role', () => {
+        it('should delete a role', done => {
+            request(app)
+            .delete('/api/1/roles/1')
+            .expect(204)
+            .end((err, res) => done(err));
         });
     });
 });

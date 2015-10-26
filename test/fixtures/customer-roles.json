@@ -1,0 +1,10 @@
+[
+  {
+    "model": "CustomerRole",
+    "data": {
+      "role": "testrole",
+      "isSeller": true,
+      "internalSales": true
+    }
+  }
+]
