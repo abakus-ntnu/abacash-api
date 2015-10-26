@@ -1,0 +1,11 @@
+[
+  {
+    "model": "CustomerRole",
+    "data": {
+      "systemId": 1,
+      "role": "testrole",
+      "isSeller": true,
+      "internalSales": true
+    }
+  }
+]

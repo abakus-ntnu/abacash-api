@@ -71,4 +71,47 @@ describe('System API', () => {
             });
         });
     });
+
+    describe('Update a system', () => {
+        beforeEach(() => loadFixtures(fixtures));
+
+        it('should update a system', done => {
+            const payload = {
+                displayName: 'testuser123',
+                status: true
+            };
+
+            request(app)
+            .put('/api/systems/1')
+            .send(payload)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                const system = res.body;
+                system.displayName.should.equal(payload.displayName);
+                system.status.should.equal(payload.status);
+                done();
+            });
+        });
+
+        it('should return 404 when updating not found systems', done => {
+            const payload = {
+                displayName: 'testuser123',
+                status: true
+            };
+
+            request(app)
+            .put('/api/systems/1337')
+            .send(payload)
+            .expect('Content-Type', /json/)
+            .expect(404)
+            .end((err, res) => {
+                if (err) return done(err);
+                const error = res.body;
+                error.message.should.equal('Could not find the entity');
+                done();
+            });
+        });
+    });
 });

@@ -1,8 +1,9 @@
 setup_tasks:
+  - createdb abacash-test
   - npm install
 
 tasks:
-  - npm run mocha
+  - npm test 
   - npm run lint
 
 services: 
