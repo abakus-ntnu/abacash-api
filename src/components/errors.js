@@ -11,6 +11,17 @@ export class ValidationError extends Error {
     }
 }
 
+export class ControllerValidationError extends Error {
+    name = 'ControllerValidationError';
+    status = 400;
+
+    constructor(errorMessage) {
+        super(errorMessage);
+        this.message = errorMessage;
+    }
+}
+
+
 export class RequestError extends Error {
     name = 'RequestError'
     status = 400

@@ -30,6 +30,7 @@ export default function(sequelize, DataTypes) {
                 System.hasMany(models.CustomerRole);
                 System.hasMany(models.AuthToken);
                 System.hasMany(models.Product);
+                System.hasMany(models.Transaction);
                 System.belongsToMany(models.User, {
                     through: models.SystemRole,
                     foreignKey: 'systemId'
