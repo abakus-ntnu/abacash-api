@@ -1,7 +1,6 @@
 import chai from 'chai';
 import request from 'supertest';
 import app from '../../src/app';
-import customerFixtures from '../fixtures/customers.json';
 import { loadFixtures, test404 } from '../helpers';
 
 chai.should();
@@ -23,7 +22,7 @@ describe('Customer API', () => {
             .end((err, res) => {
                 if (err) return done(err);
                 const customers = res.body;
-                customers.length.should.equal(customerFixtures.length);
+                customers.length.should.equal(2);
                 customers[0].id.should.equal(1);
                 done();
             });
@@ -36,7 +35,7 @@ describe('Customer API', () => {
             .expect(200)
             .end((err, res) => {
                 if (err) return done(err);
-                res.body.length.should.equal(0);
+                res.body.length.should.equal(1);
                 done();
             });
         });
