@@ -18,5 +18,15 @@
       "balance": 100,
       "systemId": 1
     }
+  },
+  {
+    "model": "Customer",
+    "data": {
+      "rfid": "1337",
+      "displayName": "test customer 3",
+      "username": "testcustomer3",
+      "balance": 200.00,
+      "systemId": 2
+    }
   }
 ]
