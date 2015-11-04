@@ -8,7 +8,7 @@ export default function(sequelize, DataTypes) {
         classMethods: {
             associate(models) {
                 Transaction.belongsToMany(models.Product, { 
-                    through: 'transactionProduction' 
+                    through: 'transactionProduct' 
                 });
                 Transaction.belongsTo(models.Customer, {
                     as: 'customer',
