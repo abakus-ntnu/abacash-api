@@ -7,9 +7,18 @@ export default function(sequelize, DataTypes) {
     }, {
         classMethods: {
             associate(models) {
-                Transaction.belongsToMany(models.Product, { through: 'transactionProduction' });
-                Transaction.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' });
-                Transaction.belongsTo(models.Customer, { as: 'seller', foreignKey: 'sellerId' });
+                Transaction.belongsToMany(models.Product, { 
+                    through: 'transactionProduction' 
+                });
+                Transaction.belongsTo(models.Customer, {
+                    as: 'customer',
+                    foreignKey: 'customerId'
+                });
+                Transaction.belongsTo(models.Customer, { 
+                    as: 'seller', 
+                    foreignKey: 'sellerId' 
+                });
+                Transaction.belongsTo(models.System);
             }
         }
     });
