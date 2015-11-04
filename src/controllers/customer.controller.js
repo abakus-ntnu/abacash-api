@@ -53,8 +53,8 @@ export function update(req, res, next) {
 
 export function destroy(req, res, next) {
     db.Customer.destroy({ where: {
-            id: req.params.customerId,
-            systemId: req.system.id
+        id: req.params.customerId,
+        systemId: req.system.id
     }})
     .then((count) => {
         if (!count) throw new NotFoundError();

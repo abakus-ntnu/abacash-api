@@ -16,6 +16,12 @@ export class RequestError extends Error {
     status = 400
 }
 
+export class AuthenticationError extends Error {
+    name = 'AuthenticationError'
+    message = 'You need to authenticate to access this resource'
+    status = 401
+}
+
 export class NotFoundError extends Error {
     name = 'NotFoundError'
     message = 'Could not find the entity';

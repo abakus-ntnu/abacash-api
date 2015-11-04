@@ -1,5 +1,5 @@
 import chai from 'chai';
-import models from '../../src/models';
+import db from '../../src/models';
 import { loadFixtures } from '../helpers';
 
 chai.should();
@@ -15,7 +15,7 @@ describe('AuthToken Model', () => {
                 systemId: 1
             };
 
-            return models.AuthToken.generate(body)
+            return db.AuthToken.generate(body)
             .then(auth => {
                 auth.token.length.should.equal(32);
                 Object.keys(body).forEach(field => {
@@ -29,7 +29,7 @@ describe('AuthToken Model', () => {
                 systemId: 1
             };
 
-            return models.AuthToken.generate(body)
+            return db.AuthToken.generate(body)
             .catch(err => {
                 err.message
                     .should.equal('notNull Violation: name cannot be null');
