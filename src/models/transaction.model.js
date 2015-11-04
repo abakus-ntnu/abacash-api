@@ -1,9 +1,14 @@
 export default function(sequelize, DataTypes) {
     const Transaction = sequelize.define('transaction', {
-        name: DataTypes.STRING,
-        info: DataTypes.STRING,
-        active: DataTypes.BOOLEAN,
-        total: DataTypes.DECIMAL(2)
+        total: DataTypes.DECIMAL,
+        customerId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        sellerId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        }
     }, {
         classMethods: {
             associate(models) {
