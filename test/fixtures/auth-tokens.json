@@ -1,0 +1,18 @@
+[
+  {
+    "model": "AuthToken",
+    "data": {
+      "name": "test token",
+      "token": "d54f9200b680ff11eb1ffcb01a99bde2",
+      "systemId": 1
+    }
+  },
+  {
+    "model": "AuthToken",
+    "data": {
+      "name": "test token 2",
+      "token": "dfff9200ba80sf11ebtffcb01e99bde2",
+      "systemId": 1
+    }
+  }
+]

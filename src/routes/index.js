@@ -4,6 +4,7 @@ import customer from './customer.routes';
 import system from './system.routes';
 import product from './product.routes';
 import customerRole from './customer-role.routes';
+import authToken from './auth-token.routes';
 import * as errors from '../components/errors';
 // import auth from './auth.routes';
 // import product from './product.routes';
@@ -27,6 +28,7 @@ apiRouter.param('system', (req, res, next, id) => {
     .catch(next);
 });
 
+apiRouter.use('/auth-tokens', authToken);
 apiRouter.use('/systems', system);
 apiRouter.use('/:system/customers', customer);
 apiRouter.use('/:system/roles', customerRole);

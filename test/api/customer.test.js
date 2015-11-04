@@ -179,16 +179,7 @@ describe('Customer API', () => {
         });
 
         it('should return 404 for missing customer', done => {
-            request(app)
-            .delete('/api/1/customers/12345')
-            .expect('Content-Type', /json/)
-            .expect(404)
-            .end((err, res) => {
-                if (err) return done(err);
-                res.body.message.should.equal('Could not find the entity');
-                done();
-            });
+            test404('/api/1/customers/12345', done, 'delete');
         });
     });
-
 });
