@@ -1,5 +1,5 @@
-export class ValidationError extends Error {
-    name = 'ValidationError'
+export class ModelValidationError extends Error {
+    name = 'ModelValidationError'
     status = 400
 
     constructor(error) {
@@ -11,8 +11,8 @@ export class ValidationError extends Error {
     }
 }
 
-export class ControllerValidationError extends Error {
-    name = 'ControllerValidationError';
+export class ValidationError extends Error {
+    name = 'ValidationError';
     status = 400;
 
     constructor(errorMessage) {

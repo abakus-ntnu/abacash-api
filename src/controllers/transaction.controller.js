@@ -1,5 +1,5 @@
 import db from '../models';
-import { NotFoundError, ValidationError, ControllerValidationError} from '../components/errors';
+import { NotFoundError, ModelValidationError, ValidationError} from '../components/errors';
 import Sequelize from 'sequelize';
 
 export function list(req, res, next) {
@@ -23,7 +23,7 @@ export function retrieve(req, res, next) {
 
 export function add(req, res, next) {
     if (!req.body.products || req.body.products.length === 0) {
-        const error =  new ControllerValidationError('A transaction must contain at least one product');
+        const error =  new ValidationError('A transaction must contain at least one product');
         return next(error);
     }
     db.Transaction.create({
@@ -34,7 +34,7 @@ export function add(req, res, next) {
         res.status(201).json(transaction);
     })
     .catch(Sequelize.ValidationError, err => {
-        throw new ValidationError(err);
+        throw new ModelValidationError(err);
     })
     .catch(next);
 }
