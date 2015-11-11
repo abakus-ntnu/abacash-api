@@ -27,18 +27,18 @@ export function add(req, res, next) {
         const error =  new ValidationError('A transaction must contain at least one product');
         return next(error);
     }
+
     let _total;
     let _transaction;
+
     Bluebird.mapSeries(req.body.products, id => {
         return db.Product.findById(id)
-          .then(product => {
+        .then(product => {
             product.stock--;
             return product.save();
-          });
+        });
     })
-    .reduce((sum, product) => {
-        return product.price + sum;
-    }, 0.0)
+    .reduce((sum, product) => product.price + sum, 0)
     .then(total => {
         _total = total;
         return Bluebird.all([
