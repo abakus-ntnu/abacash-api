@@ -1,8 +1,19 @@
+import config from '../config';
+
 export default function(sequelize, DataTypes) {
     const CustomerRole = sequelize.define('customerRole', {
-        role: DataTypes.STRING,
-        internalSales: DataTypes.BOOLEAN,
-        isSeller: DataTypes.BOOLEAN
+        role: {
+            type: DataTypes.STRING,
+            defaultValue: config.defaultCustomerRole
+        },
+        internalSales: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        isSeller: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        }
     }, {
         classMethods: {
             associate(models) {
