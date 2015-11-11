@@ -2,22 +2,25 @@ import express from 'express';
 import db from '../models';
 import customer from './customer.routes';
 import system from './system.routes';
+import user from './user.routes';
 import product from './product.routes';
 import nerd from './nerd.routes';
 import customerRole from './customer-role.routes';
 import transaction from './transaction.routes';
 import authToken from './auth-token.routes';
+import systemRole from './system-role.routes';
 import * as errors from '../components/errors';
+
 // import auth from './auth.routes';
 // import product from './product.routes';
 // import transaction from './transaction.routes';
-// import user from './user.routes';
 
 const router = express.Router();
 const apiRouter = express.Router();
 
 // router.use('/auth', auth);
 router.use('/api', apiRouter);
+
 apiRouter.param('system', (req, res, next, id) => {
     db.System.findOne({
         where: { id }
@@ -31,14 +34,15 @@ apiRouter.param('system', (req, res, next, id) => {
 });
 
 apiRouter.use('/auth-tokens', authToken);
+apiRouter.use('/users', user);
 apiRouter.use('/systems', system);
 apiRouter.use('/nerd', nerd);
 apiRouter.use('/:system/customers', customer);
 apiRouter.use('/:system/roles', customerRole);
+apiRouter.use('/:system/users', systemRole);
 apiRouter.use('/:system/products', product);
 apiRouter.use('/:system/transactions', transaction);
 
-// apiRouter.use('/users', user);
 // apiRouter.use('/:system/roles', role);
 // apiRouter.use('/:system/products', product);
 // apiRouter.use('/:system/transaction', transaction);

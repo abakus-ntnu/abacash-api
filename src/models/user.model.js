@@ -5,14 +5,12 @@ export default function(sequelize, DataTypes) {
         email: {
             type: DataTypes.STRING,
             unique: true,
+            allowNull: false,
             validate: {
                 isEmail: true
             }
         },
-        role: {
-            type: DataTypes.STRING,
-            defaultValue: 'user'
-        },
+        name: DataTypes.STRING,
         hash: DataTypes.STRING,
         salt: DataTypes.STRING
     }, {

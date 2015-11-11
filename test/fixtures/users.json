@@ -1,0 +1,16 @@
+[
+  {
+    "model": "User",
+    "data": {
+      "email": "test@abakus.no",
+      "name": "Test Bruker"
+    }
+  },
+  {
+    "model": "System",
+    "data": {
+      "name": "backup@abakus.no",
+      "info": "Backup bruker"
+    }
+  }
+]
