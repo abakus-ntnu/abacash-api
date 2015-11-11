@@ -4,6 +4,7 @@ import customer from './customer.routes';
 import system from './system.routes';
 import product from './product.routes';
 import customerRole from './customer-role.routes';
+import transaction from './transaction.routes';
 import authToken from './auth-token.routes';
 import * as errors from '../components/errors';
 // import auth from './auth.routes';
