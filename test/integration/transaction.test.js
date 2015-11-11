@@ -95,5 +95,25 @@ describe('Transaction API', () => {
         .then(() => checkProductStock(2, expectedProduct2Stock));
     });
 
+    it('should properly add a transaction for an internal user', () => {
+        const transaction = {
+            sellerId: 1,
+            customerId: 2,
+            products: [1, 2, 2]
+        };
+
+        const expectedSum = 70.98;
+        const expectedBalance = 29.02;
+        const expectedProduct1Stock = 4;
+        const expectedProduct2Stock = 6;
+        
+        // add the transaction
+        return postTransaction(transaction, expectedSum)
+        .then(getTransaction)
+        .then(() => checkCustomerBalance(transaction.customerId, expectedBalance))
+        .then(() => checkProductStock(1, expectedProduct1Stock))
+        .then(() => checkProductStock(2, expectedProduct2Stock));
+
+    });
 
 });

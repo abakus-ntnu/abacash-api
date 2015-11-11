@@ -4,7 +4,7 @@ export default function(sequelize, DataTypes) {
             type: DataTypes.DECIMAL,
             defaultValue: 0.0,
             get() {
-                return Number(this.getDataValue('total'))
+                return Math.round(Number(this.getDataValue('total')) * 100) / 100.0;
             } 
         },
         customerId: {

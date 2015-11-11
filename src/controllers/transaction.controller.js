@@ -28,32 +28,40 @@ export function add(req, res, next) {
         return next(error);
     }
 
-    let _total;
     let _transaction;
+    let _customer;
+    let _total;
+    let _isInternal;
 
-    Bluebird.mapSeries(req.body.products, id => {
-        return db.Product.findById(id)
-        .then(product => {
-            product.stock--;
-            return product.save();
-        });
+    db.Customer.findById(req.body.customerId)
+    .then((customer) => {
+        _customer = customer;
+        return customer.getCustomerRole();
     })
-    .reduce((sum, product) => product.price + sum, 0)
+    .then((customerRole) => {
+        _isInternal = customerRole.internalSales; 
+        // reduce stock
+        return Bluebird.mapSeries(req.body.products, id => {
+            return db.Product.findById(id)
+            .then(product => {
+                product.stock--;
+                return product.save();
+            });
+        })
+    })
+    .reduce((sum, product) => (_isInternal ? product.internalPrice : product.price) + sum, 0)
     .then(total => {
         _total = total;
-        return Bluebird.all([
-            db.Transaction.create({
-                ...req.body,
-                systemId: req.system.id,
-                total
-            }),
-            db.Customer.findById(req.body.customerId)
-        ]);
+        return db.Transaction.create({
+            ...req.body,
+            systemId: req.system.id,
+            total
+        });
     })
-    .spread((transaction, user) => {
+    .then(transaction => {
         _transaction = transaction;
-        user.balance -= _total;
-        return user.save();
+        _customer.balance -= _total;
+        return _customer.save();
     })
     .then(() => {
         res.status(201).json(_transaction);

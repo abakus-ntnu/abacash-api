@@ -12,7 +12,7 @@ export default function(sequelize, DataTypes) {
         balance: {
             type: DataTypes.DECIMAL,
             get() {
-                return Number(this.getDataValue('balance'));
+                return Math.round(Number(this.getDataValue('balance')) * 100) / 100.0;
             }
         }
     }, {
