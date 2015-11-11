@@ -9,7 +9,12 @@ export default function(sequelize, DataTypes) {
          allowNull: false   
         },
         username: DataTypes.STRING,
-        balance: DataTypes.DECIMAL
+        balance: {
+            type: DataTypes.DECIMAL,
+            get() {
+                return Number(this.getDataValue('balance'));
+            }
+        }
     }, {
         classMethods: {
             associate(models) {

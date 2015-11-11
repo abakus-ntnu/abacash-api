@@ -1,6 +1,12 @@
 export default function(sequelize, DataTypes) {
     const Transaction = sequelize.define('transaction', {
-        total: DataTypes.DECIMAL,
+        total: {
+            type: DataTypes.DECIMAL,
+            defaultValue: 0.0,
+            get() {
+                return Number(this.getDataValue('total'))
+            } 
+        },
         customerId: {
             type: DataTypes.INTEGER,
             allowNull: false
