@@ -1,5 +1,5 @@
-export class ValidationError extends Error {
-    name = 'ValidationError'
+export class ModelValidationError extends Error {
+    name = 'ModelValidationError'
     status = 400
 
     constructor(error) {
@@ -10,6 +10,17 @@ export class ValidationError extends Error {
         };
     }
 }
+
+export class ValidationError extends Error {
+    name = 'ValidationError';
+    status = 400;
+
+    constructor(errorMessage) {
+        super(errorMessage);
+        this.message = errorMessage;
+    }
+}
+
 
 export class RequestError extends Error {
     name = 'RequestError'
@@ -29,7 +40,7 @@ export class NotFoundError extends Error {
 }
 
 export function errorMiddleware(err, req, res, next) {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
         console.log(err.stack);
     }
 
