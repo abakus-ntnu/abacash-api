@@ -61,6 +61,9 @@ export function add(req, res, next) {
     .then(transaction => {
         _transaction = transaction;
         _customer.balance -= _total;
+        if (_customer.balance < 0) {
+            throw new ValidationError('Insufficient balance');
+        }
         return _customer.save();
     })
     .then(() => {
