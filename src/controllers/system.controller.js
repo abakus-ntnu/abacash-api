@@ -22,9 +22,18 @@ export function retrieve(req, res, next) {
 
 export function create(req, res, next) {
     db.System.create(req.body)
-    .then(system => {
-        res.status(201).json(system);
-    })
+    .then(system => system.get({ plain: true }))
+    .then(system =>
+        db.CustomerRole.create({
+            ...req.body.defaultCustomerRole,
+            isDefaultRole: true,
+            systemId: system.id
+        })
+        .then(customerRole => {
+            system.defaultCustomerRole = customerRole;
+            res.status(201).json(system);
+        })
+    )
     .catch(next);
 }
 
