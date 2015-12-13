@@ -1,16 +1,20 @@
 export default function(sequelize, DataTypes) {
     const Product = sequelize.define('product', {
         type: DataTypes.STRING,
-        price: DataTypes.DECIMAL,
+        price: {
+            type: DataTypes.DECIMAL,
+            get() {
+                return Number(this.getDataValue('price'));
+            }
+        },
         internalPrice: {
             type: DataTypes.DECIMAL,
             allowNull: true,
             get() {
-                if (this.getDataValue('internalPrice') === null) {
-                    return this.getDataValue('price');
+                if (!this.getDataValue('internalPrice')) {
+                    return Number(this.getDataValue('price'));
                 }
-
-                return this.getDataValue('internalPrice');
+                return Number(this.getDataValue('internalPrice'));
             }
         },
         name: DataTypes.STRING,
@@ -24,7 +28,11 @@ export default function(sequelize, DataTypes) {
             validate: {
                 min: 0
             }
-        }
+        },
+        keepStock: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
     }, {
         classMethods: {
             associate(models) {
