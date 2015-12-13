@@ -40,7 +40,7 @@ export class NotFoundError extends Error {
 }
 
 export function errorMiddleware(err, req, res, next) {
-    if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
+    if (process.env.NODE_ENV === 'development' ) {
         console.log(err.stack);
     }
 
