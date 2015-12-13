@@ -8,6 +8,7 @@ chai.should();
 describe('Customer API', () => {
     const fixtures = [
         'systems.json',
+        'customer-roles.json',
         'customers.json'
     ];
 

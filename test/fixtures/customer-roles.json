@@ -7,5 +7,32 @@
       "isSeller": true,
       "internalSales": true
     }
+  },
+  {
+    "model": "CustomerRole",
+    "data": {
+      "systemId": 1,
+      "role": "Seller",
+      "isSeller": true,
+      "internalSales": false
+    }
+  },
+  {
+    "model": "CustomerRole",
+    "data": {
+      "systemId": 1,
+      "role": "Internal",
+      "isSeller": false,
+      "internalSales": true
+    }
+  },
+  {
+    "model": "CustomerRole",
+    "data": {
+      "systemId": 1,
+      "role": "Internal",
+      "isSeller": false,
+      "internalSales": false
+    }
   }
 ]

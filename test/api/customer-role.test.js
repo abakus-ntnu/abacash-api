@@ -22,7 +22,7 @@ describe('Customer Role API', () => {
             .end((err, res) => {
                 if (err) return done(err);
                 const roles = res.body;
-                roles.length.should.equal(1);
+                roles.length.should.equal(4);
                 roles[0].id.should.equal(1);
                 done();
             });
