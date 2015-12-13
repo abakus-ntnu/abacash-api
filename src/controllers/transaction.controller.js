@@ -1,68 +1,76 @@
-/**
- * Using Rails-like standard naming convention for endpoints.
- * GET     /things              ->  index
- * POST    /things              ->  create
- * GET     /things/:id          ->  show
- * PUT     /things/:id          ->  update
- * DELETE  /things/:id          ->  destroy
- */
+import db from '../models';
+import { NotFoundError, ModelValidationError, ValidationError} from '../components/errors';
+import Sequelize from 'sequelize';
+import Bluebird from 'bluebird';
 
-'use strict';
+export function list(req, res, next) {
+    req.system.getTransactions()
+    .then(res.json.bind(res))
+    .catch(next);
+}
 
-import _ from 'lodash';
-import Thing from './transaction.model';
+export function retrieve(req, res, next) {
+    db.Transaction.findOne({ where: {
+        id: req.params.transactionId,
+        systemId: req.system.id
+    }})
+    .then(transaction => {
+        if (!transaction) throw new NotFoundError();
+        res.json(transaction);
+    })
+    .catch(next);
+    
+}
 
-// Get list of things
-exports.index = function(req, res) {
-  Thing.find(function (err, things) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, things);
-  });
-};
+export function add(req, res, next) {
+    if (!req.body.products || req.body.products.length === 0) {
+        const error =  new ValidationError('A transaction must contain at least one product');
+        return next(error);
+    }
 
-// Get a single thing
-exports.show = function(req, res) {
-  Thing.findById(req.params.id, function (err, thing) {
-    if(err) { return handleError(res, err); }
-    if(!thing) { return res.send(404); }
-    return res.json(thing);
-  });
-};
+    let _transaction;
+    let _customer;
+    let _total;
+    let _isInternal;
 
-// Creates a new thing in the DB.
-exports.create = function(req, res) {
-  Thing.create(req.body, function(err, thing) {
-    if(err) { return handleError(res, err); }
-    return res.json(201, thing);
-  });
-};
-
-// Updates an existing thing in the DB.
-exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
-  Thing.findById(req.params.id, function (err, thing) {
-    if (err) { return handleError(res, err); }
-    if(!thing) { return res.send(404); }
-    var updated = _.merge(thing, req.body);
-    updated.save(function (err) {
-      if (err) { return handleError(res, err); }
-      return res.json(200, thing);
-    });
-  });
-};
-
-// Deletes a thing from the DB.
-exports.destroy = function(req, res) {
-  Thing.findById(req.params.id, function (err, thing) {
-    if(err) { return handleError(res, err); }
-    if(!thing) { return res.send(404); }
-    thing.remove(function(err) {
-      if(err) { return handleError(res, err); }
-      return res.send(204);
-    });
-  });
-};
-
-function handleError(res, err) {
-  return res.send(500, err);
+    db.Customer.findById(req.body.customerId)
+    .then((customer) => {
+        _customer = customer;
+        return customer.getCustomerRole();
+    })
+    .then((customerRole) => {
+        _isInternal = customerRole.internalSales; 
+        // reduce stock
+        return Bluebird.mapSeries(req.body.products, id => {
+            return db.Product.findById(id)
+            .then(product => {
+                product.stock--;
+                return product.save();
+            });
+        })
+    })
+    .reduce((sum, product) => (_isInternal ? product.internalPrice : product.price) + sum, 0)
+    .then(total => {
+        _total = total;
+        return db.Transaction.create({
+            ...req.body,
+            systemId: req.system.id,
+            total
+        });
+    })
+    .then(transaction => {
+        _transaction = transaction;
+        _customer.balance -= _total;
+        if (_customer.balance < 0) {
+            throw new ValidationError('Insufficient balance');
+        }
+        return _customer.save();
+    })
+    .then(() => {
+        res.status(201).json(_transaction);
+    })
+    .catch(Sequelize.ValidationError, err => {
+        throw new ModelValidationError(err);
+    })
+    .catch(next);
 }

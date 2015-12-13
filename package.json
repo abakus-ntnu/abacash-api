@@ -5,12 +5,14 @@
     "watch": "nodemon --exec npm start",
     "start": "babel-node src/index.js",
     "test": "NODE_ENV=test PG_URL='postgres://localhost/abacash-test' mocha --compilers js:babel/register $(find test -name '*.test.js')",
+    "test-transaction": "NODE_ENV=test PG_URL='postgres://localhost/abacash-test' mocha --compilers js:babel/register $(find test/integration -name transaction.test.js)",
+    "test-watch": "nodemon --exec npm test",
     "lint": "eslint --ignore-path .gitignore ."
   },
   "dependencies": {
     "async": "*",
     "babel": "~5.8.23",
-    "bluebird": "~2.9.34",
+    "bluebird": "~3.0.5",
     "body-parser": "~1.5.0",
     "composable-middleware": "^0.3.0",
     "compression": "~1.0.1",

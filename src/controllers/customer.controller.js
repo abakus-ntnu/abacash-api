@@ -1,5 +1,5 @@
 import db from '../models';
-import { NotFoundError, ValidationError } from '../components/errors';
+import { NotFoundError, ModelValidationError } from '../components/errors';
 import Sequelize from 'sequelize';
 import _ from 'lodash';
 
@@ -30,7 +30,7 @@ export function create(req, res, next) {
         res.status(201).json(customer);
     })
     .catch(Sequelize.ValidationError, err => {
-        throw new ValidationError(err);
+        throw new ModelValidationError(err);
     })
     .catch(next);
 }

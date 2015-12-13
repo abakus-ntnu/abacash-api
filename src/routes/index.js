@@ -5,6 +5,7 @@ import system from './system.routes';
 import product from './product.routes';
 import customerRole from './customer-role.routes';
 import authToken from './auth-token.routes';
+import transaction from './transaction.routes';
 import * as errors from '../components/errors';
 // import auth from './auth.routes';
 // import product from './product.routes';
@@ -33,6 +34,7 @@ apiRouter.use('/systems', system);
 apiRouter.use('/:system/customers', customer);
 apiRouter.use('/:system/roles', customerRole);
 apiRouter.use('/:system/products', product);
+apiRouter.use('/:system/transactions', transaction);
 
 // apiRouter.use('/users', user);
 // apiRouter.use('/:system/roles', role);
