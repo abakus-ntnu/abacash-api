@@ -4,9 +4,8 @@
   "scripts": {
     "watch": "nodemon --exec npm start",
     "start": "babel-node src/index.js",
-    "test": "NODE_ENV=test PG_URL='postgres://localhost/abacash-test' mocha --compilers js:babel/register $(find test -name '*.test.js')",
-    "test-transaction": "NODE_ENV=test PG_URL='postgres://localhost/abacash-test' mocha --compilers js:babel/register $(find test/integration -name transaction.test.js)",
-    "test-watch": "nodemon --exec npm test",
+    "test": "PG_URL=${PG_URL:-'postgres://localhost/abacash-test'} NODE_ENV=test mocha --compilers js:babel/register $(find test -name '*.test.js')",
+    "test-watch": "nodemon --exec npm test-dev",
     "lint": "eslint --ignore-path .gitignore ."
   },
   "dependencies": {
