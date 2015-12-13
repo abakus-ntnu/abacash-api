@@ -1,20 +1,19 @@
-import passportLocalSequelize from 'passport-local-sequelize';
+import Bluebird from 'bluebird';
+import bcrypt from 'bcrypt';
+Bluebird.promisifyAll(bcrypt);
 
 export default function(sequelize, DataTypes) {
     const User = sequelize.define('user', {
         email: {
             type: DataTypes.STRING,
             unique: true,
+            allowNull: false,
             validate: {
                 isEmail: true
             }
         },
-        role: {
-            type: DataTypes.STRING,
-            defaultValue: 'user'
-        },
-        hash: DataTypes.STRING,
-        salt: DataTypes.STRING
+        name: DataTypes.STRING,
+        hash: DataTypes.STRING
     }, {
         classMethods: {
             associate(models) {
@@ -22,12 +21,21 @@ export default function(sequelize, DataTypes) {
                     through: models.SystemRole,
                     foreignKey: 'userId'
                 });
+            },
+            register(body, password) {
+                return bcrypt.genSaltAsync()
+                .then(salt => bcrypt.hashAsync(password, salt))
+                .then(hash => User.create({
+                    ...body,
+                    hash
+                }));
+            }
+        },
+        instanceMethods: {
+            authenticate(password) {
+                return bcrypt.compareAsync(password, this.hash);
             }
         }
-    });
-
-    passportLocalSequelize.attachToUser(User, {
-        usernameField: 'email'
     });
 
     return User;

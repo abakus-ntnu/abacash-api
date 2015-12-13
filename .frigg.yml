@@ -3,8 +3,8 @@ setup_tasks:
   - npm install
 
 tasks:
-  - npm test 
+  - PG_URL='postgres://frigg@localhost/abacash-test' npm test
   - npm run lint
 
-services: 
+services:
   - postgresql

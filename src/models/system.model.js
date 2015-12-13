@@ -5,7 +5,8 @@ export default function(sequelize, DataTypes) {
         info: DataTypes.STRING,
         status: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: false,
+            allowNull: false
         },
         email: {
             type: DataTypes.STRING,
@@ -18,15 +19,18 @@ export default function(sequelize, DataTypes) {
         },
         needSeller: {
             type: DataTypes.BOOLEAN,
-            defaultValue: true
+            defaultValue: true,
+            allowNull: false
         },
         internalSales: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: false,
+            allowNull: false
         },
         allowCredit: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: false,
+            allowNull: false
         }
     }, {
         classMethods: {

@@ -4,15 +4,15 @@
   "scripts": {
     "watch": "nodemon --exec npm start",
     "start": "babel-node src/index.js",
-    "test": "NODE_ENV=test PG_URL='postgres://localhost/abacash-test' mocha --compilers js:babel/register $(find test -name '*.test.js')",
-    "test-transaction": "NODE_ENV=test PG_URL='postgres://localhost/abacash-test' mocha --compilers js:babel/register $(find test/integration -name transaction.test.js)",
-    "test-watch": "nodemon --exec npm test",
+    "test": "PG_URL=${PG_URL:-'postgres://localhost/abacash-test'} NODE_ENV=test mocha --compilers js:babel/register $(find test -name '*.test.js')",
+    "test-watch": "nodemon --exec npm test-dev",
     "lint": "eslint --ignore-path .gitignore ."
   },
   "dependencies": {
     "async": "*",
     "babel": "~5.8.23",
     "bluebird": "~3.0.5",
+    "bcrypt": "^0.8.5",
     "body-parser": "~1.5.0",
     "composable-middleware": "^0.3.0",
     "compression": "~1.0.1",
@@ -30,24 +30,23 @@
     "morgan": "~1.0.0",
     "nodemailer": "0.7",
     "nodemailer-ses-transport": "*",
-    "passport": "~0.2.0",
-    "passport-local": "~0.1.6",
-    "passport-local-sequelize": "0.6.0",
-    "pg": "^4.4.2",
-    "pg-hstore": "^2.3.2",
-    "request": "^2.65.0",
-    "sequelize": "^3.12.0",
+    "passport": "0.2.0",
+    "passport-local": "0.1.6",
+    "pg": "4.4.2",
+    "pg-hstore": "2.3.2",
+    "sequelize": "3.12.0",
     "serve-favicon": "~2.0.1"
   },
   "devDependencies": {
-    "babel-eslint": "4.1.3",
-    "chai": "^3.4.0",
-    "eslint": "1.6.0",
-    "eslint-config-airbnb": "0.1.0",
-    "eslint-config-webkom": "0.3.1",
-    "mocha": "^2.3.3",
+    "babel-eslint": "~4.1.3",
+    "chai": "~3.4.0",
+    "chai-as-promised": "~5.1.0",
+    "eslint": "~1.6.0",
+    "eslint-config-airbnb": "~0.1.0",
+    "eslint-config-webkom": "~0.3.1",
+    "mocha": "~2.3.3",
     "sequelize-fixtures": "0.4.8",
-    "supertest": "1.1.0"
+    "supertest": "~1.1.0"
   },
   "private": true
 }
