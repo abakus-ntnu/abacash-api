@@ -10,6 +10,7 @@ describe('Transaction API', () => {
     const fixtures = [
         'systems.json',
         'customers.json',
+        'customer-role.json',
         'products.json',
         'transactions.json',
     ];
