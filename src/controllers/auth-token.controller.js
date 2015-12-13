@@ -1,5 +1,5 @@
 import db from '../models';
-import { NotFoundError, ValidationError } from '../components/errors';
+import { NotFoundError, ModelValidationError } from '../components/errors';
 import Sequelize from 'sequelize';
 
 export function list(req, res, next) {
@@ -12,7 +12,7 @@ export function create(req, res, next) {
     db.AuthToken.generate(req.body)
     .then(token => res.status(201).json(token))
     .catch(Sequelize.ValidationError, err => {
-        throw new ValidationError(err);
+        throw new ModelValidationError(err);
     })
     .catch(next);
 }

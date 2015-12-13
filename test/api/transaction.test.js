@@ -11,6 +11,7 @@ describe('Transaction API', () => {
         'systems.json',
         'customer-roles.json',
         'customers.json',
+        'customer-role.json',
         'products.json',
         'transactions.json',
     ];
@@ -42,10 +43,6 @@ describe('Transaction API', () => {
                 done();
             });
         });
-        
-    });
-
-    describe('Retrieve one transaction', () => {
 
         beforeEach(() => loadFixtures(fixtures));
 
@@ -64,8 +61,8 @@ describe('Transaction API', () => {
         it('should return 404 for missing transaction', done => {
             test404('/api/1/transactions/1337', done);
         });
-
     });
+
 
     describe('Add a new transaction ', () => {
 

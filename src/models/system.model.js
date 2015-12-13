@@ -11,6 +11,11 @@ export default function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             lowercase: true
         },
+        productTypes: {
+            type: DataTypes.ARRAY(DataTypes.STRING),
+            defaultValue: ['Innskudd'],
+            lowercase: true
+        },
         needSeller: {
             type: DataTypes.BOOLEAN,
             defaultValue: true

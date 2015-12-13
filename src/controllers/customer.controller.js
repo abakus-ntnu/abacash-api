@@ -4,16 +4,25 @@ import Sequelize from 'sequelize';
 import _ from 'lodash';
 
 export function list(req, res, next) {
-    req.system.getCustomers()
+    req.system.getCustomers({ include: [ db.CustomerRole ] })
     .then(res.json.bind(res))
     .catch(next);
 }
 
 export function retrieve(req, res, next) {
-    db.Customer.findOne({ where: {
-        id: req.params.customerId,
-        systemId: req.system.id
-    }})
+
+    let { lookupParam } = req.query;
+    if (['rfid', 'id'].indexOf(lookupParam) === -1) {
+        lookupParam = 'id';
+    }
+
+    db.Customer.findOne({
+        where: {
+            [lookupParam]: req.params.lookup,
+            systemId: req.system.id
+        },
+        include: [ db.CustomerRole ]
+    })
     .then(customer => {
         if (!customer) throw new NotFoundError();
         res.json(customer);

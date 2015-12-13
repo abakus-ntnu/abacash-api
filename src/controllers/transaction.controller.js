@@ -3,6 +3,7 @@ import { NotFoundError, ModelValidationError, ValidationError} from '../componen
 import Sequelize from 'sequelize';
 import Bluebird from 'bluebird';
 
+
 export function list(req, res, next) {
     req.system.getTransactions()
     .then(res.json.bind(res))
@@ -19,7 +20,7 @@ export function retrieve(req, res, next) {
         res.json(transaction);
     })
     .catch(next);
-    
+
 }
 
 export function add(req, res, next) {
@@ -39,7 +40,7 @@ export function add(req, res, next) {
         return customer.getCustomerRole();
     })
     .then((customerRole) => {
-        _isInternal = customerRole.internalSales; 
+        _isInternal = customerRole.internalSales;
         // reduce stock
         return Bluebird.mapSeries(req.body.products, id => {
             return db.Product.findById(id)
