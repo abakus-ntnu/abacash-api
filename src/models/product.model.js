@@ -11,10 +11,9 @@ export default function(sequelize, DataTypes) {
             type: DataTypes.DECIMAL,
             allowNull: true,
             get() {
-                if (this.getDataValue('internalPrice') === null) {
+                if (!this.getDataValue('internalPrice')) {
                     return Number(this.getDataValue('price'));
                 }
-
                 return Number(this.getDataValue('internalPrice'));
             }
         },

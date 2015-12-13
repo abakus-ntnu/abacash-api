@@ -6,12 +6,14 @@ import { loadFixtures, test404 } from '../helpers';
 chai.should();
 
 describe('Transaction API', () => {
+
     const fixtures = [
         'systems.json',
         'customers.json',
         'products.json',
         'transactions.json',
     ];
+
     describe('List transactions', () => {
 
         beforeEach(() => loadFixtures(fixtures));
@@ -39,9 +41,11 @@ describe('Transaction API', () => {
                 done();
             });
         });
+        
     });
 
     describe('Retrieve one transaction', () => {
+
         beforeEach(() => loadFixtures(fixtures));
 
         it('should retrieve a transaction', done => {
@@ -59,9 +63,11 @@ describe('Transaction API', () => {
         it('should return 404 for missing transaction', done => {
             test404('/api/1/transactions/1337', done);
         });
+
     });
 
     describe('Add a new transaction ', () => {
+
         beforeEach(() => loadFixtures(fixtures));
 
         it('should add a new transaction', done => {
@@ -117,6 +123,7 @@ describe('Transaction API', () => {
                 done();
             });
         });
+
         it('should return a validation error when missing products', done => {
             const newTransaction = {
                 customerId: 1,
@@ -134,6 +141,7 @@ describe('Transaction API', () => {
                 done();
             });
         });
+
         it('should return a validation error when empty product list', done => {
             const newTransaction = {
                 customerId: 1,
