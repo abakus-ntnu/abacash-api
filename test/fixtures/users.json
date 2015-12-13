@@ -7,10 +7,10 @@
     }
   },
   {
-    "model": "System",
+    "model": "User",
     "data": {
-      "name": "backup@abakus.no",
-      "info": "Backup bruker"
+      "email": "backup@abakus.no",
+      "name": "Backup bruker"
     }
   }
 ]

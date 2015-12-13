@@ -1,115 +1,114 @@
 import chai from 'chai';
 import request from 'supertest';
 import app from '../../src/app';
-import systemFixtures from '../fixtures/users.json';
 import { loadFixtures } from '../helpers';
 
-chai.should();
+const should = chai.should();
 
 describe('Users API', () => {
     const fixtures = [
-        'users.json'
+        'users.json',
+        'systems.json'
     ];
 
-    describe('List systems', () => {
-        beforeEach(() => loadFixtures(fixtures));
+    beforeEach(() => loadFixtures(fixtures));
 
-        it('should list systems', done => {
+    describe('List', () => {
+        it('should list users', done => {
             request(app)
-            .get('/api/systems')
+            .get('/api/users')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
                 if (err) return done(err);
-                const systems = res.body;
-                systems.length.should.equal(systemFixtures.length);
-                systems[0].id.should.equal(1);
+                const users = res.body;
+                users.length.should.equal(2);
+                should.exist(users[0].id);
+                should.not.exist(users[0].hash);
                 done();
             });
         });
     });
 
-    describe('Retrieve a system', () => {
-        beforeEach(() => loadFixtures(fixtures));
-
-        it('should retrieve a system', done => {
+    describe('Retrieve', () => {
+        it('should retrieve a user', done => {
             request(app)
-            .get('/api/systems/1')
+            .get('/api/users/1')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
                 if (err) return done(err);
-                const system = res.body;
-                system.id.should.equal(1);
+                const user = res.body;
+                user.name.should.equal('Test Bruker');
+                should.not.exist(user.hash);
                 done();
             });
         });
     });
 
-    describe('Create a system', () => {
-        beforeEach(() => loadFixtures(fixtures));
-
-        it('should create a system', done => {
+    describe('Create', () => {
+        it('should create a user', done => {
             const payload = {
-                displayName: 'testuser123',
-                name: 'test user 123',
-                info: 'info',
-                status: false,
-                email: 'hei@hei.com'
+                email: 'test@test.com',
+                name: 'testuser',
+                password: 'testpassword'
             };
 
             request(app)
-            .post('/api/systems')
+            .post('/api/users')
             .send(payload)
             .expect('Content-Type', /json/)
             .expect(201)
             .end((err, res) => {
                 if (err) return done(err);
-                const system = res.body;
-                system.id.should.equal(3);
+                const user = res.body;
+                user.name.should.equal(payload.name);
+                should.not.exist(user.hash);
+                done();
+            });
+        });
+
+        it('should create a user and add a system to it', done => {
+            const payload = {
+                email: 'test@test.com',
+                name: 'testuser',
+                password: 'testpassword',
+                systemId: 1
+            };
+
+            request(app)
+            .post('/api/users')
+            .send(payload)
+            .expect('Content-Type', /json/)
+            .expect(201)
+            .end((err, res) => {
+                if (err) return done(err);
+                const user = res.body;
+                user.name.should.equal(payload.name);
+                user.role.should.equal('USER');
                 done();
             });
         });
     });
 
-    describe('Update a system', () => {
-        beforeEach(() => loadFixtures(fixtures));
-
-        it('should update a system', done => {
+    describe('Update', () => {
+        it('should create a user', done => {
             const payload = {
-                displayName: 'testuser123',
-                status: true
+                email: 'test@test.com',
+                name: 'testuser',
+                password: 'testpassword'
             };
 
             request(app)
-            .put('/api/systems/1')
+            .post('/api/users')
             .send(payload)
             .expect('Content-Type', /json/)
-            .expect(200)
+            .expect(201)
             .end((err, res) => {
                 if (err) return done(err);
-                const system = res.body;
-                system.displayName.should.equal(payload.displayName);
-                system.status.should.equal(payload.status);
-                done();
-            });
-        });
-
-        it('should return 404 when updating not found systems', done => {
-            const payload = {
-                displayName: 'testuser123',
-                status: true
-            };
-
-            request(app)
-            .put('/api/systems/1337')
-            .send(payload)
-            .expect('Content-Type', /json/)
-            .expect(404)
-            .end((err, res) => {
-                if (err) return done(err);
-                const error = res.body;
-                error.message.should.equal('Could not find the entity');
+                const user = res.body;
+                user.name.should.equal(payload.name);
+                should.not.exist(user.hash);
                 done();
             });
         });
