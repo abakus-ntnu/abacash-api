@@ -5,6 +5,7 @@ import { loadFixtures } from '../test/helpers';
 
 const fixtures = [
     'systems.json',
+    'customer-roles.json',
     'customers.json'
 ];
 
