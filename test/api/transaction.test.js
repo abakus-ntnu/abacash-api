@@ -11,7 +11,6 @@ describe('Transaction API', () => {
         'systems.json',
         'customer-roles.json',
         'customers.json',
-        'customer-role.json',
         'products.json',
         'transactions.json',
     ];
