@@ -12,3 +12,10 @@ $ npm start
 ```bash
 $ npm test
 ```
+
+To run a test a subset of the tests:
+```bash
+$ npm test -- -g *pattern*
+```
+Here, *pattern* is a regex for the test descriptions.
+
