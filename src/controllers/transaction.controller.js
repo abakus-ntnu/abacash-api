@@ -1,9 +1,7 @@
 import db from '../models';
-
 import { NotFoundError, ModelValidationError, ValidationError, RequestError} from '../components/errors';
 import Sequelize from 'sequelize';
 import Bluebird from 'bluebird';
-
 
 export function list(req, res, next) {
     req.system.getTransactions()
@@ -36,15 +34,14 @@ export function add(req, res, next) {
 
         // transaction must contain products
         if (!req.body.products || req.body.products.length === 0) {
-            const error =  new ValidationError('A transaction must contain at least one product');
-            return next(error);
+            throw new ValidationError('A transaction must contain at least one product');
         }
 
         // find and store customer
         return db.Customer.findById(req.body.customerId, { transaction: t })
         .then((customer) => {
             if (!customer) {
-                return next(new ValidationError('Customer for transaction not found'));
+                throw new ValidationError('Customer for transaction not found');
             }
             _customer = customer;
             return customer.getCustomerRole({ transaction: t });
