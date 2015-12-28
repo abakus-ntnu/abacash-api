@@ -5,9 +5,10 @@ import app from '../../src/app';
 import db from '../../src/models';
 import { loadFixtures } from '../helpers';
 
-chai.should();
+const should = chai.should();
 
-function postTransaction(transaction, expectedSum) {
+// posts a transaction that should work and check if sum is calculated correctly
+function postTransactionAndCheckSum(transaction, expectedSum) {
     return new Bluebird((resolve, reject) => {
         request(app)
         .post('/api/1/transactions/')
@@ -15,50 +16,51 @@ function postTransaction(transaction, expectedSum) {
         .expect(201)
         .end((err, res) => {
               if (err) return reject(err);
-              // check sum
               res.body.total.should.equal(expectedSum);
               resolve(res.body.id);
         });
     });
 }
 
-function postTransactionInsufficientBalance(transaction) {
-    return new Bluebird((resolve, reject) => {
-        request(app)
-        .post('/api/1/transactions/')
-        .send(transaction)
-         .expect(400)
-         .end((err, res) => {
-               if (err) return reject(err);
-               resolve();
-         });
-    });
-}
-
-function getTransaction(transactionId) {
-    // check if the transaction can be fetched 
+// see if transaction is added and can be fetched from the API
+function checkIfTransactionExists(transactionId) {
     return new Bluebird((resolve, reject) => {
         request(app)
         .get('/api/1/transactions/' + transactionId)
         .expect(200)
         .end((err, res) => {
-              if (err) return reject(err);
-              // transaction exists
-              res.body.id.should.equal(transactionId); 
-              resolve();
+            if (err) return reject(err);
+            res.body.id.should.equal(transactionId); 
+            resolve();
         });
     });
 }
 
-function getTransactionInsufficientBalance(transactionId) {
+// posts a transaction where the user has insufficient balance
+function postTransactionInsufficientBalance(transaction) {
+    return new Bluebird((resolve, reject) => {
+        request(app)
+        .post('/api/1/transactions/')
+        .send(transaction)
+        .expect(400) // 400 status code on insufficient balance
+        .end((err, res) => {
+            if (err) return reject(err);
+            resolve();
+         });
+    });
+}
+
+
+function checkIfNoTransactionsAreAdded(transactionId) {
     // check if the transaction can be fetched 
     return new Bluebird((resolve, reject) => {
         request(app)
-        .get('/api/1/transactions/' + transactionId)
-        .expect(404)
+        .get('/api/1/transactions/')
+        .expect(200)
         .end((err, res) => {
-              if (err) return reject(err);
-              resolve();
+            if (err) return reject(err);
+            res.body.length.should.equal(0);
+            resolve();
         });
     });
 }
@@ -83,14 +85,13 @@ function checkProductStock(productId, expectedStock) {
         .get('/api/1/products/' + productId)
         .expect(200)
         .end((err, res) => {
-              if (err) return reject(err);
-              res.body.stock.should.equal(expectedStock);
+              should.equal(expectedStock, res.body.stock);
               resolve();
         });
     });
 }
 
-describe('Transaction API', () => {
+describe('Transaction API Integration', () => {
     
     const fixtures = [
         'systems.json',
@@ -107,8 +108,8 @@ describe('Transaction API', () => {
             products: [1, 2, 2]
         };
         
-        return postTransaction(transaction, 90.0)
-        .then(getTransaction)
+        return postTransactionAndCheckSum(transaction, 90.0)
+        .then(checkIfTransactionExists)
         .then(() => checkCustomerBalance(transaction.customerId, 59.5))
         .then(() => checkProductStock(1, 4))
         .then(() => checkProductStock(2, 6));
@@ -123,15 +124,15 @@ describe('Transaction API', () => {
             products: [1, 2, 2]
         };
 
-        return postTransaction(transaction, 70.98)
-        .then(getTransaction)
+        return postTransactionAndCheckSum(transaction, 70.98)
+        .then(checkIfTransactionExists)
         .then(() => checkCustomerBalance(transaction.customerId, 29.02))
         .then(() => checkProductStock(1, 4))
         .then(() => checkProductStock(2, 6));
 
     });
 
-    xit('should not add a transaction if the customer does not have enough money', () => {
+    it('should not add a transaction if the customer does not have enough money', () => {
 
         const transaction = {
             sellerId: 1,
@@ -141,13 +142,35 @@ describe('Transaction API', () => {
 
         // add the transaction
         return postTransactionInsufficientBalance(transaction)
-        .then(getTransactionInsufficientBalance);
-        /*
-        .then((transactionId) => getTransaction(transactionId, true));
-        .then(() => checkCustomerBalance(transaction.customerId, expectedBalance))
-        .then(() => checkProductStock(1, expectedProduct1Stock))
-        .then(() => checkProductStock(2, expectedProduct2Stock));
-        */
+        .then(checkIfNoTransactionsAreAdded)
+        .then(() => checkCustomerBalance(transaction.customerId, 149.5))
+        .then(() => checkProductStock(1, 5))
+        .then(() => checkProductStock(2, 8));
+    });
+
+    it('should not decrease stock if keepStock is false', () => {
+
+        const transaction = {
+            sellerId: 1,
+            customerId: 3,
+            products: [3]
+        };
+        
+        return postTransactionAndCheckSum(transaction, 10.0)
+        .then(() => checkProductStock(3, 8));
+
+    });
+
+    it('should handle situations where stock is null', () => {
+
+        const transaction = {
+            sellerId: 1,
+            customerId: 3,
+            products: [4]
+        };
+        
+        return postTransactionAndCheckSum(transaction, 10.0)
+        .then(() => checkProductStock(4, null));
 
     });
 

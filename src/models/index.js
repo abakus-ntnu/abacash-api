@@ -1,11 +1,17 @@
+import cls from 'continuation-local-storage';
 import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
 import config from '../config';
 
+const namespace = cls.createNamespace('abacash-api');
 const logging = config.nodeEnv === 'development' ? console.log : false;
-const sequelize = new Sequelize(config.pgUrl, { logging });
 const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
+
+// create sequelize instance with continuation local storage
+Sequelize.cls = namespace;
+const sequelize = new Sequelize(config.pgUrl, { logging });
+
 
 const db = fs
     .readdirSync(__dirname)
@@ -27,6 +33,7 @@ Object.keys(db).forEach(modelName => {
 });
 
 const total = {
+    namespace,
     sequelize,
     Sequelize,
     ...db

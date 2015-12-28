@@ -26,6 +26,32 @@
     }
   },
   {
+    "model": "Product",
+    "data": {
+      "name": "Product 3",
+      "type": "Foo",
+      "price": 10.0,
+      "internalPrice": 10.0,
+      "active": true,
+      "stock": 8,
+      "keepStock": false,
+      "systemId": 1
+    }
+  },
+  {
+    "model": "Product",
+    "data": {
+      "name": "Product 4",
+      "type": "Foo",
+      "price": 10.0,
+      "internalPrice": 10.0,
+      "active": true,
+      "stock": null,
+      "keepStock": false,
+      "systemId": 1
+    }
+  },
+  {
     "model": "CustomerRole",
     "data": {
       "role": "Seller",

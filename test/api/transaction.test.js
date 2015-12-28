@@ -11,7 +11,6 @@ describe('Transaction API', () => {
         'systems.json',
         'customer-roles.json',
         'customers.json',
-        'customer-role.json',
         'products.json',
         'transactions.json',
     ];
@@ -86,7 +85,7 @@ describe('Transaction API', () => {
             });
         });
 
-        xit('should return a validation error for customerId', done => {
+        it('should return a validation error for customerId', done => {
             const newTransaction = {
                 sellerId: 1,
                 products: [1]
@@ -98,8 +97,7 @@ describe('Transaction API', () => {
             .expect(400)
             .end((err, res) => {
                 if (err) return done(err);
-                res.body.message.should.equal('notNull Violation: customerId cannot be null');
-                res.body.errors.length.should.equal(1);
+                res.body.message.should.equal('Customer for transaction not found');
                 done();
             });
         });
