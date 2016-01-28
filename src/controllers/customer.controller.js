@@ -12,7 +12,8 @@ export function list(req, res, next) {
 export function retrieve(req, res, next) {
 
     let { lookupParam } = req.query;
-    if (['rfid', 'id'].indexOf(lookupParam) === -1) {
+
+    if (['rfid', 'id', 'username'].indexOf(lookupParam) === -1) {
         lookupParam = 'id';
     }
 
@@ -36,7 +37,6 @@ export function create(req, res, next) {
         systemId: req.system.id
     })
     .then(customer => {
-        console.log(customer);
         res.status(201).json(customer);
     })
     .catch(Sequelize.ValidationError, err => {

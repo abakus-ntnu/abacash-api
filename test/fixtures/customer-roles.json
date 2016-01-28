@@ -31,8 +31,8 @@
     "data": {
       "systemId": 2,
       "role": "Internal",
-      "isSeller": false,
-      "internalSales": false
+      "isSeller": true,
+      "internalSales": true
     }
   }
 ]
