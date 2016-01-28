@@ -24,10 +24,7 @@ export default function(sequelize, DataTypes) {
         },
         stock: {
             type: DataTypes.INTEGER,
-            defaultValue: 0,
-            validate: {
-                min: 0
-            }
+            defaultValue: 0
         },
         keepStock: {
             type: DataTypes.BOOLEAN,
