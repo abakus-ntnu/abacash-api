@@ -8,7 +8,7 @@
       "name": "Test product 1",
       "active": true,
       "stock": 5,
-      "systemId": 2
+      "systemId": 1
     }
   },
   {
@@ -20,7 +20,7 @@
       "name": "Test product 2",
       "active": true,
       "stock": 10,
-      "systemId": 2
+      "systemId": 1
     }
   },
   {
@@ -32,7 +32,7 @@
       "name": "Innskudd 200",
       "active": true,
       "stock": 0,
-      "systemId": 2
+      "systemId": 1
     }
   },
   {

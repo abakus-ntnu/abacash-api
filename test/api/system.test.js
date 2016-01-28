@@ -72,12 +72,14 @@ describe('System API', () => {
         });
     });
 
+
     describe('Update a system', () => {
         beforeEach(() => loadFixtures(fixtures));
 
         it('should update a system', done => {
+
             const payload = {
-                displayName: 'testuser123',
+                info: 'testinfo',
                 status: true
             };
 
@@ -89,7 +91,7 @@ describe('System API', () => {
             .end((err, res) => {
                 if (err) return done(err);
                 const system = res.body;
-                system.displayName.should.equal(payload.displayName);
+                system.info.should.equal(payload.info);
                 system.status.should.equal(payload.status);
                 done();
             });

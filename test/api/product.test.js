@@ -38,7 +38,7 @@ describe('Product API', () => {
             .end((err, res) => {
                 if (err) return done(err);
                 const products = res.body;
-                products.length.should.equal(1);
+                products.length.should.equal(2);
                 products[0].id.should.equal(4);
                 done();
             });
@@ -58,7 +58,7 @@ describe('Product API', () => {
             .end((err, res) => {
                 if (err) return done(err);
                 const products = res.body;
-                products.length.should.equal(2);
+                products.length.should.equal(3);
                 done();
             });
         });
@@ -128,20 +128,6 @@ describe('Product API', () => {
                 stock: 0
             })
             .expect(201, done);
-        });
-
-        it('should create not create a product with negative stock', done => {
-            request(app)
-            .post('/api/1/products')
-            .send({
-                type: 'Created Type',
-                price: 1337.99,
-                internalPrice: 1337.00,
-                name: 'Created Product',
-                active: true,
-                stock: -500
-            })
-            .expect(400, done);
         });
 
     });
