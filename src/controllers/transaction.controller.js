@@ -28,6 +28,7 @@ export function add(req, res, next) {
     let _customer;
     let _total;
     let _isInternal;
+    
 
     // start database transaction
     db.sequelize.transaction(t => {
@@ -35,6 +36,12 @@ export function add(req, res, next) {
         // transaction must contain products
         if (!req.body.products || req.body.products.length === 0) {
             throw new ValidationError('A transaction must contain at least one product');
+        }
+
+        // check that seller is included if system needs seller
+        if (req.system.needSeller && !req.body.sellerId) {
+            const error =  new ValidationError('A transaction for this system requires a seller');
+            return next(error);
         }
 
         // find and store customer

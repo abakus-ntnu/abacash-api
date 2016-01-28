@@ -13,7 +13,7 @@
   {
     "model": "Customer",
     "data": {
-      "rfid": "4321",
+      "rfid": "cb:51:34:49",
       "displayName": "test customer 2",
       "username": "testcustomer2",
       "balance": 100,
@@ -29,7 +29,7 @@
       "username": "testcustomer3",
       "balance": 200.00,
       "systemId": 2,
-      "customerRoleId": 3
+      "customerRoleId": 4
     }
   }
 ]

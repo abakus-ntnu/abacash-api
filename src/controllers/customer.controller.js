@@ -12,7 +12,8 @@ export function list(req, res, next) {
 export function retrieve(req, res, next) {
 
     let { lookupParam } = req.query;
-    if (['rfid', 'id'].indexOf(lookupParam) === -1) {
+
+    if (['rfid', 'id', 'username'].indexOf(lookupParam) === -1) {
         lookupParam = 'id';
     }
 

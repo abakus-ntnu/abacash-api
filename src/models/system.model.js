@@ -1,6 +1,5 @@
 export default function(sequelize, DataTypes) {
     const System = sequelize.define('system', {
-        displayName: DataTypes.STRING,
         name: DataTypes.STRING,
         info: DataTypes.STRING,
         status: {
@@ -22,6 +21,11 @@ export default function(sequelize, DataTypes) {
             defaultValue: true,
             allowNull: false
         },
+        allowExternalCustomers: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+            allowNull: false
+        },
         internalSales: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
@@ -40,6 +44,10 @@ export default function(sequelize, DataTypes) {
                 System.hasMany(models.AuthToken);
                 System.hasMany(models.Product);
                 System.hasMany(models.Transaction);
+                System.belongsTo(models.CustomerRole, {
+                    constraints: false,
+                    as: 'defaultCustomerRole'
+                });
                 System.belongsToMany(models.User, {
                     through: models.SystemRole,
                     foreignKey: 'systemId'

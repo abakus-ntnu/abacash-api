@@ -13,6 +13,10 @@ export default function(sequelize, DataTypes) {
         isSeller: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
+        },
+        isDefaultRole: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
         }
     }, {
         classMethods: {

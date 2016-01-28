@@ -11,6 +11,7 @@ describe('Transaction API', () => {
         'systems.json',
         'customer-roles.json',
         'customers.json',
+        'customer-roles.json',
         'products.json',
         'transactions.json',
     ];
@@ -102,20 +103,36 @@ describe('Transaction API', () => {
             });
         });
 
-        it('should return a validation error for sellerId', done => {
+
+        it('should return a validation error for sellerId = null on seller enforced system', done => {
             const newTransaction = {
                 customerId: 1,
-                products: [1, 2]
+                products: [1]
             };
             request(app)
-            .post('/api/1/transactions/')
+            .post('/api/1/transactions/') // system 1 enforces seller
             .send(newTransaction)
             .expect('Content-Type', /json/)
             .expect(400)
             .end((err, res) => {
                 if (err) return done(err);
-                res.body.message.should.equal('notNull Violation: sellerId cannot be null');
-                res.body.errors.length.should.equal(1);
+                res.body.message.should.equal('A transaction for this system requires a seller');
+                done();
+            });
+        });
+
+        it('sellerId = null should be OK if seller not enforced', done => {
+            const newTransaction = {
+                customerId: 3,
+                products: [4]
+            };
+            request(app)
+            .post('/api/2/transactions/')
+            .send(newTransaction)
+            .expect('Content-Type', /json/)
+            .expect(201)
+            .end((err, res) => {
+                if (err) return done(err);
                 done();
             });
         });
@@ -132,7 +149,6 @@ describe('Transaction API', () => {
             .expect(400)
             .end((err, res) => {
                 if (err) return done(err);
-                console.log(res.body);
                 res.body.message.should.equal('A transaction must contain at least one product');
                 done();
             });
@@ -151,7 +167,6 @@ describe('Transaction API', () => {
             .expect(400)
             .end((err, res) => {
                 if (err) return done(err);
-                console.log(res.body);
                 res.body.message.should.equal('A transaction must contain at least one product');
                 done();
             });

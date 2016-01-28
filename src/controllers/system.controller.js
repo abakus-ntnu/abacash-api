@@ -11,7 +11,8 @@ export function list(req, res, next) {
 export function retrieve(req, res, next) {
     const { id } = req.params;
     db.System.findOne({
-        where: { id }
+        where: { id },
+        include: [ { model: db.CustomerRole, as: 'defaultCustomerRole' } ]
     })
     .then(system => {
         if (!system) throw new NotFoundError();
@@ -22,9 +23,18 @@ export function retrieve(req, res, next) {
 
 export function create(req, res, next) {
     db.System.create(req.body)
-    .then(system => {
-        res.status(201).json(system);
-    })
+    .then(system => system.get({ plain: true }))
+    .then(system =>
+        db.CustomerRole.create({
+            ...req.body.defaultCustomerRole,
+            isDefaultRole: true,
+            systemId: system.id
+        })
+        .then(customerRole => {
+            system.defaultCustomerRole = customerRole;
+            res.status(201).json(system);
+        })
+    )
     .catch(next);
 }
 

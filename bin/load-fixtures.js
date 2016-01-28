@@ -5,7 +5,9 @@ import { loadFixtures } from '../test/helpers';
 
 const fixtures = [
     'systems.json',
-    'customers.json'
+    'customer-roles.json',
+    'customers.json',
+    'products.json'
 ];
 
 syncDB()
