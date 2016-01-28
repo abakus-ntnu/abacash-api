@@ -4,8 +4,8 @@
     "data": {
       "systemId": 1,
       "role": "testrole",
-      "isSeller": true,
-      "internalSales": true
+      "isSeller": false,
+      "internalSales": false
     }
   },
   {
@@ -29,7 +29,7 @@
   {
     "model": "CustomerRole",
     "data": {
-      "systemId": 1,
+      "systemId": 2,
       "role": "Internal",
       "isSeller": false,
       "internalSales": false

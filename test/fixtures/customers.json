@@ -29,7 +29,7 @@
       "username": "testcustomer3",
       "balance": 200.00,
       "systemId": 2,
-      "customerRoleId": 3
+      "customerRoleId": 4
     }
   }
 ]

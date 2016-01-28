@@ -11,7 +11,8 @@ export function list(req, res, next) {
 export function retrieve(req, res, next) {
     const { id } = req.params;
     db.System.findOne({
-        where: { id }
+        where: { id },
+        include: [ { model: db.CustomerRole, as: 'defaultCustomerRole' } ]
     })
     .then(system => {
         if (!system) throw new NotFoundError();

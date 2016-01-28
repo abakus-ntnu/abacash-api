@@ -36,6 +36,7 @@ export function create(req, res, next) {
         systemId: req.system.id
     })
     .then(customer => {
+        console.log(customer);
         res.status(201).json(customer);
     })
     .catch(Sequelize.ValidationError, err => {
