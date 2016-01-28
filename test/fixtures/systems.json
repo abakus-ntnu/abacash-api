@@ -9,8 +9,7 @@
       "email": "labamba@abakus.no",
       "needSeller": true,
       "allowExternalCustomers": true,
-      "internalSales": true,
-      "allowCredit": true
+      "internalSales": true
     }
   },
   {
@@ -24,8 +23,7 @@
       "email": "labamba@abakus.no",
       "allowExternalCustomers": false,
       "needSeller": false,
-      "internalSales": false,
-      "allowCredit": false
+      "internalSales": false
     }
   }
 ]

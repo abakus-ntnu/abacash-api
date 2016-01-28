@@ -5,7 +5,8 @@
       "systemId": 1,
       "role": "testrole",
       "isSeller": false,
-      "internalSales": false
+      "internalSales": false,
+      "allowCredit": false
     }
   },
   {
@@ -14,7 +15,8 @@
       "systemId": 1,
       "role": "Seller",
       "isSeller": true,
-      "internalSales": false
+      "internalSales": false,
+      "allowCredit": false
     }
   },
   {
@@ -23,7 +25,8 @@
       "systemId": 1,
       "role": "Internal",
       "isSeller": false,
-      "internalSales": true
+      "internalSales": true,
+      "allowCredit": true
     }
   },
   {
@@ -32,7 +35,8 @@
       "systemId": 2,
       "role": "Internal",
       "isSeller": true,
-      "internalSales": true
+      "internalSales": true,
+      "allowCredit": false
     }
   }
 ]

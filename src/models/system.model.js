@@ -30,11 +30,6 @@ export default function(sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
             allowNull: false
-        },
-        allowCredit: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-            allowNull: false
         }
     }, {
         classMethods: {

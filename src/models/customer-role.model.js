@@ -17,6 +17,11 @@ export default function(sequelize, DataTypes) {
         isDefaultRole: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
+        },
+        allowCredit: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+            allowNull: false
         }
     }, {
         classMethods: {
