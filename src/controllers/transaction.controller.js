@@ -24,8 +24,16 @@ export function retrieve(req, res, next) {
 }
 
 export function add(req, res, next) {
+
+    // check that transactions contains products
     if (!req.body.products || req.body.products.length === 0) {
         const error =  new ValidationError('A transaction must contain at least one product');
+        return next(error);
+    }
+    
+    // check that seller is included if system needs seller
+    if (req.system.needSeller && !req.body.sellerId) {
+        const error =  new ValidationError('A transaction for this system requires a seller');
         return next(error);
     }
 
@@ -33,6 +41,8 @@ export function add(req, res, next) {
     let _customer;
     let _total;
     let _isInternal;
+    
+    
 
     db.Customer.findById(req.body.customerId)
     .then((customer) => {
@@ -48,7 +58,7 @@ export function add(req, res, next) {
                 product.stock--;
                 return product.save();
             });
-        })
+        });
     })
     .reduce((sum, product) => (_isInternal ? product.internalPrice : product.price) + sum, 0)
     .then(total => {

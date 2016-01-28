@@ -15,7 +15,7 @@ export default function(sequelize, DataTypes) {
         },
         sellerId: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         }
     }, {
         classMethods: {
