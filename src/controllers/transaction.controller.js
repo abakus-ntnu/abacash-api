@@ -27,7 +27,7 @@ export function add(req, res, next) {
     let _transaction;
     let _customer;
     let _total;
-    let _isInternal;
+    let _customerRole;
     
 
     // start database transaction
@@ -56,7 +56,7 @@ export function add(req, res, next) {
 
         // find customer role
         .then((customerRole) => {
-            _isInternal = customerRole.internalSales;
+            _customerRole = customerRole;
             // reduce stock for all products. database transaction must explicitly be
             // set because a new transaction promise chain implies a new transaction
             return Bluebird.mapSeries(req.body.products, id => {
@@ -71,7 +71,7 @@ export function add(req, res, next) {
         })
 
         // calculate sum of all products
-        .reduce((sum, product) => (_isInternal ? product.internalPrice : product.price) + sum, 0)
+        .reduce((sum, product) => (_customerRole.internalSales ? product.internalPrice : product.price) + sum, 0)
 
         // store total and create transaction
         .then(total => {
@@ -87,7 +87,7 @@ export function add(req, res, next) {
         .then(transaction => {
             _transaction = transaction;
             _customer.balance -= _total;
-            if (_customer.balance < 0) {
+            if (_customer.balance < 0 && _customerRole.allowCredit !== true) {
                 throw new ValidationError('Insufficient balance');
             }
             return _customer.save();

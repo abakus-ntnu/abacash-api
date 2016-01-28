@@ -57,7 +57,8 @@
       "role": "Seller",
       "internalSales": false,
       "isSeller": true,
-      "systemId": 1
+      "systemId": 1,
+      "allowCredit": false
     }
   },
   {
@@ -66,7 +67,8 @@
       "role": "Internal",
       "internalSales": true,
       "isSeller": false,
-      "systemId": 1
+      "systemId": 1,
+      "allowCredit": true
     }
   },
   {
@@ -75,7 +77,8 @@
       "role": "External",
       "internalSales": false,
       "isSeller": false,
-      "systemId": 1
+      "systemId": 1,
+      "allowCredit": false
     }
   },
   {

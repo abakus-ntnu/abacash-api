@@ -148,6 +148,21 @@ describe('Transaction API Integration', () => {
         .then(() => checkProductStock(2, 8));
     });
 
+    it('should allow a user with allowCredit role to get negative balance', () => {
+
+        const transaction = {
+            sellerId: 1,
+            customerId: 2,
+            products: [1, 1, 1, 1, 1, 1, 1]
+        };
+
+        // add the transaction
+        return postTransactionAndCheckSum(transaction, 105.00)
+        .then(checkIfTransactionExists)
+        .then(() => checkCustomerBalance(transaction.customerId, -5.0))
+        .then(() => checkProductStock(1, -2));
+    });
+
     it('should not decrease stock if keepStock is false', () => {
 
         const transaction = {
