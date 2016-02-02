@@ -16,7 +16,7 @@ describe('Customer Role API', () => {
     describe('List Roles', () => {
         it('should list roles', done => {
             request(app)
-            .get('/api/1/roles')
+            .get('/1/roles')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -38,7 +38,7 @@ describe('Customer Role API', () => {
             };
 
             request(app)
-            .post('/api/1/roles')
+            .post('/1/roles')
             .send(payload)
             .expect('Content-Type', /json/)
             .expect(201)
@@ -61,7 +61,7 @@ describe('Customer Role API', () => {
             };
 
             request(app)
-            .put('/api/1/roles/1')
+            .put('/1/roles/1')
             .send(payload)
             .expect('Content-Type', /json/)
             .expect(200)
@@ -79,7 +79,7 @@ describe('Customer Role API', () => {
             };
 
             request(app)
-            .put('/api/1/roles/1337')
+            .put('/1/roles/1337')
             .send(payload)
             .expect('Content-Type', /json/)
             .expect(404)
@@ -95,7 +95,7 @@ describe('Customer Role API', () => {
     describe('Delete Role', () => {
         it('should delete a role', done => {
             request(app)
-            .delete('/api/1/roles/1')
+            .delete('/1/roles/1')
             .expect(204)
             .end((err, res) => done(err));
         });

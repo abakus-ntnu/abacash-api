@@ -17,7 +17,7 @@ describe('Product API', () => {
 
         it('should list all products', done => {
             request(app)
-            .get('/api/1/products/')
+            .get('/1/products/')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -32,7 +32,7 @@ describe('Product API', () => {
 
         it('should keep systems separate all products', done => {
             request(app)
-            .get('/api/2/products/')
+            .get('/2/products/')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -52,7 +52,7 @@ describe('Product API', () => {
 
         it('should list active products', done => {
             request(app)
-            .get('/api/1/products/?active=true')
+            .get('/1/products/?active=true')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -69,7 +69,7 @@ describe('Product API', () => {
 
         it('should list active products', done => {
             request(app)
-            .get('/api/1/products/?type=Type 2&active=true')
+            .get('/1/products/?type=Type 2&active=true')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -88,7 +88,7 @@ describe('Product API', () => {
         
         it('should return a product from a current system', done => {
             request(app)
-            .get('/api/1/products/1')
+            .get('/1/products/1')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -101,13 +101,13 @@ describe('Product API', () => {
 
         it('should return 404 on product that doesn\'t exist', done => {
             request(app)
-            .get('/api/1/products/1337')
+            .get('/1/products/1337')
             .expect(404, done);
         });
 
         it('should return 404 on product that exists, but are not in the current system.', done => {
             request(app)
-            .get('/api/1/products/4')
+            .get('/1/products/4')
             .expect(404, done)
         });
     });
@@ -118,7 +118,7 @@ describe('Product API', () => {
 
         it('should create a product', done => {
             request(app)
-            .post('/api/1/products')
+            .post('/1/products')
             .send({
                 type: 'Created Type',
                 price: 1337.99,
@@ -138,12 +138,12 @@ describe('Product API', () => {
 
         it('should delete an existing product', done => {
             request(app)
-            .delete('/api/1/products/1')
+            .delete('/1/products/1')
             .expect(204, done);
         });
         it('should return not found if product not found', done => {
             request(app)
-            .delete('/api/1/products/4')
+            .delete('/1/products/4')
             .expect(404, done);
         });
     });

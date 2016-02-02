@@ -16,7 +16,7 @@ describe('Users API', () => {
     describe('List', () => {
         it('should list users', done => {
             request(app)
-            .get('/api/users')
+            .get('/users')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -33,7 +33,7 @@ describe('Users API', () => {
     describe('Retrieve', () => {
         it('should retrieve a user', done => {
             request(app)
-            .get('/api/users/1')
+            .get('/users/1')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -55,7 +55,7 @@ describe('Users API', () => {
             };
 
             request(app)
-            .post('/api/users')
+            .post('/users')
             .send(payload)
             .expect('Content-Type', /json/)
             .expect(201)
@@ -77,7 +77,7 @@ describe('Users API', () => {
             };
 
             request(app)
-            .post('/api/users')
+            .post('/users')
             .send(payload)
             .expect('Content-Type', /json/)
             .expect(201)
@@ -100,7 +100,7 @@ describe('Users API', () => {
             };
 
             request(app)
-            .post('/api/users')
+            .post('/users')
             .send(payload)
             .expect('Content-Type', /json/)
             .expect(201)

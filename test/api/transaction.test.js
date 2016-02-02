@@ -22,7 +22,7 @@ describe('Transaction API', () => {
 
         it('should list transactions', done => {
             request(app)
-            .get('/api/1/transactions')
+            .get('/1/transactions')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -34,7 +34,7 @@ describe('Transaction API', () => {
 
         it('should not list transactions from other systems', done => {
             request(app)
-            .get('/api/2/transactions')
+            .get('/2/transactions')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -48,7 +48,7 @@ describe('Transaction API', () => {
 
         it('should retrieve a transaction', done => {
             request(app)
-            .get('/api/1/transactions/1')
+            .get('/1/transactions/1')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -59,7 +59,7 @@ describe('Transaction API', () => {
         });
 
         it('should return 404 for missing transaction', done => {
-            test404('/api/1/transactions/1337', done);
+            test404('/1/transactions/1337', done);
         });
     });
 
@@ -75,7 +75,7 @@ describe('Transaction API', () => {
                 products: [1]
             };
             request(app)
-            .post('/api/1/transactions/')
+            .post('/1/transactions/')
             .send(newTransaction)
             .expect('Content-Type', /json/)
             .expect(201)
@@ -92,7 +92,7 @@ describe('Transaction API', () => {
                 products: [1]
             };
             request(app)
-            .post('/api/1/transactions/')
+            .post('/1/transactions/')
             .send(newTransaction)
             .expect('Content-Type', /json/)
             .expect(400)
@@ -110,7 +110,7 @@ describe('Transaction API', () => {
                 products: [1]
             };
             request(app)
-            .post('/api/1/transactions/') // system 1 enforces seller
+            .post('/1/transactions/') // system 1 enforces seller
             .send(newTransaction)
             .expect('Content-Type', /json/)
             .expect(400)
@@ -127,7 +127,7 @@ describe('Transaction API', () => {
                 products: [4]
             };
             request(app)
-            .post('/api/2/transactions/')
+            .post('/2/transactions/')
             .send(newTransaction)
             .expect('Content-Type', /json/)
             .expect(201)
@@ -143,7 +143,7 @@ describe('Transaction API', () => {
                 sellerId: 2
             };
             request(app)
-            .post('/api/1/transactions/')
+            .post('/1/transactions/')
             .send(newTransaction)
             .expect('Content-Type', /json/)
             .expect(400)
@@ -161,7 +161,7 @@ describe('Transaction API', () => {
                 products: []
             };
             request(app)
-            .post('/api/1/transactions/')
+            .post('/1/transactions/')
             .send(newTransaction)
             .expect('Content-Type', /json/)
             .expect(400)

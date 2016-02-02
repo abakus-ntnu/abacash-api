@@ -4,7 +4,7 @@ const config = {
     nodeEnv: process.env.NODE_ENV || 'production',
     defaultCustomerRole: process.env.DEFAULT_CUSTOMER_ROLE || 'customer',
     nerd: {
-        url: 'https://abakus.no/api/',
+        url: 'https://abakus.no/',
         apiKey: '689ee7683b8f28abf041a4df9c3a022679c58317'
     },
     secret: 'super-secret-abacash-secret'

@@ -18,7 +18,7 @@ import * as errors from '../components/errors';
 const router = express.Router();
 const apiRouter = express.Router();
 
-router.use('/api', apiRouter);
+router.use(apiRouter);
 
 apiRouter.param('system', (req, res, next, id) => {
     db.System.findOne({

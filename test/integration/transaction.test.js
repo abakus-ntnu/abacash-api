@@ -11,7 +11,7 @@ const should = chai.should();
 function postTransactionAndCheckSum(transaction, expectedSum) {
     return new Bluebird((resolve, reject) => {
         request(app)
-        .post('/api/1/transactions/')
+        .post('/1/transactions/')
         .send(transaction)
         .expect(201)
         .end((err, res) => {
@@ -26,7 +26,7 @@ function postTransactionAndCheckSum(transaction, expectedSum) {
 function checkIfTransactionExists(transactionId) {
     return new Bluebird((resolve, reject) => {
         request(app)
-        .get('/api/1/transactions/' + transactionId)
+        .get('/1/transactions/' + transactionId)
         .expect(200)
         .end((err, res) => {
             if (err) return reject(err);
@@ -40,7 +40,7 @@ function checkIfTransactionExists(transactionId) {
 function postTransactionInsufficientBalance(transaction) {
     return new Bluebird((resolve, reject) => {
         request(app)
-        .post('/api/1/transactions/')
+        .post('/1/transactions/')
         .send(transaction)
         .expect(400) // 400 status code on insufficient balance
         .end((err, res) => {
@@ -55,7 +55,7 @@ function checkIfNoTransactionsAreAdded(transactionId) {
     // check if the transaction can be fetched 
     return new Bluebird((resolve, reject) => {
         request(app)
-        .get('/api/1/transactions/')
+        .get('/1/transactions/')
         .expect(200)
         .end((err, res) => {
             if (err) return reject(err);
@@ -69,7 +69,7 @@ function checkCustomerBalance(customerId, expectedBalance) {
     // check if customer has new balance
     return new Bluebird((resolve, reject) => {
         request(app)
-        .get('/api/1/customers/' + customerId)
+        .get('/1/customers/' + customerId)
         .expect(200)
         .end((err, res) => {
               if (err) return reject(err);
@@ -82,7 +82,7 @@ function checkCustomerBalance(customerId, expectedBalance) {
 function checkProductStock(productId, expectedStock) {
     return new Bluebird((resolve, reject) => {
         request(app)
-        .get('/api/1/products/' + productId)
+        .get('/1/products/' + productId)
         .expect(200)
         .end((err, res) => {
               should.equal(expectedStock, res.body.stock);

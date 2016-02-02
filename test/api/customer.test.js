@@ -17,7 +17,7 @@ describe('Customer API', () => {
 
         it('should list customers', done => {
             request(app)
-            .get('/api/1/customers')
+            .get('/1/customers')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -31,7 +31,7 @@ describe('Customer API', () => {
 
         it('should not list customers from other systems', done => {
             request(app)
-            .get('/api/2/customers')
+            .get('/2/customers')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -47,7 +47,7 @@ describe('Customer API', () => {
 
         it('should retrieve a customer', done => {
             request(app)
-            .get('/api/1/customers/1')
+            .get('/1/customers/1')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -59,7 +59,7 @@ describe('Customer API', () => {
         });
 
         it('should return 404 for missing customer', done => {
-            test404('/api/1/customers/1337', done);
+            test404('/1/customers/1337', done);
         });
     });
 
@@ -74,7 +74,7 @@ describe('Customer API', () => {
                 balance: 524
             };
             request(app)
-            .post('/api/1/customers/')
+            .post('/1/customers/')
             .send(newCustomer)
             .expect('Content-Type', /json/)
             .expect(201)
@@ -93,7 +93,7 @@ describe('Customer API', () => {
                 balance: 524
             };
             request(app)
-            .post('/api/1/customers/')
+            .post('/1/customers/')
             .send(newCustomer)
             .expect('Content-Type', /json/)
             .expect(400)
@@ -115,7 +115,7 @@ describe('Customer API', () => {
                 rfid: 'dd:dd:dd:dd'
             };
             request(app)
-            .put('/api/1/customers/1')
+            .put('/1/customers/1')
             .send(newCustomer)
             .expect('Content-Type', /json/)
             .expect(200)
@@ -134,7 +134,7 @@ describe('Customer API', () => {
                 displayName: 'Updated Customer'
             };
             request(app)
-            .put('/api/1/customers/1')
+            .put('/1/customers/1')
             .send(newCustomer)
             .expect('Content-Type', /json/)
             .expect(200)
@@ -153,7 +153,7 @@ describe('Customer API', () => {
                 rfid: 'dd:dd:dd:dd'
             };
             request(app)
-            .put('/api/1/customers/12345')
+            .put('/1/customers/12345')
             .send(newCustomer)
             .expect('Content-Type', /json/)
             .expect(404)
@@ -170,7 +170,7 @@ describe('Customer API', () => {
 
         it('should delete a customer', done => {
             request(app)
-            .delete('/api/1/customers/1')
+            .delete('/1/customers/1')
             .expect(204)
             .end((err, res) => {
                 if (err) return done(err);
@@ -179,7 +179,7 @@ describe('Customer API', () => {
         });
 
         it('should return 404 for missing customer', done => {
-            test404('/api/1/customers/12345', done, 'delete');
+            test404('/1/customers/12345', done, 'delete');
         });
     });
 });
