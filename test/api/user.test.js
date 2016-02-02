@@ -7,7 +7,7 @@ const should = chai.should();
 
 describe('Users API', () => {
     const fixtures = [
-        'users.json',
+        'users.js',
         'systems.json'
     ];
 
