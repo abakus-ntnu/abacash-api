@@ -12,9 +12,6 @@ import apiToken from './api-token.routes';
 import systemRole from './system-role.routes';
 import * as errors from '../components/errors';
 
-// import product from './product.routes';
-// import transaction from './transaction.routes';
-
 const router = express.Router();
 const apiRouter = express.Router();
 

@@ -2,7 +2,7 @@ import _ from 'lodash';
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import db from '../models';
-import app from '../app';
+import config from '../config';
 import { AuthenticationError, ValidationError } from '../components/errors';
 
 const router = express.Router();
@@ -29,18 +29,17 @@ router.post('/', (req, res, next) => {
     })
     .then(valid => {
         if (!valid) throwAuthError();
-        const secret = app.get('jwt secret');
         const cleanUser = _.omit(_user, 'hash');
 
         // Even though jwt has a callback method,
         // there's no point in using it as the functions
         // it executes are synchronous:
-        return jwt.sign(cleanUser, secret, {
-            expiresIn: '7 days',
+        return jwt.sign(cleanUser, config.jwtSecret, {
+            expiresIn: config.jwtExpiresIn,
             subject: _user.id
         });
     })
-    .then(token => res.json({ token, user: _user }))
+    .then(token => res.json({ token }))
     .catch(next);
 });
 

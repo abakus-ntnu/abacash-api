@@ -17,6 +17,7 @@ import routes from './routes';
 
 // Setup server
 const app = express();
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(methodOverride());
@@ -30,9 +31,5 @@ if (app.get('env') === 'development') {
 }
 
 app.use('/', routes);
-
-// TODO: Use private key instead of secret?
-const secretOrKey = process.env.JWT_SECRET || 'hemmelig';
-app.set('jwt secret', secretOrKey);
 
 export default app;

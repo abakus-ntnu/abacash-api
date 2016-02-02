@@ -1,7 +1,9 @@
 import chai from 'chai';
 import request from 'supertest';
+import jwt from 'jsonwebtoken';
 import app from '../../src/app';
-import { loadFixtures } from '../helpers';
+import config from '../../src/config';
+import { loadFixtures, testUnauthenticated } from '../helpers';
 
 const should = chai.should();
 
@@ -11,12 +13,22 @@ describe('Users API', () => {
         'systems.json'
     ];
 
+    const token = jwt.sign({}, config.jwtSecret, {
+        expiresIn: '7 days',
+        subject: 1 // fake user id
+    });
+
     beforeEach(() => loadFixtures(fixtures));
 
     describe('List', () => {
+        it('should not be possible to list users without a valid token', done => {
+            testUnauthenticated('/users', done);
+        });
+
         it('should list users', done => {
             request(app)
             .get('/users')
+            .set('Authorization', `Bearer ${token}`)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -31,9 +43,14 @@ describe('Users API', () => {
     });
 
     describe('Retrieve', () => {
+        it('should not be possible to retrieve users without a valid token', done => {
+            testUnauthenticated('/users/1', done);
+        });
+
         it('should retrieve a user', done => {
             request(app)
             .get('/users/1')
+            .set('Authorization', `Bearer ${token}`)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -47,6 +64,10 @@ describe('Users API', () => {
     });
 
     describe('Create', () => {
+        it('should not be possible to create users without a valid token', done => {
+            testUnauthenticated('/users', done, 'post');
+        });
+
         it('should create a user', done => {
             const payload = {
                 email: 'test@test.com',
@@ -57,6 +78,7 @@ describe('Users API', () => {
             request(app)
             .post('/users')
             .send(payload)
+            .set('Authorization', `Bearer ${token}`)
             .expect('Content-Type', /json/)
             .expect(201)
             .end((err, res) => {
@@ -79,6 +101,7 @@ describe('Users API', () => {
             request(app)
             .post('/users')
             .send(payload)
+            .set('Authorization', `Bearer ${token}`)
             .expect('Content-Type', /json/)
             .expect(201)
             .end((err, res) => {
@@ -92,18 +115,23 @@ describe('Users API', () => {
     });
 
     describe('Update', () => {
-        it('should create a user', done => {
+        it('should not be possible to update users without a valid token', done => {
+            testUnauthenticated('/users/1', done, 'put');
+        });
+
+        it('should update a user', done => {
             const payload = {
                 email: 'test@test.com',
-                name: 'testuser',
+                name: 'newname',
                 password: 'testpassword'
             };
 
             request(app)
-            .post('/users')
+            .put('/users/1')
             .send(payload)
+            .set('Authorization', `Bearer ${token}`)
             .expect('Content-Type', /json/)
-            .expect(201)
+            .expect(200)
             .end((err, res) => {
                 if (err) return done(err);
                 const user = res.body;
