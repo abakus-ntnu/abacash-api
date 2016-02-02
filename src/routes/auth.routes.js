@@ -35,7 +35,7 @@ router.post('/', (req, res, next) => {
         // there's no point in using it as the functions
         // it executes are synchronous:
         return jwt.sign(cleanUser, config.jwtSecret, {
-            expiresIn: '7 days',
+            expiresIn: config.jwtExpiresIn,
             subject: _user.id
         });
     })
