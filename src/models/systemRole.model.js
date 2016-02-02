@@ -12,9 +12,9 @@ export default function(sequelize, DataTypes) {
             unique: 'compositeIndex'
         },
         role: {
-          type: DataTypes.ENUM,
-          values: _.values(ROLE_TYPES),
-          defaultValue: ROLE_TYPES.USER
+            type: DataTypes.ENUM,
+            values: _.values(ROLE_TYPES),
+            defaultValue: ROLE_TYPES.USER
         }
     });
 

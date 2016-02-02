@@ -12,7 +12,7 @@ export function retrieve(req, res, next) {
     const { id } = req.params;
     db.System.findOne({
         where: { id },
-        include: [ { model: db.CustomerRole, as: 'defaultCustomerRole' } ]
+        include: [{ model: db.CustomerRole, as: 'defaultCustomerRole' }]
     })
     .then(system => {
         if (!system) throw new NotFoundError();

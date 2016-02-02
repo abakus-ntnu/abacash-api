@@ -20,7 +20,7 @@ export function create(req, res, next) {
 export function destroy(req, res, next) {
     const { id } = req.params;
     db.APIToken.destroy({ where: { id } })
-    .then((count) => {
+    .then(count => {
         if (!count) throw new NotFoundError();
         res.status(204).send();
     })

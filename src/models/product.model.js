@@ -29,16 +29,16 @@ export default function(sequelize, DataTypes) {
         keepStock: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
-        },
+        }
     }, {
         classMethods: {
             associate(models) {
                 Product.belongsTo(models.System, {
-                    foreignKey: { 
+                    foreignKey: {
                         allowNull: false
                     }
                 });
-                Product.belongsToMany(models.Transaction, { through: 'transactionProduct'});
+                Product.belongsToMany(models.Transaction, { through: 'transactionProduct' });
             }
         }
     });

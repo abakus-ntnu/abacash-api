@@ -2,7 +2,10 @@
     "extends": "webkom",
     "parser": "babel-eslint",
     "rules": {
-        "indent": [2, 4]
+        "indent": [2, 4],
+        "new-cap": [2, {
+            "capIsNewExceptions": ["Router", "ARRAY"]
+        }]
     },
     "env": {
         "node": true,

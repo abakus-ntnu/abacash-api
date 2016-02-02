@@ -4,13 +4,12 @@ import Sequelize from 'sequelize';
 import _ from 'lodash';
 
 export function list(req, res, next) {
-    req.system.getCustomers({ include: [ db.CustomerRole ] })
+    req.system.getCustomers({ include: [db.CustomerRole] })
     .then(res.json.bind(res))
     .catch(next);
 }
 
 export function retrieve(req, res, next) {
-
     let { lookupParam } = req.query;
 
     if (['rfid', 'id', 'username'].indexOf(lookupParam) === -1) {
@@ -22,7 +21,7 @@ export function retrieve(req, res, next) {
             [lookupParam]: req.params.lookup,
             systemId: req.system.id
         },
-        include: [ db.CustomerRole ]
+        include: [db.CustomerRole]
     })
     .then(customer => {
         if (!customer) throw new NotFoundError();
@@ -65,8 +64,8 @@ export function destroy(req, res, next) {
     db.Customer.destroy({ where: {
         id: req.params.customerId,
         systemId: req.system.id
-    }})
-    .then((count) => {
+    } })
+    .then(count => {
         if (!count) throw new NotFoundError();
         res.status(204).send();
     })

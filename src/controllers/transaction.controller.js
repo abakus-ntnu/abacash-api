@@ -1,5 +1,5 @@
 import db from '../models';
-import { NotFoundError, ModelValidationError, ValidationError, RequestError} from '../components/errors';
+import { NotFoundError, ModelValidationError, ValidationError } from '../components/errors';
 import Sequelize from 'sequelize';
 import Bluebird from 'bluebird';
 
@@ -13,26 +13,23 @@ export function retrieve(req, res, next) {
     db.Transaction.findOne({ where: {
         id: req.params.transactionId,
         systemId: req.system.id
-    }})
+    } })
     .then(transaction => {
         if (!transaction) throw new NotFoundError();
         res.json(transaction);
     })
     .catch(next);
-
 }
 
 export function add(req, res, next) {
-
     let _transaction;
     let _customer;
     let _total;
     let _customerRole;
-    
+
 
     // start database transaction
     db.sequelize.transaction(t => {
-
         // transaction must contain products
         if (!req.body.products || req.body.products.length === 0) {
             throw new ValidationError('A transaction must contain at least one product');
@@ -40,13 +37,13 @@ export function add(req, res, next) {
 
         // check that seller is included if system needs seller
         if (req.system.needSeller && !req.body.sellerId) {
-            const error =  new ValidationError('A transaction for this system requires a seller');
+            const error = new ValidationError('A transaction for this system requires a seller');
             return next(error);
         }
 
         // find and store customer
         return db.Customer.findById(req.body.customerId)
-        .then((customer) => {
+        .then(customer => {
             if (!customer) {
                 throw new ValidationError('Customer for transaction not found');
             }
@@ -55,23 +52,25 @@ export function add(req, res, next) {
         })
 
         // find customer role
-        .then((customerRole) => {
+        .then(customerRole => {
             _customerRole = customerRole;
             // reduce stock for all products. database transaction must explicitly be
             // set because a new transaction promise chain implies a new transaction
-            return Bluebird.mapSeries(req.body.products, id => {
-                return db.Product.findById(id, { transaction: t })
+            return Bluebird.mapSeries(req.body.products, id =>
+                db.Product.findById(id, { transaction: t })
                 .then(product => {
                     if (product.keepStock) {
                         product.stock--;
                     }
                     return product.save({ transaction: t });
-                });
-            });
+                })
+            );
         })
 
         // calculate sum of all products
-        .reduce((sum, product) => (_customerRole.internalSales ? product.internalPrice : product.price) + sum, 0)
+        .reduce((sum, product) =>
+            (_customerRole.internalSales ? product.internalPrice : product.price) + sum
+        , 0)
 
         // store total and create transaction
         .then(total => {
@@ -92,12 +91,11 @@ export function add(req, res, next) {
             }
             return _customer.save();
         });
-    }).then((result) => {
+    }).then(result => {
         // entire database transaction OK, return newly created transaction
         res.status(201).json(_transaction);
     }).catch(Sequelize.ValidationError, err => {
         throw new ModelValidationError(err);
     })
     .catch(next);
-
 }

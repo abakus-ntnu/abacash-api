@@ -76,8 +76,8 @@ export function update(req, res, next) {
 export function destroy(req, res, next) {
     db.User.destroy({ where: {
         id: req.params.id
-    }})
-    .then((count) => {
+    } })
+    .then(count => {
         if (!count) throw new NotFoundError();
         res.status(204).send();
     })

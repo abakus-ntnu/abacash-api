@@ -8,7 +8,7 @@ export function list(req, res, next) {
     })
     .then(res.json.bind(res))
     .catch(next);
-};
+}
 
 export function retrieve(req, res, next) {
     db.Product.findOne({
@@ -24,8 +24,7 @@ export function retrieve(req, res, next) {
         res.json(product);
     })
     .catch(next);
-
-};
+}
 
 export function create(req, res, next) {
     db.Product.create({
@@ -39,7 +38,7 @@ export function create(req, res, next) {
         throw new ModelValidationError(err);
     })
     .catch(next);
-};
+}
 
 export function destroy(req, res, next) {
     db.Product.destroy({
@@ -49,10 +48,10 @@ export function destroy(req, res, next) {
         }
     })
     .then(count => {
-        if (count == 0) {
+        if (count === 0) {
             throw new NotFoundError();
         }
         res.status(204).send();
     })
     .catch(next);
-};
+}

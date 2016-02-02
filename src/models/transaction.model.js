@@ -1,6 +1,6 @@
 export default function(sequelize, DataTypes) {
     const Transaction = sequelize.define('transaction', {
-        
+
         total: {
             type: DataTypes.DECIMAL,
             defaultValue: 0.0,

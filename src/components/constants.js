@@ -1,5 +1,5 @@
 exports.ROLE_TYPES = {
     USER: 'USER',
-  MODERATOR: 'MODERATOR',
-  ADMIN: 'ADMIN'
+    MODERATOR: 'MODERATOR',
+    ADMIN: 'ADMIN'
 };

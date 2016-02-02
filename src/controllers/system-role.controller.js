@@ -38,10 +38,10 @@ export function update(req, res, next) {
 
 export function destroy(req, res, next) {
     db.SystemRole.destroy({ where: {
-            userId: req.params.id,
-            systemId: req.system.id
-    }})
-    .then((count) => {
+        userId: req.params.id,
+        systemId: req.system.id
+    } })
+    .then(count => {
         if (!count) throw new NotFoundError();
         res.status(204).send();
     })
