@@ -1,4 +1,4 @@
-# abacash [![Build status](https://ci.frigg.io/badges/abakusbackup/abacash/)](https://ci.frigg.io/abakusbackup/abacash/last/) [![Coverage status](https://ci.frigg.io/badges/coverage/abakusbackup/abacash/)](https://ci.frigg.io/abakusbackup/abacash/last/)
+# abacash-api [![Build status](https://ci.frigg.io/badges/abakusbackup/abacash-api/)](https://ci.frigg.io/abakusbackup/abacash-api/last/) [![Coverage status](https://ci.frigg.io/badges/coverage/abakusbackup/abacash-api/)](https://ci.frigg.io/abakusbackup/abacash-api/last/)
 
 ## Usage
 ```bash
