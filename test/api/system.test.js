@@ -16,7 +16,7 @@ describe('System API', () => {
 
         it('should list systems', done => {
             request(app)
-            .get('/api/systems')
+            .get('/systems')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -34,7 +34,7 @@ describe('System API', () => {
 
         it('should retrieve a system', done => {
             request(app)
-            .get('/api/systems/1')
+            .get('/systems/1')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -59,7 +59,7 @@ describe('System API', () => {
             };
 
             request(app)
-            .post('/api/systems')
+            .post('/systems')
             .send(payload)
             .expect('Content-Type', /json/)
             .expect(201)
@@ -84,7 +84,7 @@ describe('System API', () => {
             };
 
             request(app)
-            .put('/api/systems/1')
+            .put('/systems/1')
             .send(payload)
             .expect('Content-Type', /json/)
             .expect(200)
@@ -104,7 +104,7 @@ describe('System API', () => {
             };
 
             request(app)
-            .put('/api/systems/1337')
+            .put('/systems/1337')
             .send(payload)
             .expect('Content-Type', /json/)
             .expect(404)

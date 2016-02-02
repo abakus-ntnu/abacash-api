@@ -18,7 +18,7 @@ describe('APIToken API', () => {
             };
 
             request(app)
-            .post('/api/authenticate/')
+            .post('/authenticate/')
             .send(credentials)
             .expect('Content-Type', /json/)
             .expect(200)
@@ -37,7 +37,7 @@ describe('APIToken API', () => {
 
         function testBadPayload(payload, done) {
             request(app)
-            .post('/api/authenticate/')
+            .post('/authenticate/')
             .send(payload)
             .expect('Content-Type', /json/)
             .expect(400)
@@ -66,7 +66,7 @@ describe('APIToken API', () => {
             };
 
             request(app)
-            .post('/api/authenticate/')
+            .post('/authenticate/')
             .send(credentials)
             .expect('Content-Type', /json/)
             .expect(401)
@@ -85,7 +85,7 @@ describe('APIToken API', () => {
             };
 
             request(app)
-            .post('/api/authenticate/')
+            .post('/authenticate/')
             .send(credentials)
             .expect('Content-Type', /json/)
             .expect(401)
