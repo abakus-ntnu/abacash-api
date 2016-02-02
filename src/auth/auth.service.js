@@ -7,12 +7,12 @@ export function isTokenAuthenticated(req, res, next) {
         return next(new AuthenticationError());
     }
 
-    db.AuthToken.findOne({
+    db.APIToken.findOne({
         where: { token }
     })
-    .then(authToken => {
-        if (authToken) {
-            req.authToken = authToken;
+    .then(apiToken => {
+        if (apiToken) {
+            req.apiToken = apiToken;
             return next();
         }
 

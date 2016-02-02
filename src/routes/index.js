@@ -7,7 +7,7 @@ import product from './product.routes';
 import nerd from './nerd.routes';
 import customerRole from './customer-role.routes';
 import transaction from './transaction.routes';
-import authToken from './auth-token.routes';
+import apiToken from './api-token.routes';
 import systemRole from './system-role.routes';
 import * as errors from '../components/errors';
 
@@ -33,7 +33,7 @@ apiRouter.param('system', (req, res, next, id) => {
     .catch(next);
 });
 
-apiRouter.use('/auth-tokens', authToken);
+apiRouter.use('/api-tokens', apiToken);
 apiRouter.use('/users', user);
 apiRouter.use('/systems', system);
 apiRouter.use('/nerd', nerd);

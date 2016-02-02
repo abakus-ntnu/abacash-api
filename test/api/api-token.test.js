@@ -5,10 +5,10 @@ import { loadFixtures, test404 } from '../helpers';
 
 chai.should();
 
-describe('AuthToken API', () => {
+describe('APIToken API', () => {
     const fixtures = [
         'systems.json',
-        'auth-tokens.json'
+        'api-tokens.json'
     ];
 
     describe('List all tokens', () => {
@@ -16,7 +16,7 @@ describe('AuthToken API', () => {
 
         it('should list all tokens', done => {
             request(app)
-            .get('/api/auth-tokens/')
+            .get('/api/api-tokens/')
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -39,7 +39,7 @@ describe('AuthToken API', () => {
             };
 
             request(app)
-            .post('/api/auth-tokens')
+            .post('/api/api-tokens')
             .send(body)
             .expect('Content-Type', /json/)
             .expect(201)
@@ -58,7 +58,7 @@ describe('AuthToken API', () => {
             };
 
             request(app)
-            .post('/api/auth-tokens/')
+            .post('/api/api-tokens/')
             .send(auth)
             .expect('Content-Type', /json/)
             .expect(400)
@@ -76,7 +76,7 @@ describe('AuthToken API', () => {
 
         it('should delete a token', done => {
             request(app)
-            .delete('/api/auth-tokens/1')
+            .delete('/api/api-tokens/1')
             .expect(204)
             .end((err, res) => {
                 if (err) return done(err);
@@ -85,7 +85,7 @@ describe('AuthToken API', () => {
         });
 
         it('should return 404 for missing tokens', done => {
-            test404('/api/auth-tokens/1337', done, 'delete');
+            test404('/api/api-tokens/1337', done, 'delete');
         });
     });
 });

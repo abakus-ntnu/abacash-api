@@ -1,7 +1,7 @@
 import { randomBytes } from 'crypto';
 
 export default function(sequelize, DataTypes) {
-    const AuthToken = sequelize.define('authToken', {
+    const APIToken = sequelize.define('APIToken', {
         name: {
             type: DataTypes.STRING,
             allowNull: false
@@ -14,7 +14,7 @@ export default function(sequelize, DataTypes) {
     }, {
         classMethods: {
             associate(models) {
-                AuthToken.belongsTo(models.System);
+                APIToken.belongsTo(models.System);
             },
             generate(body) {
                 const token = randomBytes(16).toString('hex');
@@ -23,5 +23,5 @@ export default function(sequelize, DataTypes) {
         }
     });
 
-    return AuthToken;
+    return APIToken;
 }

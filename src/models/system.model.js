@@ -36,7 +36,7 @@ export default function(sequelize, DataTypes) {
             associate(models) {
                 System.hasMany(models.Customer);
                 System.hasMany(models.CustomerRole);
-                System.hasMany(models.AuthToken);
+                System.hasMany(models.APIToken);
                 System.hasMany(models.Product);
                 System.hasMany(models.Transaction);
                 System.belongsTo(models.CustomerRole, {
