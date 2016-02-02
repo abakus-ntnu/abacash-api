@@ -1,6 +1,6 @@
 export class ModelValidationError extends Error {
-    name = 'ModelValidationError'
-    status = 400
+    name = 'ModelValidationError';
+    status = 400;
 
     constructor(error) {
         super(error.message);
@@ -23,13 +23,13 @@ export class ValidationError extends Error {
 
 
 export class RequestError extends Error {
-    name = 'RequestError'
-    status = 400
+    name = 'RequestError';
+    status = 400;
 }
 
 export class AuthenticationError extends Error {
-    name = 'AuthenticationError'
-    status = 401
+    name = 'AuthenticationError';
+    status = 401;
 
     constructor(message = 'You need to authenticate to access this resource') {
         super(message);
@@ -38,15 +38,14 @@ export class AuthenticationError extends Error {
 }
 
 export class NotFoundError extends Error {
-    name = 'NotFoundError'
+    name = 'NotFoundError';
     message = 'Could not find the entity';
     status = 404;
 }
 
 export function errorMiddleware(err, req, res, next) {
-    //if (process.env.NODE_ENV === 'development' ) {
-    if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
-       console.log(err.stack);
+    if (process.env.NODE_ENV === 'development') {
+        console.log(err.stack);
     }
 
     const status = err.status || 500;

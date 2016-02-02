@@ -77,7 +77,6 @@ describe('System API', () => {
         beforeEach(() => loadFixtures(fixtures));
 
         it('should update a system', done => {
-
             const payload = {
                 info: 'testinfo',
                 status: true
