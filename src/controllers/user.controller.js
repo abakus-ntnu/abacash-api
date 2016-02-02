@@ -7,7 +7,6 @@ const attributes = _.without(Object.keys(db.User.attributes), 'hash');
 
 export function list(req, res, next) {
     db.User.findAll({
-        include: [ db.System ],
         attributes
     })
     .then(res.json.bind(res))
@@ -18,7 +17,6 @@ export function retrieve(req, res, next) {
     db.User.findOne({ where: {
         id: req.params.id
     },
-        include: [ db.System ],
         attributes
     })
     .then(user => {
