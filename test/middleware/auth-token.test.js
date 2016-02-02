@@ -5,7 +5,7 @@ import { loadFixtures } from '../helpers';
 
 const should = chai.should();
 
-describe('AuthToken Middleware', () => {
+describe('APIToken Middleware', () => {
     const createNext = done => err => {
         err.should.be.an.instanceOf(AuthenticationError);
         err.message
@@ -42,7 +42,7 @@ describe('AuthToken Middleware', () => {
     describe('Database Tests', () => {
         const fixtures = [
             'systems.json',
-            'auth-tokens.json'
+            'api-tokens.json'
         ];
 
         beforeEach(() => loadFixtures(fixtures));
@@ -64,7 +64,7 @@ describe('AuthToken Middleware', () => {
             isTokenAuthenticated(req, res, next);
         });
 
-        it('should set req.authToken when the token is correct', done => {
+        it('should set req.apiToken when the token is correct', done => {
             const res = {};
             const req = {
                 get(header) {
@@ -74,7 +74,7 @@ describe('AuthToken Middleware', () => {
             };
 
             const next = () => {
-                req.authToken.id.should.equal(1);
+                req.apiToken.id.should.equal(1);
                 done();
             };
 

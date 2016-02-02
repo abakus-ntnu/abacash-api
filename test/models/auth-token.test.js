@@ -4,7 +4,7 @@ import { loadFixtures } from '../helpers';
 
 chai.should();
 
-describe('AuthToken Model', () => {
+describe('APIToken Model', () => {
     const fixtures = ['systems.json'];
     beforeEach(() => loadFixtures(fixtures));
 
@@ -15,7 +15,7 @@ describe('AuthToken Model', () => {
                 systemId: 1
             };
 
-            return db.AuthToken.generate(body)
+            return db.APIToken.generate(body)
             .then(auth => {
                 auth.token.length.should.equal(32);
                 Object.keys(body).forEach(field => {
@@ -29,7 +29,7 @@ describe('AuthToken Model', () => {
                 systemId: 1
             };
 
-            return db.AuthToken.generate(body)
+            return db.APIToken.generate(body)
             .catch(err => {
                 err.message
                     .should.equal('notNull Violation: name cannot be null');
