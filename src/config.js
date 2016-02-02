@@ -7,7 +7,9 @@ const config = {
         url: 'https://abakus.no/',
         apiKey: '689ee7683b8f28abf041a4df9c3a022679c58317'
     },
-    secret: 'super-secret-abacash-secret'
+    secret: 'super-secret-abacash-secret',
+    // TODO: Use private key instead of secret?
+    jwtSecret: process.env.JWT_SECRET || 'hemmelig'
 };
 
 export default config;

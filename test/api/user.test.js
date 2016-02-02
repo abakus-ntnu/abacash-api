@@ -1,6 +1,8 @@
 import chai from 'chai';
 import request from 'supertest';
+import jwt from 'jsonwebtoken';
 import app from '../../src/app';
+import config from '../../src/config';
 import { loadFixtures } from '../helpers';
 
 const should = chai.should();
@@ -11,12 +13,18 @@ describe('Users API', () => {
         'systems.json'
     ];
 
+    const token = jwt.sign({}, config.jwtSecret, {
+        expiresIn: '7 days',
+        subject: 1 // fake user id
+    });
+
     beforeEach(() => loadFixtures(fixtures));
 
     describe('List', () => {
         it('should list users', done => {
             request(app)
             .get('/users')
+            .set('Authorization', `Bearer ${token}`)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -34,6 +42,7 @@ describe('Users API', () => {
         it('should retrieve a user', done => {
             request(app)
             .get('/users/1')
+            .set('Authorization', `Bearer ${token}`)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -57,6 +66,7 @@ describe('Users API', () => {
             request(app)
             .post('/users')
             .send(payload)
+            .set('Authorization', `Bearer ${token}`)
             .expect('Content-Type', /json/)
             .expect(201)
             .end((err, res) => {
@@ -79,6 +89,7 @@ describe('Users API', () => {
             request(app)
             .post('/users')
             .send(payload)
+            .set('Authorization', `Bearer ${token}`)
             .expect('Content-Type', /json/)
             .expect(201)
             .end((err, res) => {
@@ -102,6 +113,7 @@ describe('Users API', () => {
             request(app)
             .post('/users')
             .send(payload)
+            .set('Authorization', `Bearer ${token}`)
             .expect('Content-Type', /json/)
             .expect(201)
             .end((err, res) => {

@@ -24,13 +24,11 @@ describe('APIToken API', () => {
             .expect(200)
             .end((err, res) => {
                 if (err) return done(err);
-                const { token, user } = res.body;
+                const { token } = res.body;
                 const decoded = jwt.decode(token);
                 decoded.email.should.equal(credentials.email);
-
                 // Sub should equal the database id, which is 1:
                 decoded.sub.should.equal(1);
-                user.email.should.equal(credentials.email);
                 done();
             });
         });
