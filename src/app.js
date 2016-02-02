@@ -31,4 +31,8 @@ if (app.get('env') === 'development') {
 
 app.use('/', routes);
 
+// TODO: Use private key instead of secret?
+const secretOrKey = process.env.JWT_SECRET || 'hemmelig';
+app.set('jwt secret', secretOrKey);
+
 export default app;
