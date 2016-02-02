@@ -38,7 +38,7 @@
     "eslint-config-airbnb": "~0.1.0",
     "eslint-config-webkom": "~0.3.1",
     "mocha": "~2.3.3",
-    "sequelize-fixtures": "0.4.8",
+    "sequelize-fixtures": "git+https://github.com/abakusbackup/sequelize-fixtures.git",
     "supertest": "~1.1.0"
   },
   "private": true
