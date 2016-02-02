@@ -6,7 +6,7 @@
     "start": "babel-node src/index.js",
     "load-db": "PG_URL=${PG_URL:-'postgres://localhost/abacash'} babel-node bin/load-fixtures.js",
     "test": "PG_URL=${PG_URL:-'postgres://localhost/abacash-test'} NODE_ENV=test mocha --compilers js:babel/register $(find test -name '*.test.js')",
-    "test-watch": "npm test -- --watch --reporter min",
+    "test:watch": "npm test -- --watch --reporter min",
     "lint": "eslint --ignore-path .gitignore ."
   },
   "dependencies": {
