@@ -21,3 +21,15 @@ export function test404(url, done, method = 'get') {
             done();
         });
 }
+
+export function testUnauthenticated(url, done, method = 'get') {
+    const requestMethod = request(app)[method];
+    requestMethod(url)
+        .expect('Content-Type', /json/)
+        .expect(401)
+        .end((err, res) => {
+            if (err) return done(err);
+            res.body.message.should.equal('No authorization token was found');
+            done();
+        });
+}

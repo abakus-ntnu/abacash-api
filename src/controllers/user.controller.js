@@ -68,7 +68,7 @@ export function update(req, res, next) {
     })
     .spread((count, user) => {
         if (!count) throw new NotFoundError();
-        res.json(user[0]);
+        res.json(_.pick(user[0], attributes));
     })
     .catch(next);
 }
