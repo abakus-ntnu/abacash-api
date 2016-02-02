@@ -1,0 +1,35 @@
+[
+  {
+    "model": "Customer",
+    "data": {
+      "rfid": "1234",
+      "displayName": "test customer",
+      "username": "testcustomer",
+      "balance": 123.34,
+      "systemId": 1,
+      "customerRoleId": 4
+    }
+  },
+  {
+    "model": "Customer",
+    "data": {
+      "rfid": "cb:51:34:49",
+      "displayName": "test customer 2",
+      "username": "testcustomer2",
+      "balance": 100,
+      "systemId": 1,
+      "customerRoleId": 2
+    }
+  },
+  {
+    "model": "Customer",
+    "data": {
+      "rfid": "1337",
+      "displayName": "test customer 3",
+      "username": "testcustomer3",
+      "balance": 200.00,
+      "systemId": 2,
+      "customerRoleId": 4
+    }
+  }
+]

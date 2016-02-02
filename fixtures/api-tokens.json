@@ -1,0 +1,18 @@
+[
+  {
+    "model": "APIToken",
+    "data": {
+      "name": "Kontoret API Token",
+      "token": "d54f9200b680ff11eb1ffcb01a99bde2",
+      "systemId": 2
+    }
+  },
+  {
+    "model": "APIToken",
+    "data": {
+      "name": "LaBamba API Token",
+      "token": "dfff9200ba80sf11ebtffcb01e99bde2",
+      "systemId": 1
+    }
+  }
+]
