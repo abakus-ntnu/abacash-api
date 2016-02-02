@@ -6,18 +6,16 @@ import { loadFixtures, test404 } from '../helpers';
 chai.should();
 
 describe('Transaction API', () => {
-
     const fixtures = [
         'systems.json',
         'customer-roles.json',
         'customers.json',
         'customer-roles.json',
         'products.json',
-        'transactions.json',
+        'transactions.json'
     ];
 
     describe('List transactions', () => {
-
         beforeEach(() => loadFixtures(fixtures));
 
         it('should list transactions', done => {
@@ -65,7 +63,6 @@ describe('Transaction API', () => {
 
 
     describe('Add a new transaction ', () => {
-
         beforeEach(() => loadFixtures(fixtures));
 
         it('should add a new transaction', done => {
@@ -104,7 +101,8 @@ describe('Transaction API', () => {
         });
 
 
-        it('should return a validation error for sellerId = null on seller enforced system', done => {
+        it('should return a validation error for sellerId = null on seller enforced system',
+        done => {
             const newTransaction = {
                 customerId: 1,
                 products: [1]

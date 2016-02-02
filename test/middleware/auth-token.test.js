@@ -1,13 +1,11 @@
 import chai from 'chai';
 import { isTokenAuthenticated } from '../../src/auth/middleware';
-import { AuthenticationError } from '../../src/components/errors';
 import { loadFixtures } from '../helpers';
 
 const should = chai.should();
 
 describe('APIToken Middleware', () => {
     const createNext = done => err => {
-        err.should.be.an.instanceOf(AuthenticationError);
         err.message
             .should.equal('You need to authenticate to access this resource');
         done();

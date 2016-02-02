@@ -12,7 +12,6 @@ describe('Product API', () => {
     ];
 
     describe('List all products', () => {
-
         beforeEach(() => loadFixtures(fixtures));
 
         it('should list all products', done => {
@@ -43,11 +42,9 @@ describe('Product API', () => {
                 done();
             });
         });
-
     });
 
     describe('List active products', () => {
-
         beforeEach(() => loadFixtures(fixtures));
 
         it('should list active products', done => {
@@ -83,9 +80,8 @@ describe('Product API', () => {
     });
 
     describe('List a single product', () => {
-
         beforeEach(() => loadFixtures(fixtures));
-        
+
         it('should return a product from a current system', done => {
             request(app)
             .get('/1/products/1')
@@ -96,7 +92,6 @@ describe('Product API', () => {
                 res.body.name.should.equal('Test product 1');
                 done();
             });
-
         });
 
         it('should return 404 on product that doesn\'t exist', done => {
@@ -108,12 +103,11 @@ describe('Product API', () => {
         it('should return 404 on product that exists, but are not in the current system.', done => {
             request(app)
             .get('/1/products/4')
-            .expect(404, done)
+            .expect(404, done);
         });
     });
 
     describe('Create products', () => {
-    
         beforeEach(() => loadFixtures(fixtures));
 
         it('should create a product', done => {
@@ -129,11 +123,9 @@ describe('Product API', () => {
             })
             .expect(201, done);
         });
-
     });
 
     describe('Destroy product', () => {
-
         beforeEach(() => loadFixtures(fixtures));
 
         it('should delete an existing product', done => {
