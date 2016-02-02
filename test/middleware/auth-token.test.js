@@ -1,5 +1,5 @@
 import chai from 'chai';
-import { isTokenAuthenticated } from '../../src/auth/auth.service';
+import { isTokenAuthenticated } from '../../src/auth/middleware';
 import { AuthenticationError } from '../../src/components/errors';
 import { loadFixtures } from '../helpers';
 

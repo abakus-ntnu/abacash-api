@@ -1,5 +1,6 @@
 import express from 'express';
 import db from '../models';
+import auth from './auth.routes';
 import customer from './customer.routes';
 import system from './system.routes';
 import user from './user.routes';
@@ -11,14 +12,12 @@ import apiToken from './api-token.routes';
 import systemRole from './system-role.routes';
 import * as errors from '../components/errors';
 
-// import auth from './auth.routes';
 // import product from './product.routes';
 // import transaction from './transaction.routes';
 
 const router = express.Router();
 const apiRouter = express.Router();
 
-// router.use('/auth', auth);
 router.use('/api', apiRouter);
 
 apiRouter.param('system', (req, res, next, id) => {
@@ -33,6 +32,7 @@ apiRouter.param('system', (req, res, next, id) => {
     .catch(next);
 });
 
+apiRouter.use('/authenticate', auth);
 apiRouter.use('/api-tokens', apiToken);
 apiRouter.use('/users', user);
 apiRouter.use('/systems', system);
