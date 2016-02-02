@@ -1,12 +1,4 @@
 {
     "extends": "webkom",
-    "env": {
-        "node": true,
-        "mocha": true
-    },
-    "rules": {
-        "indent": [2, 4],
-        "new-cap": 0,
-        "func-names": 0
-    }
+    "parser": "babel-eslint"
 }
