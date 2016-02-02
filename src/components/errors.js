@@ -29,8 +29,12 @@ export class RequestError extends Error {
 
 export class AuthenticationError extends Error {
     name = 'AuthenticationError'
-    message = 'You need to authenticate to access this resource'
     status = 401
+
+    constructor(message = 'You need to authenticate to access this resource') {
+        super(message);
+        this.message = message;
+    }
 }
 
 export class NotFoundError extends Error {
