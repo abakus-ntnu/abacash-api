@@ -13,9 +13,14 @@ $ npm start
 $ npm test
 ```
 
+To run tests with file watch:
+```bash
+$ npm run test:watch
+```
+
 To run a test a subset of the tests:
 ```bash
 $ npm test -- -g *pattern*
 ```
-Here, *pattern* is a regex for the test descriptions.
+Here, *pattern* is a regex for the test descriptions. This also works on `npm run test:watch`.
 
