@@ -8,7 +8,6 @@ $ npm start
 ```
 
 ## Tests
-
 ```bash
 $ npm test
 ```
@@ -26,7 +25,6 @@ Here, *pattern* is a regex for the test descriptions. This also works on `npm ru
 
 ## Load database with test data
 ```
-$ npm run load-data 
+$ npm run load-data
 ```
 Will fill the `abacash` postgres database with fixtures from `./fixtures/`. Connection string can be set by setting environment variable `PG_URL`. Contents in the `fixtures` are not (and should not be) used for automatic testing, which means the fixtures can be edited to test the client.
-
