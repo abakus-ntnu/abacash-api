@@ -13,12 +13,11 @@ export function isTokenAuthenticated(req, res, next) {
         where: { token }
     })
     .then(apiToken => {
-        if (apiToken) {
-            req.apiToken = apiToken;
-            return next();
+        if (!apiToken) {
+            return next(new AuthenticationError());
         }
-
-        return next(new AuthenticationError());
+        req.apiToken = apiToken;
+        return next();
     })
     .catch(next);
 }

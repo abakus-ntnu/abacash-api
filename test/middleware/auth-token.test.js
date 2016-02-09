@@ -23,18 +23,6 @@ describe('APIToken Middleware', () => {
 
             isTokenAuthenticated(req, res, createNext(done));
         });
-
-        it('should call next if it can\'t find the token', done => {
-            const res = {};
-            const req = {
-                get(header) {
-                    header.should.equal('Authorization');
-                    return 'Token 123tdfaj43k';
-                }
-            };
-
-            isTokenAuthenticated(req, res, createNext(done));
-        });
     });
 
     describe('Database Tests', () => {
@@ -60,6 +48,18 @@ describe('APIToken Middleware', () => {
             };
 
             isTokenAuthenticated(req, res, next);
+        });
+
+        it('should call next if it can\'t find the token', done => {
+            const res = {};
+            const req = {
+                get(header) {
+                    header.should.equal('Authorization');
+                    return 'Token 123tdfaj43k';
+                }
+            };
+
+            isTokenAuthenticated(req, res, createNext(done));
         });
 
         it('should set req.apiToken when the token is correct', done => {
