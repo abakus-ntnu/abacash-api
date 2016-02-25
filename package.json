@@ -29,7 +29,7 @@
     "lodash": "4.5.1",
     "method-override": "2.3.5",
     "morgan": "1.7.0",
-    "pg": "4.4.4",
+    "pg": "4.5.1",
     "pg-hstore": "2.3.2",
     "sequelize": "3.19.1",
     "superagent": "1.7.2"
