@@ -13,6 +13,7 @@ describe('System API', () => {
         it('should list systems', done => {
             request(app)
             .get('/systems')
+            .set('Authorization', createAuthToken())
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -31,6 +32,7 @@ describe('System API', () => {
         it('should retrieve a system', done => {
             request(app)
             .get('/systems/1')
+            .set('Authorization', createAuthToken())
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
