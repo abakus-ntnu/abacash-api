@@ -4,8 +4,14 @@ import config from '../config';
 import { AuthenticationError } from '../components/errors';
 
 export function isTokenAuthenticated(req, res, next) {
+    const authString = req.get('Authorization');
+    if (!authString) {
+        // No auth header provided
+        return next(new AuthenticationError());
+    }
     const [scheme, token] = req.get('Authorization').split(' ');
     if (scheme !== 'Token') {
+        // Only token authentication is accepted
         return next(new AuthenticationError());
     }
 
