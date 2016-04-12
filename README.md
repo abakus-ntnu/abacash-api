@@ -28,3 +28,15 @@ Here, *pattern* is a regex for the test descriptions. This also works on `npm ru
 $ npm run load-data
 ```
 Will fill the `abacash` postgres database with fixtures from `./fixtures/`. Connection string can be set by setting environment variable `PG_URL`. Contents in the `fixtures` are not (and should not be) used for automatic testing, which means the fixtures can be edited to test the client.
+
+## Transfer data from existing Mongodb documents
+```
+$ node scripts/transfer.js -d *database url* -s *system id* [-k] 
+```
+The `-d` and `-s` options are required, `-k` is optional. The options are defined like this:
+```
+.option('-d, --database [value]', 'MongoDB connection string (i.e. mongodb://localhost:27017/labamba')
+.option('-s, --system-id <n>', 'System ID to transfer to')
+.option('-k, --keep-stock', 'Keep stock?')
+```
+The transfer script is dependent on an existing system.
