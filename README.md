@@ -35,8 +35,10 @@ $ node scripts/transfer.js -d *database url* -s *system id* [-k]
 ```
 The `-d` and `-s` options are required, `-k` is optional. The options are defined like this:
 ```
-.option('-d, --database [value]', 'MongoDB connection string (i.e. mongodb://localhost:27017/labamba')
-.option('-s, --system-id <n>', 'System ID to transfer to')
-.option('-k, --keep-stock', 'Keep stock?')
+-h, --help              output usage information
+-V, --version           output the version number
+-d, --database [value]  MongoDB connection string (i.e. mongodb://localhost:27017/labamba
+-s, --system-id <n>     System ID to transfer to
+-k, --keep-stock        Keep stock?
 ```
 The transfer script is dependent on an existing system.
