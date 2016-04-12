@@ -1,5 +1,6 @@
-import config from '../config';
 import request from 'superagent';
+import config from '../config';
+import { NotFoundError } from '../components/errors';
 
 const path = config.nerd.url + config.nerd.apiKey;
 
@@ -10,15 +11,20 @@ export function list(req, res, next) {
     .query({ surname: req.query.surname })
     .end((err, response) => {
         if (err) next(err);
-        res.json(response.body.users);
+        res.json(response.body.users || []);
     });
 }
 
 export function retrieve(req, res, next) {
     request
-    .get(`${path}/user/info/${req.params.username}`)
+    .get(`${path}/user/info/${req.params.username}/`)
     .end((err, response) => {
         if (err) next(err);
-        res.json(response.body.users[0]);
+        const { users } = response.body;
+        if (!users || !users.length) {
+            next(new NotFoundError());
+        } else {
+            res.json(users[0]);
+        }
     });
 }
