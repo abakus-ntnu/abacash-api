@@ -2,8 +2,11 @@
 
 ## Usage
 ```bash
-$ npm run watch
-# Or without reloading:
+# With reloading (development):
+$ npm run start:watch
+
+# Or without reloading (production):
+$ npm run build
 $ npm start
 ```
 
