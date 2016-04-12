@@ -8,7 +8,8 @@
     "load-db": "PG_URL=${PG_URL:-'postgres://localhost/abacash'} babel-node bin/load-db.js",
     "test": "PG_URL=${PG_URL:-'postgres://localhost/abacash-test'} NODE_ENV=test mocha --compilers js:babel-core/register $(find test -name '*.test.js')",
     "test:watch": "npm test -- --watch --reporter min",
-    "lint": "eslint --ignore-path .gitignore ."
+    "lint": "eslint --ignore-path .gitignore .",
+    "transfer": "PG_URL=${PG_URL:-'postgres://localhost/abacash'} node scripts/transfer.js"
   },
   "dependencies": {
     "bcrypt": "0.8.5",
@@ -33,15 +34,17 @@
   "devDependencies": {
     "babel-cli": "^6.6.5",
     "babel-core": "^6.7.4",
+    "babel-eslint": "^6.0.2",
     "babel-preset-es2015": "^6.6.0",
     "babel-preset-stage-0": "^6.5.0",
-    "babel-eslint": "^6.0.2",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
+    "commander": "^2.9.0",
     "eslint": "2.7.0",
     "eslint-config-airbnb": "^7.0.0",
     "eslint-config-webkom": "^1.3.4",
     "mocha": "^2.4.5",
+    "mongodb": "^2.1.16",
     "sequelize-fixtures": "git+https://github.com/abakusbackup/sequelize-fixtures.git",
     "supertest": "^1.2.0"
   },
