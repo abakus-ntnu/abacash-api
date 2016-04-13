@@ -23,7 +23,7 @@
     "express": "4.13.4",
     "express-jwt": "3.3.0",
     "jsonwebtoken": "5.7.0",
-    "lodash": "4.10.0",
+    "lodash": "4.11.0",
     "method-override": "2.3.5",
     "morgan": "1.7.0",
     "pg": "4.5.3",
