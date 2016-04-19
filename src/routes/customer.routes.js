@@ -1,14 +1,13 @@
 import express from 'express';
 import * as controller from '../controllers/customer.controller';
-import { isTokenAuthenticated } from '../auth/middleware';
+import { isAuthenticated, isTokenAuthenticated } from '../auth/middleware';
 
 const router = express.Router();
 
-router.use(isTokenAuthenticated);
-router.get('/', controller.list);
-router.get('/:lookup', controller.retrieve);
-router.post('/', controller.create);
-router.put('/:customerId', controller.update);
-router.delete('/:customerId', controller.destroy);
+router.get('/:lookup', isTokenAuthenticated, controller.retrieve);
+router.post('/', isTokenAuthenticated, controller.create);
+router.get('/', isAuthenticated, controller.list);
+router.put('/:customerId', isAuthenticated, controller.update);
+router.delete('/:customerId', isAuthenticated, controller.destroy);
 
 export default router;
