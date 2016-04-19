@@ -12,15 +12,15 @@ if (process.env.NODE_ENV === 'production') {
 
 const fixtureDir = 'fixtures/';
 const fixtures = [
-    'systems',
-    'api-tokens',
-    'customer-roles',
-    'customers',
-    'products',
-    'transactions',
-    'users'
+    'systems.json',
+    'api-tokens.json',
+    'customer-roles.json',
+    'customers.json',
+    'products.json',
+    'transactions.json',
+    'users.js'
 ]
-    .map(file => `./${fixtureDir}${file}.json`);
+    .map(file => `./${fixtureDir}${file}`);
 
 syncDB({ force: true })
     .then(() => sequelizeFixtures.loadFiles(fixtures, db))
