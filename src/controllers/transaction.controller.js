@@ -3,6 +3,18 @@ import { NotFoundError, ModelValidationError, ValidationError } from '../compone
 import Sequelize from 'sequelize';
 import Bluebird from 'bluebird';
 
+function checkIfSellerIsSeller(sellerId, needSeller) {
+    return new Bluebird(resolve => {
+        if (needSeller) {
+            db.Customer.findById(sellerId)
+            .then(customer => customer.getCustomerRole())
+            .then(role => resolve(role.isSeller));
+        } else {
+            resolve(true);
+        }
+    });
+}
+
 export function list(req, res, next) {
     req.system.getTransactions()
     .then(res.json.bind(res))
@@ -37,7 +49,7 @@ export function add(req, res, next) {
 
         // check that seller is included if system needs seller
         if (req.system.needSeller && !req.body.sellerId) {
-             return next(new ValidationError('A transaction for this system requires a seller'));
+            return next(new ValidationError('A transaction for this system requires a seller'));
         }
         // find and store customer
         return checkIfSellerIsSeller(req.body.sellerId, req.system.needSeller)
@@ -102,16 +114,4 @@ export function add(req, res, next) {
         throw new ModelValidationError(err);
     })
     .catch(next);
-}
-
-function checkIfSellerIsSeller(sellerId, needSeller) {
-    return new Bluebird(resolve =>  {
-        if (needSeller) {
-            db.Customer.findById(sellerId)
-            .then(customer => customer.getCustomerRole())
-            .then(role => resolve(role.isSeller));
-        } else {
-            resolve(true);
-        }
-    });
 }

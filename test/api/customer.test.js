@@ -18,7 +18,7 @@ describe('Customer API', () => {
             .end((err, res) => {
                 if (err) return done(err);
                 const customers = res.body;
-                customers.length.should.equal(2);
+                customers.length.should.equal(3);
                 customers[0].id.should.equal(1);
                 done();
             });
