@@ -1,7 +1,12 @@
 import chai from 'chai';
 import request from 'supertest';
 import app from '../../src/app';
-import { loadFixtures, test404, getAPIToken } from '../helpers';
+import { TOKEN } from '../../src/auth/constants';
+import { loadFixtures, test404, createAuthorization } from '../helpers';
+
+const headers = {
+    Authorization: createAuthorization(TOKEN)
+};
 
 chai.should();
 
@@ -12,7 +17,7 @@ describe('Transaction API', () => {
         it('should list transactions', done => {
             request(app)
             .get('/1/transactions')
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -25,7 +30,7 @@ describe('Transaction API', () => {
         it('should not list transactions from other systems', done => {
             request(app)
             .get('/2/transactions')
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -40,7 +45,7 @@ describe('Transaction API', () => {
         it('should retrieve a transaction', done => {
             request(app)
             .get('/1/transactions/1')
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -51,7 +56,7 @@ describe('Transaction API', () => {
         });
 
         it('should return 404 for missing transaction', done => {
-            test404('/1/transactions/1337', done, getAPIToken());
+            test404('/1/transactions/1337', done, headers);
         });
     });
 
@@ -68,7 +73,7 @@ describe('Transaction API', () => {
             request(app)
             .post('/1/transactions/')
             .send(newTransaction)
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(201)
             .end((err, res) => {
@@ -86,7 +91,7 @@ describe('Transaction API', () => {
             request(app)
             .post('/1/transactions/')
             .send(newTransaction)
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(400)
             .end((err, res) => {
@@ -107,7 +112,7 @@ describe('Transaction API', () => {
             request(app)
             .post('/1/transactions/') // system 1 enforces seller
             .send(newTransaction)
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(400)
             .end((err, res) => {
@@ -126,7 +131,7 @@ describe('Transaction API', () => {
             request(app)
             .post('/1/transactions/') // system 1 enforces seller
             .send(newTransaction)
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(400)
             .end((err, res) => {
@@ -144,7 +149,7 @@ describe('Transaction API', () => {
             request(app)
             .post('/2/transactions/')
             .send(newTransaction)
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(201)
             .end((err, res) => {
@@ -161,7 +166,7 @@ describe('Transaction API', () => {
             request(app)
             .post('/1/transactions/')
             .send(newTransaction)
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(400)
             .end((err, res) => {
@@ -180,7 +185,7 @@ describe('Transaction API', () => {
             request(app)
             .post('/1/transactions/')
             .send(newTransaction)
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(400)
             .end((err, res) => {

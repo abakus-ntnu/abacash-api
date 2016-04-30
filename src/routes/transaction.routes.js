@@ -1,10 +1,11 @@
 import express from 'express';
 import * as controller from '../controllers/transaction.controller';
-import { isTokenAuthenticated } from '../auth/middleware';
+import { requires } from '../auth';
+import { TOKEN } from '../auth/constants';
 
 const router = express.Router();
 
-router.use(isTokenAuthenticated);
+router.use(requires(TOKEN));
 router.get('/', controller.list);
 router.get('/:transactionId', controller.retrieve);
 router.post('/', controller.add);

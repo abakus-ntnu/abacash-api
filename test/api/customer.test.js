@@ -1,9 +1,14 @@
 import chai from 'chai';
 import request from 'supertest';
 import app from '../../src/app';
-import { createAuthToken, loadFixtures, test404, getAPIToken } from '../helpers';
+import { ADMINISTRATOR } from '../../src/auth/constants';
+import { createAuthorization, loadFixtures, test404 } from '../helpers';
 
 chai.should();
+
+const headers = {
+    Authorization: createAuthorization(ADMINISTRATOR)
+};
 
 describe('Customer API', () => {
     describe('List customers', () => {
@@ -12,7 +17,7 @@ describe('Customer API', () => {
         it('should list customers', done => {
             request(app)
             .get('/1/customers')
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -27,7 +32,7 @@ describe('Customer API', () => {
         it('should not list customers from other systems', done => {
             request(app)
             .get('/2/customers')
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -44,7 +49,7 @@ describe('Customer API', () => {
         it('should retrieve a customer', done => {
             request(app)
             .get('/1/customers/1')
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -56,7 +61,7 @@ describe('Customer API', () => {
         });
 
         it('should return 404 for missing customer', done => {
-            test404('/1/customers/1337', done, getAPIToken());
+            test404('/1/customers/1337', done, headers);
         });
     });
 
@@ -73,7 +78,7 @@ describe('Customer API', () => {
             request(app)
             .post('/1/customers/')
             .send(newCustomer)
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(201)
             .end((err, res) => {
@@ -93,7 +98,7 @@ describe('Customer API', () => {
             request(app)
             .post('/1/customers/')
             .send(newCustomer)
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(400)
             .end((err, res) => {
@@ -116,7 +121,7 @@ describe('Customer API', () => {
             request(app)
             .put('/1/customers/1')
             .send(newCustomer)
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -136,7 +141,7 @@ describe('Customer API', () => {
             request(app)
             .put('/1/customers/1')
             .send(newCustomer)
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -156,7 +161,7 @@ describe('Customer API', () => {
             request(app)
             .put('/1/customers/12345')
             .send(newCustomer)
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(404)
             .end((err, res) => {
@@ -173,7 +178,7 @@ describe('Customer API', () => {
         it('should delete a customer', done => {
             request(app)
             .delete('/1/customers/1')
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect(204)
             .end((err, res) => {
                 if (err) return done(err);
@@ -182,7 +187,7 @@ describe('Customer API', () => {
         });
 
         it('should return 404 for missing customer', done => {
-            test404('/1/customers/12345', done, createAuthToken(), 'delete');
+            test404('/1/customers/12345', done, headers, 'delete');
         });
     });
 });

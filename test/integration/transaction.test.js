@@ -2,16 +2,21 @@ import chai from 'chai';
 import request from 'supertest';
 import Bluebird from 'bluebird';
 import app from '../../src/app';
-import { loadFixtures, getAPIToken } from '../helpers';
+import { TOKEN } from '../../src/auth/constants';
+import { loadFixtures, createAuthorization } from '../helpers';
 
 const should = chai.should();
+
+const headers = {
+    Authorization: createAuthorization(TOKEN)
+};
 
 // posts a transaction that should work and check if sum is calculated correctly
 function postTransactionAndCheckSum(transaction, expectedSum) {
     return new Bluebird((resolve, reject) => {
         request(app)
         .post('/1/transactions/')
-        .set('Authorization', getAPIToken())
+        .set(headers)
         .send(transaction)
         .expect(201)
         .end((err, res) => {
@@ -27,7 +32,7 @@ function checkIfTransactionExists(transactionId) {
     return new Bluebird((resolve, reject) => {
         request(app)
         .get(`/1/transactions/${transactionId}`)
-        .set('Authorization', getAPIToken())
+        .set(headers)
         .expect(200)
         .end((err, res) => {
             if (err) return reject(err);
@@ -43,7 +48,7 @@ function postTransactionInsufficientBalance(transaction) {
         request(app)
         .post('/1/transactions/')
         .send(transaction)
-        .set('Authorization', getAPIToken())
+        .set(headers)
         .expect(400) // 400 status code on insufficient balance
         .end((err, res) => {
             if (err) return reject(err);
@@ -58,7 +63,7 @@ function checkIfNoTransactionsAreAdded(transactionId) {
     return new Bluebird((resolve, reject) => {
         request(app)
         .get('/1/transactions/')
-        .set('Authorization', getAPIToken())
+        .set(headers)
         .expect(200)
         .end((err, res) => {
             if (err) return reject(err);
@@ -73,7 +78,7 @@ function checkCustomerBalance(customerId, expectedBalance) {
     return new Bluebird((resolve, reject) => {
         request(app)
         .get(`/1/customers/${customerId}`)
-        .set('Authorization', getAPIToken())
+        .set(headers)
         .expect(200)
         .end((err, res) => {
             if (err) return reject(err);
@@ -87,7 +92,7 @@ function checkProductStock(productId, expectedStock) {
     return new Bluebird((resolve, reject) => {
         request(app)
         .get(`/1/products/${productId}`)
-        .set('Authorization', getAPIToken())
+        .set(headers)
         .expect(200)
         .end((err, res) => {
             should.equal(expectedStock, res.body.stock);

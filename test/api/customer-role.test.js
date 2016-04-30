@@ -1,9 +1,14 @@
 import chai from 'chai';
 import request from 'supertest';
 import app from '../../src/app';
-import { loadFixtures, createAuthToken } from '../helpers';
+import { ADMINISTRATOR } from '../../src/auth/constants';
+import { loadFixtures, createAuthorization } from '../helpers';
 
 const should = chai.should();
+
+const headers = {
+    Authorization: createAuthorization(ADMINISTRATOR)
+};
 
 describe('Customer Role API', () => {
     beforeEach(() => loadFixtures());
@@ -12,7 +17,7 @@ describe('Customer Role API', () => {
         it('should list roles', done => {
             request(app)
             .get('/1/roles')
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -36,7 +41,7 @@ describe('Customer Role API', () => {
             request(app)
             .post('/1/roles')
             .send(payload)
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(201)
             .end((err, res) => {
@@ -60,7 +65,7 @@ describe('Customer Role API', () => {
             request(app)
             .put('/1/roles/1')
             .send(payload)
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -79,7 +84,7 @@ describe('Customer Role API', () => {
             request(app)
             .put('/1/roles/1337')
             .send(payload)
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(404)
             .end((err, res) => {
@@ -95,7 +100,7 @@ describe('Customer Role API', () => {
         it('should delete a role', done => {
             request(app)
             .delete('/1/roles/1')
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect(204)
             .end((err, res) => done(err));
         });
