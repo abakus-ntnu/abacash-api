@@ -9,6 +9,7 @@ router.use(requires(ADMINISTRATOR));
 router.get('/', controller.list);
 router.post('/', controller.create);
 router.get('/:id', controller.retrieve);
+router.get('/:id/users', controller.users);
 router.put('/:id', controller.update);
 
 export default router;
