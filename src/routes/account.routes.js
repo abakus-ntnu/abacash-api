@@ -1,10 +1,11 @@
 import express from 'express';
 import * as controller from '../controllers/account.controller';
-import { isAuthenticated } from '../auth/middleware';
+import { requires } from '../auth';
+import { MODERATOR } from '../auth/constants';
 
 const router = express.Router();
 
-router.use(isAuthenticated);
+router.use(requires(MODERATOR));
 router.get('/', controller.retrieve);
 
 export default router;
