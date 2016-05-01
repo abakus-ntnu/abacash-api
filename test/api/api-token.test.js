@@ -16,7 +16,7 @@ describe('APIToken API', () => {
 
         it('should list all tokens', done => {
             request(app)
-            .get('/api-tokens/')
+            .get('/1/api-tokens/')
             .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
@@ -40,7 +40,7 @@ describe('APIToken API', () => {
             };
 
             request(app)
-            .post('/api-tokens')
+            .post('/1/api-tokens/')
             .send(body)
             .set(headers)
             .expect('Content-Type', /json/)
@@ -60,7 +60,7 @@ describe('APIToken API', () => {
             };
 
             request(app)
-            .post('/api-tokens/')
+            .post('/1/api-tokens/')
             .send(auth)
             .set(headers)
             .expect('Content-Type', /json/)
@@ -79,7 +79,7 @@ describe('APIToken API', () => {
 
         it('should delete a token', done => {
             request(app)
-            .delete('/api-tokens/1')
+            .delete('/1/api-tokens/1/')
             .set(headers)
             .expect(204)
             .end((err, res) => {
@@ -89,7 +89,7 @@ describe('APIToken API', () => {
         });
 
         it('should return 404 for missing tokens', done => {
-            test404('/api-tokens/1337', done, headers, 'delete');
+            test404('/1/api-tokens/1337', done, headers, 'delete');
         });
     });
 });
