@@ -28,7 +28,9 @@ function createAPIToken() {
 }
 
 function createModeratorToken() {
-    const token = jwt.sign({}, config.jwtSecret, {
+    const token = jwt.sign({
+        isAdministrator: false
+    }, config.jwtSecret, {
         expiresIn: '7 days',
         subject: 1 // fake user id
     });
@@ -36,7 +38,9 @@ function createModeratorToken() {
 }
 
 function createAdministratorToken() {
-    const token = jwt.sign({}, config.jwtSecret, {
+    const token = jwt.sign({
+        isAdministrator: true
+    }, config.jwtSecret, {
         expiresIn: '7 days',
         subject: 1 // fake user id
     });

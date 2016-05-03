@@ -29,10 +29,12 @@ function authenticateModerator(authString) {
     const token = getToken(authString, 'Bearer');
     if (!token) return false;
     try {
-        jwt.verify(token, config.jwtSecret);
-        return true;
+        const decodedToken = jwt.verify(token, config.jwtSecret);
+        if ('isAdministrator' in decodedToken) {
+            return !decodedToken.isAdministrator;
+        }
+        return false;
     } catch (err) {
-        console.log(err);
         return false;
     }
 }
@@ -41,14 +43,14 @@ function authenticateAdministrator(authString) {
     const token = getToken(authString, 'Bearer');
     if (!token) return false;
     try {
-        jwt.verify(token, config.jwtSecret);
-        return true;
+        const decodedToken = jwt.verify(token, config.jwtSecret);
+        return decodedToken.isAdministrator === true;
     } catch (err) {
         return false;
     }
 }
 
-function authenticate(auth, authString) {
+export function authenticate(auth, authString) {
     switch (auth) {
     case authConstants.TOKEN:
         return authenticateToken(authString);
