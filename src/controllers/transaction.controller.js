@@ -4,15 +4,12 @@ import Sequelize from 'sequelize';
 import Bluebird from 'bluebird';
 
 function checkIfSellerIsSeller(sellerId, needSeller) {
-    return new Bluebird(resolve => {
-        if (needSeller) {
-            db.Customer.findById(sellerId)
-            .then(customer => customer.getCustomerRole())
-            .then(role => resolve(role.isSeller));
-        } else {
-            resolve(true);
-        }
-    });
+    if (needSeller) {
+        return db.Customer.findById(sellerId)
+        .then(customer => customer.getCustomerRole())
+        .then(role => role.isSeller);
+    }
+    return Bluebird.resolve(true);
 }
 
 export function list(req, res, next) {

@@ -3,10 +3,32 @@ import chai from 'chai';
 import request from 'supertest';
 import Bluebird from 'bluebird';
 import { loadFixtures, createAuthorization } from '../helpers';
-import { TOKEN, HIERARCHY, name } from '../../src/auth/constants';
+import { TOKEN, HIERARCHY, AUTH_NAMES } from '../../src/auth/constants';
 
 chai.should();
 
+function checkAuthorization(auth, httpVerb, controller, shouldBeAuthenticatedForLevel) {
+    return new Bluebird(resolve => {
+        request(app)[httpVerb.toLowerCase()](controller)
+        .set('Authorization', createAuthorization(auth))
+        .end((err, res) => {
+            if (shouldBeAuthenticatedForLevel) {
+                chai.assert.notEqual(
+                    res.status,
+                    401,
+                    `${httpVerb} ${controller} should be allowed with ${AUTH_NAMES[auth]}`
+                );
+            } else {
+                chai.assert.equal(
+                    res.status,
+                    401,
+                    `${httpVerb} ${controller} should not be allowed with ${AUTH_NAMES[auth]}`
+                );
+            }
+            resolve();
+        });
+    });
+}
 function testSecurity(controller, httpVerb, authId) {
     it(`${controller} should be ${authId}  authenticated for ${httpVerb}`, done => {
         let shouldBeAuthenticatedForLevel = false;
@@ -16,27 +38,8 @@ function testSecurity(controller, httpVerb, authId) {
                 // for all levels and up
                 shouldBeAuthenticatedForLevel = true;
             }
-            return new Bluebird(resolve => {
-                request(app)[httpVerb.toLowerCase()](controller)
-                .set('Authorization', createAuthorization(auth))
-                .end((err, res) => {
-                    if (shouldBeAuthenticatedForLevel) {
-                        chai.assert.notEqual(
-                            res.status,
-                            401,
-                            `${httpVerb} ${controller} should be allowed with ${name(auth)}`
-                        );
-                    } else {
-                        chai.assert.equal(
-                            res.status,
-                            401,
-                            `${httpVerb} ${controller} should not be allowed with ${name(auth)}`
-                        );
-                    }
-                    resolve();
-                });
-            });
-        }).then(() => done());
+            return checkAuthorization(auth, httpVerb, controller, shouldBeAuthenticatedForLevel);
+        }).nodeify(done);
     });
 }
 
