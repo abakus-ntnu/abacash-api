@@ -1,13 +1,12 @@
 import express from 'express';
 import * as controller from '../controllers/transaction.controller';
 import { createAuthMiddleware } from '../auth';
-import { TOKEN } from '../auth/constants';
+import { TOKEN, MODERATOR } from '../auth/constants';
 
 const router = express.Router();
 
-router.use(createAuthMiddleware(TOKEN));
-router.get('/', controller.list);
-router.get('/:transactionId', controller.retrieve);
-router.post('/', controller.add);
+router.get('/', createAuthMiddleware(MODERATOR), controller.list);
+router.get('/:transactionId', createAuthMiddleware(MODERATOR), controller.retrieve);
+router.post('/', createAuthMiddleware(TOKEN), controller.add);
 
 export default router;
