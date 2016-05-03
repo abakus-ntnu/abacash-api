@@ -1,10 +1,11 @@
 import express from 'express';
 import * as controller from '../controllers/system-role.controller';
-import { isAuthenticated } from '../auth/middleware';
+import { createAuthMiddleware } from '../auth';
+import { ADMINISTRATOR } from '../auth/constants';
 
 const router = express.Router();
 
-router.use(isAuthenticated);
+router.use(createAuthMiddleware(ADMINISTRATOR));
 router.post('/:id', controller.create);
 router.put('/:id', controller.update);
 router.delete('/:id', controller.destroy);

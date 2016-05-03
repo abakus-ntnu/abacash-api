@@ -1,12 +1,13 @@
 import express from 'express';
 import * as controller from '../controllers/product.controller';
-import { isTokenAuthenticated, isAuthenticated } from '../auth/middleware';
+import { createAuthMiddleware } from '../auth';
+import { TOKEN, MODERATOR } from '../auth/constants';
 
 const router = express.Router();
 
-router.get('/', isTokenAuthenticated, controller.list);
-router.post('/', isAuthenticated, controller.create);
-router.get('/:id', isTokenAuthenticated, controller.retrieve);
-router.delete('/:id', isAuthenticated, controller.destroy);
+router.get('/', createAuthMiddleware(TOKEN), controller.list);
+router.post('/', createAuthMiddleware(MODERATOR), controller.create);
+router.get('/:id', createAuthMiddleware(TOKEN), controller.retrieve);
+router.delete('/:id', createAuthMiddleware(MODERATOR), controller.destroy);
 
 export default router;

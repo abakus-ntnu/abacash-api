@@ -1,9 +1,14 @@
 import chai from 'chai';
 import request from 'supertest';
 import app from '../../src/app';
-import { loadFixtures, createAuthToken, getAPIToken } from '../helpers';
+import { ADMINISTRATOR } from '../../src/auth/constants';
+import { loadFixtures, createAuthorization } from '../helpers';
 
 chai.should();
+
+const headers = {
+    Authorization: createAuthorization(ADMINISTRATOR)
+};
 
 describe('Product API', () => {
     describe('List all products', () => {
@@ -12,7 +17,7 @@ describe('Product API', () => {
         it('should list all products', done => {
             request(app)
             .get('/1/products/')
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -28,7 +33,7 @@ describe('Product API', () => {
         it('should keep systems separate all products', done => {
             request(app)
             .get('/2/products/')
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -47,7 +52,7 @@ describe('Product API', () => {
         it('should list active products', done => {
             request(app)
             .get('/1/products/?active=true')
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -65,7 +70,7 @@ describe('Product API', () => {
         it('should list active products', done => {
             request(app)
             .get('/1/products/?type=Type 2&active=true')
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -84,7 +89,7 @@ describe('Product API', () => {
         it('should return a product from a current system', done => {
             request(app)
             .get('/1/products/1')
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -97,14 +102,14 @@ describe('Product API', () => {
         it('should return 404 on product that doesn\'t exist', done => {
             request(app)
             .get('/1/products/1337')
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect(404, done);
         });
 
         it('should return 404 on product that exists, but are not in the current system.', done => {
             request(app)
             .get('/1/products/4')
-            .set('Authorization', getAPIToken())
+            .set(headers)
             .expect(404, done);
         });
     });
@@ -123,7 +128,7 @@ describe('Product API', () => {
                 active: true,
                 stock: 0
             })
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect(201, done);
         });
     });
@@ -134,13 +139,13 @@ describe('Product API', () => {
         it('should delete an existing product', done => {
             request(app)
             .delete('/1/products/1')
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect(204, done);
         });
         it('should return not found if product not found', done => {
             request(app)
             .delete('/1/products/4')
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect(404, done);
         });
     });

@@ -3,6 +3,15 @@ import { NotFoundError, ModelValidationError, ValidationError } from '../compone
 import Sequelize from 'sequelize';
 import Bluebird from 'bluebird';
 
+function checkIfSellerIsSeller(sellerId, needSeller) {
+    if (needSeller) {
+        return db.Customer.findById(sellerId)
+        .then(customer => customer.getCustomerRole())
+        .then(role => role.isSeller);
+    }
+    return Bluebird.resolve(true);
+}
+
 export function list(req, res, next) {
     req.system.getTransactions()
     .then(res.json.bind(res))
@@ -32,17 +41,21 @@ export function add(req, res, next) {
     db.sequelize.transaction(t => {
         // transaction must contain products
         if (!req.body.products || req.body.products.length === 0) {
-            throw new ValidationError('A transaction must contain at least one product');
+            return next(new ValidationError('A transaction must contain at least one product'));
         }
 
         // check that seller is included if system needs seller
         if (req.system.needSeller && !req.body.sellerId) {
-            const error = new ValidationError('A transaction for this system requires a seller');
-            return next(error);
+            return next(new ValidationError('A transaction for this system requires a seller'));
         }
-
         // find and store customer
-        return db.Customer.findById(req.body.customerId)
+        return checkIfSellerIsSeller(req.body.sellerId, req.system.needSeller)
+        .then(isSeller => {
+            if (!isSeller) {
+                throw new ValidationError('sellerId does not belong to a seller');
+            }
+            return db.Customer.findById(req.body.customerId);
+        })
         .then(customer => {
             if (!customer) {
                 throw new ValidationError('Customer for transaction not found');

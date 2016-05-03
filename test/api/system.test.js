@@ -2,9 +2,14 @@ import chai from 'chai';
 import request from 'supertest';
 import app from '../../src/app';
 import systemFixtures from '../fixtures/systems.json';
-import { loadFixtures, createAuthToken } from '../helpers';
+import { ADMINISTRATOR } from '../../src/auth/constants';
+import { loadFixtures, createAuthorization } from '../helpers';
 
 chai.should();
+
+const headers = {
+    Authorization: createAuthorization(ADMINISTRATOR)
+};
 
 describe('System API', () => {
     describe('List systems', () => {
@@ -13,7 +18,7 @@ describe('System API', () => {
         it('should list systems', done => {
             request(app)
             .get('/systems')
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -32,7 +37,7 @@ describe('System API', () => {
         it('should retrieve a system', done => {
             request(app)
             .get('/systems/1')
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -59,7 +64,7 @@ describe('System API', () => {
             request(app)
             .post('/systems')
             .send(payload)
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(201)
             .end((err, res) => {
@@ -84,7 +89,7 @@ describe('System API', () => {
             request(app)
             .put('/systems/1')
             .send(payload)
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -105,7 +110,7 @@ describe('System API', () => {
             request(app)
             .put('/systems/1337')
             .send(payload)
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(404)
             .end((err, res) => {

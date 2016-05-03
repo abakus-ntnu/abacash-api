@@ -1,9 +1,14 @@
 import chai from 'chai';
 import request from 'supertest';
 import app from '../../src/app';
-import { loadFixtures, test404, createAuthToken } from '../helpers';
+import { ADMINISTRATOR } from '../../src/auth/constants';
+import { loadFixtures, test404, createAuthorization } from '../helpers';
 
 chai.should();
+
+const headers = {
+    Authorization: createAuthorization(ADMINISTRATOR)
+};
 
 describe('APIToken API', () => {
     describe('List all tokens', () => {
@@ -11,8 +16,8 @@ describe('APIToken API', () => {
 
         it('should list all tokens', done => {
             request(app)
-            .get('/api-tokens/')
-            .set('Authorization', createAuthToken())
+            .get('/1/api-tokens/')
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -35,9 +40,9 @@ describe('APIToken API', () => {
             };
 
             request(app)
-            .post('/api-tokens')
+            .post('/1/api-tokens/')
             .send(body)
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(201)
             .end((err, res) => {
@@ -55,9 +60,9 @@ describe('APIToken API', () => {
             };
 
             request(app)
-            .post('/api-tokens/')
+            .post('/1/api-tokens/')
             .send(auth)
-            .set('Authorization', createAuthToken())
+            .set(headers)
             .expect('Content-Type', /json/)
             .expect(400)
             .end((err, res) => {
@@ -74,8 +79,8 @@ describe('APIToken API', () => {
 
         it('should delete a token', done => {
             request(app)
-            .delete('/api-tokens/1')
-            .set('Authorization', createAuthToken())
+            .delete('/1/api-tokens/1/')
+            .set(headers)
             .expect(204)
             .end((err, res) => {
                 if (err) return done(err);
@@ -84,7 +89,7 @@ describe('APIToken API', () => {
         });
 
         it('should return 404 for missing tokens', done => {
-            test404('/api-tokens/1337', done, createAuthToken(), 'delete');
+            test404('/1/api-tokens/1337', done, headers, 'delete');
         });
     });
 });

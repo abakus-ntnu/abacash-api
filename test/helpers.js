@@ -6,6 +6,7 @@ import app from '../src/app';
 import { syncDB } from '../src/model-helpers';
 import config from '../src/config';
 import tokens from './fixtures/api-tokens.json';
+import * as authConstants from '../src/auth/constants';
 
 export function loadFixtures(fixtures) {
     const f = fixtures || [
@@ -22,39 +23,48 @@ export function loadFixtures(fixtures) {
     .then(() => sequelizeFixtures.loadFiles(fixturePaths, db));
 }
 
-export function createAuthToken() {
-    const token = jwt.sign({}, config.jwtSecret, {
+function createAPIToken() {
+    return `Token ${tokens[0].data.token}`;
+}
+
+function createModeratorToken() {
+    const token = jwt.sign({
+        isAdmin: false
+    }, config.jwtSecret, {
         expiresIn: '7 days',
         subject: 1 // fake user id
     });
     return `Bearer ${token}`;
 }
 
-export function getAPIToken() {
-    return `Token ${tokens[0].data.token}`;
+function createAdministratorToken() {
+    const token = jwt.sign({
+        isAdmin: true
+    }, config.jwtSecret, {
+        expiresIn: '7 days',
+        subject: 1 // fake user id
+    });
+    return `Bearer ${token}`;
 }
 
-export function test404(url, done, authorization, method = 'get') {
+export function createAuthorization(auth) {
+    switch (auth) {
+    case authConstants.TOKEN: return createAPIToken();
+    case authConstants.MODERATOR: return createModeratorToken();
+    case authConstants.ADMINISTRATOR: return createAdministratorToken();
+    default: return '';
+    }
+}
+
+export function test404(url, done, headers, method = 'get') {
     const requestMethod = request(app)[method];
     requestMethod(url)
         .expect('Content-Type', /json/)
-        .set('Authorization', authorization)
+        .set(headers)
         .expect(404)
         .end((err, res) => {
             if (err) return done(err);
             res.body.message.should.equal('Could not find the entity');
-            done();
-        });
-}
-
-export function testUnauthenticated(url, done, method = 'get') {
-    const requestMethod = request(app)[method];
-    requestMethod(url)
-        .expect('Content-Type', /json/)
-        .expect(401)
-        .end((err, res) => {
-            if (err) return done(err);
-            res.body.message.should.equal('No authorization token was found');
             done();
         });
 }

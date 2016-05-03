@@ -1,13 +1,11 @@
 import express from 'express';
-import * as controller from '../controllers/api-token.controller';
+import * as controller from '../controllers/account.controller';
 import { createAuthMiddleware } from '../auth';
 import { MODERATOR } from '../auth/constants';
 
 const router = express.Router();
 
 router.use(createAuthMiddleware(MODERATOR));
-router.get('/', controller.list);
-router.post('/', controller.create);
-router.delete('/:id', controller.destroy);
+router.get('/', controller.retrieve);
 
 export default router;
