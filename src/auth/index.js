@@ -1,7 +1,11 @@
 import db from '../models';
+import config from '../config';
 import { AuthenticationError } from '../components/errors';
 import Bluebird from 'bluebird';
+import expressJwt from 'express-jwt';
 import * as authConstants from './constants';
+
+const authenticateJwt = expressJwt({ secret: config.jwtSecret });
 
 function authenticateToken(req, res) {
     return new Bluebird(resolve => {
@@ -28,7 +32,7 @@ function authenticateToken(req, res) {
     });
 }
 
-function authenticateModerator(req, res) {
+function authenticateModerator(req, res, next) {
     return new Bluebird(resolve => {
         const authString = req.get('Authorization');
         if (!authString) {
@@ -39,11 +43,11 @@ function authenticateModerator(req, res) {
             // Only token authentication is accepted
             return resolve(false);
         }
-        return resolve(true);
+        return authenticateJwt(req, res, next);
     });
 }
 
-function authenticateAdministrator(req, res) {
+function authenticateAdministrator(req, res, next) {
     return new Bluebird(resolve => {
         const authString = req.get('Authorization');
         if (!authString) {
@@ -54,15 +58,15 @@ function authenticateAdministrator(req, res) {
             // Only token authentication is accepted
             return resolve(false);
         }
-        return resolve(true);
+        return authenticateJwt(req, res, next);
     });
 }
 
-function authenticate(auth, req, res) {
+function authenticate(auth, req, res, next) {
     switch (auth) {
     case authConstants.TOKEN: return authenticateToken(req, res);
-    case authConstants.MODERATOR: return authenticateModerator(req, res);
-    case authConstants.ADMINISTRATOR: return authenticateAdministrator(req, res);
+    case authConstants.MODERATOR: return authenticateModerator(req, res, next);
+    case authConstants.ADMINISTRATOR: return authenticateAdministrator(req, res, next);
     }
 }
 
@@ -80,7 +84,7 @@ export function requires(auth) {
             if (isAuthenticated === true || aboveLevel === false) {
                 return new Bluebird(resolve => resolve());
             }
-            return authenticate(authInner, req, res)
+            return authenticate(authInner, req, res, next)
             .then(result => {
                 isAuthenticated = result;
             });
