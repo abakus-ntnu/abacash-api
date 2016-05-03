@@ -30,10 +30,7 @@ function authenticateModerator(authString) {
     if (!token) return false;
     try {
         const decodedToken = jwt.verify(token, config.jwtSecret);
-        if ('isAdministrator' in decodedToken) {
-            return !decodedToken.isAdministrator;
-        }
-        return false;
+        return 'isAdmin' in decodedToken && !decodedToken.isAdmin;
     } catch (err) {
         return false;
     }
@@ -44,7 +41,7 @@ function authenticateAdministrator(authString) {
     if (!token) return false;
     try {
         const decodedToken = jwt.verify(token, config.jwtSecret);
-        return decodedToken.isAdministrator === true;
+        return decodedToken.isAdmin === true;
     } catch (err) {
         return false;
     }

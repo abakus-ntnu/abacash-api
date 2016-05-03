@@ -40,7 +40,7 @@ describe('Auth', () => {
     describe('Moderator', () => {
         it('should accept valid moderator token', () => {
             const token = jwt.sign({
-                isAdministrator: false
+                isAdmin: false
             }, config.jwtSecret, {
                 expiresIn: config.jwtExpiresIn
             });
@@ -52,7 +52,7 @@ describe('Auth', () => {
 
         it('should reject administrator token', () => {
             const token = jwt.sign({
-                isAdministrator: true
+                isAdmin: true
             }, config.jwtSecret, {
                 expiresIn: config.jwtExpiresIn
             });
@@ -74,7 +74,7 @@ describe('Auth', () => {
 
         it('should reject invalid bearer', () => {
             const token = jwt.sign({
-                isAdministrator: false
+                isAdmin: false
             }, config.jwtSecret, {
                 expiresIn: config.jwtExpiresIn
             });
@@ -88,7 +88,7 @@ describe('Auth', () => {
     describe('Administrator', () => {
         it('should accept valid administrator token', () => {
             const token = jwt.sign({
-                isAdministrator: true
+                isAdmin: true
             }, config.jwtSecret, {
                 expiresIn: config.jwtExpiresIn
             });
@@ -100,7 +100,7 @@ describe('Auth', () => {
 
         it('should reject moderator token', () => {
             const token = jwt.sign({
-                isAdministrator: false
+                isAdmin: false
             }, config.jwtSecret, {
                 expiresIn: config.jwtExpiresIn
             });
@@ -122,7 +122,7 @@ describe('Auth', () => {
 
         it('should reject invalid bearer', () => {
             const token = jwt.sign({
-                isAdministrator: true
+                isAdmin: true
             }, config.jwtSecret, {
                 expiresIn: config.jwtExpiresIn
             });
