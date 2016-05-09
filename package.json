@@ -30,7 +30,7 @@
     "pg": "4.5.5",
     "pg-hstore": "2.3.2",
     "raven": "0.10.0",
-    "sequelize": "3.22.0",
+    "sequelize": "3.23.0",
     "superagent": "1.8.3",
     "winston": "^2.2.0"
   },
