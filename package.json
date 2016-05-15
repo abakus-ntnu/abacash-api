@@ -29,13 +29,8 @@
     "nodemailer": "2.4.1",
     "pg": "4.5.5",
     "pg-hstore": "2.3.2",
-<<<<<<< HEAD
-    "raven": "0.10.0",
     "sequelize": "3.23.2",
-=======
     "raven": "0.11.0",
-    "sequelize": "3.23.0",
->>>>>>> origin/doppins/raven-equals-0.11.0
     "superagent": "1.8.3",
     "winston": "^2.2.0"
   },
@@ -48,7 +43,7 @@
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
     "commander": "^2.9.0",
-    "eslint": "2.9.0",
+    "eslint": "2.10.1",
     "eslint-config-airbnb": "^9.0.0",
     "eslint-config-webkom": "^1.3.4",
     "eslint-plugin-import": "^1.6.1",
