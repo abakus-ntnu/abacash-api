@@ -16,7 +16,8 @@ function getToken(authString, acceptedScheme) {
     return token;
 }
 
-function authenticateToken(authString) {
+function authenticateToken(req) {
+    const authString = req.get('Authorization');
     const token = getToken(authString, 'Token');
     if (!token) return Bluebird.resolve(false);
     return db.APIToken.findOne({
@@ -25,36 +26,40 @@ function authenticateToken(authString) {
     .then(apiToken => !!apiToken);
 }
 
-function authenticateModerator(authString) {
+function authenticateModerator(req) {
+    const authString = req.get('Authorization');
     const token = getToken(authString, 'Bearer');
     if (!token) return false;
     try {
         const decodedToken = jwt.verify(token, config.jwtSecret);
+        req.user = decodedToken;
         return 'isAdmin' in decodedToken && !decodedToken.isAdmin;
     } catch (err) {
         return false;
     }
 }
 
-function authenticateAdministrator(authString) {
+function authenticateAdministrator(req) {
+    const authString = req.get('Authorization');
     const token = getToken(authString, 'Bearer');
     if (!token) return false;
     try {
         const decodedToken = jwt.verify(token, config.jwtSecret);
+        req.user = decodedToken;
         return decodedToken.isAdmin === true;
     } catch (err) {
         return false;
     }
 }
 
-export function authenticate(auth, authString) {
+export function authenticate(auth, req) {
     switch (auth) {
     case authConstants.TOKEN:
-        return authenticateToken(authString);
+        return authenticateToken(req);
     case authConstants.MODERATOR:
-        return Bluebird.resolve(authenticateModerator(authString));
+        return Bluebird.resolve(authenticateModerator(req));
     case authConstants.ADMINISTRATOR:
-        return Bluebird.resolve(authenticateAdministrator(authString));
+        return Bluebird.resolve(authenticateAdministrator(req));
     }
 }
 
@@ -71,7 +76,7 @@ export function createAuthMiddleware(auth) {
             if (isAuthenticated || !aboveLevel) {
                 return;
             }
-            return authenticate(authInner, req.get('Authorization'))
+            return authenticate(authInner, req)
             .then(result => {
                 isAuthenticated = result;
             });
