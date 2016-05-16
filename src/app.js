@@ -1,10 +1,3 @@
-/**
- * Main application file
- */
-
-// Set default node environment to development
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -18,12 +11,16 @@ import { sentryClient } from './components/errors';
 import config from './config';
 
 // Global sentry patch
-sentryClient.patchGlobal();
-
 // Setup server
 const app = express();
 
-app.use(raven.middleware.express.requestHandler(config.sentryDsn));
+if (config.nodeEnv === 'production' && config.sentryDsn) {
+    app.use(raven.middleware.express.requestHandler(config.sentryDsn));
+    sentryClient.patchGlobal(() => {
+        process.exit(1);
+    });
+}
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(methodOverride());
