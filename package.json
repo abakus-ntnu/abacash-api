@@ -23,7 +23,7 @@
     "express": "4.13.4",
     "express-jwt": "3.4.0",
     "jsonwebtoken": "7.0.0",
-    "lodash": "4.13.0",
+    "lodash": "4.13.1",
     "method-override": "2.3.6",
     "morgan": "1.7.0",
     "nodemailer": "2.4.1",
