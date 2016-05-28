@@ -29,7 +29,7 @@
     "nodemailer": "2.4.2",
     "pg": "4.5.5",
     "pg-hstore": "2.3.2",
-    "sequelize": "3.23.2",
+    "sequelize": "3.23.3",
     "raven": "0.11.0",
     "superagent": "1.8.3",
     "winston": "^2.2.0"
