@@ -1,3 +1,4 @@
+import Bluebird from 'bluebird';
 import db from '../models';
 import { NotFoundError, ModelValidationError } from '../components/errors';
 import Sequelize from 'sequelize';
@@ -30,11 +31,22 @@ export function retrieve(req, res, next) {
     .catch(next);
 }
 
+function populateCustomerRole(customer) {
+    const plain = customer.get({ plain: true });
+    if (!plain.customerRoleId) return Bluebird.resolve(plain);
+    return db.CustomerRole.findById(plain.customerRoleId)
+        .then(customerRole => ({
+            ...plain,
+            customerRole
+        }));
+}
+
 export function create(req, res, next) {
     db.Customer.create({
         ...req.body,
         systemId: req.system.id
     })
+    .then(populateCustomerRole)
     .then(customer => {
         res.status(201).json(customer);
     })
@@ -55,7 +67,10 @@ export function update(req, res, next) {
     })
     .spread((count, customer) => {
         if (!count) throw new NotFoundError();
-        res.json(customer[0]);
+        return populateCustomerRole(customer[0]);
+    })
+    .then(customer => {
+        res.json(customer);
     })
     .catch(next);
 }
