@@ -32,7 +32,7 @@ function createModeratorToken() {
         isAdmin: false
     }, config.jwtSecret, {
         expiresIn: '7 days',
-        subject: 1 // fake user id
+        subject: '1' // fake user id
     });
     return `Bearer ${token}`;
 }
@@ -42,7 +42,7 @@ function createAdministratorToken() {
         isAdmin: true
     }, config.jwtSecret, {
         expiresIn: '7 days',
-        subject: 1 // fake user id
+        subject: '1' // fake user id
     });
     return `Bearer ${token}`;
 }

@@ -71,6 +71,7 @@ describe('Customer API', () => {
         it('should create a new customer', done => {
             const newCustomer = {
                 displayName: 'New Customer',
+                customerRoleId: 1,
                 username: 'newcus',
                 rfid: 'dd:dd:dd:dd',
                 balance: 524
@@ -84,6 +85,7 @@ describe('Customer API', () => {
             .end((err, res) => {
                 if (err) return done(err);
                 const customer = res.body;
+                customer.customerRole.role.should.equal('testrole');
                 customer.displayName.should.equal(newCustomer.displayName);
                 done();
             });
@@ -113,10 +115,11 @@ describe('Customer API', () => {
     describe('Update a customer ', () => {
         beforeEach(() => loadFixtures());
 
-        it('should update rfid and displayName', done => {
+        it('should update the customer', done => {
             const newCustomer = {
                 displayName: 'Updated Customer',
-                rfid: 'dd:dd:dd:dd'
+                rfid: 'dd:dd:dd:dd',
+                customerRoleId: 1
             };
             request(app)
             .put('/1/customers/1')
@@ -128,6 +131,7 @@ describe('Customer API', () => {
                 if (err) return done(err);
                 const customer = res.body;
                 customer.displayName.should.equal(newCustomer.displayName);
+                customer.customerRole.role.should.equal('testrole');
                 customer.rfid.should.equal(newCustomer.rfid);
                 done();
             });
