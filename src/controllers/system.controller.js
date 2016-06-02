@@ -4,16 +4,32 @@ import { NotFoundError } from '../components/errors';
 
 export function list(req, res, next) {
     db.System.findAll()
-        .then(res.json.bind(res))
-        .catch(next);
+    .then(res.json.bind(res))
+    .catch(next);
 }
 
 export function retrieve(req, res, next) {
-    const { id } = req.params;
-    db.System.findOne({
-        where: { id },
-        include: [{ model: db.CustomerRole, as: 'defaultCustomerRole' }]
-    })
+    const { lookupParam } = req.query;
+    let options;
+
+    if (lookupParam === 'apiToken') {
+        options = {
+            include: [{
+                model: db.APIToken,
+                where: {
+                    token: req.params.lookup
+                }
+            }]
+        };
+    } else {
+        options = {
+            where: { id: req.params.lookup },
+            include: []
+        };
+    }
+    options.include.push({ model: db.CustomerRole, as: 'defaultCustomerRole' });
+
+    db.System.findOne(options)
     .then(system => {
         if (!system) throw new NotFoundError();
         res.json(system);
