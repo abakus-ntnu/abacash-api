@@ -41,16 +41,10 @@ export function retrieve(req, res, next) {
 
 export function create(req, res, next) {
     const body = _.omit(req.body, 'password');
-    const { password } = req.body;
-
-    if (!password) {
-        const error = new Error('something');
-        return next(error);
-    }
 
     const clean = user => _.omit(user.get({ plain: true }), 'hash');
 
-    db.User.register(body, password)
+    db.User.invite(body)
     .then(user => {
         if (!req.body.systemId) {
             return res.status(201).json(clean(user));

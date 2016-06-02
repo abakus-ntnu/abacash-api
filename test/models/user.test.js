@@ -51,4 +51,34 @@ describe('User Model', () => {
             );
         });
     });
+
+    describe('#invite()', () => {
+        it('should send an invite email', () => {
+            const body = {
+                email: 'eh@eh.com',
+                name: 'testuser'
+            };
+
+            return db.User.invite(body)
+            .then(user => {
+                user.name.should.equal(body.name);
+                should.not.exist(user.hash);
+            });
+        });
+    });
+
+    describe('#passwordReset()', () => {
+        it('should send an reset password email', () => {
+            const body = {
+                email: 'eh@eh.com',
+                name: 'testuser'
+            };
+
+            return db.User.register(body, 'password')
+                .then(user => user.passwordReset())
+                .then(user => {
+                    user.name.should.equal(body.name);
+                });
+        });
+    });
 });

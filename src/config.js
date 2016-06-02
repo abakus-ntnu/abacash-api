@@ -1,5 +1,6 @@
 const config = {
     port: process.env.PORT || 9000,
+    web: 'https://abacash.abakus.no',
     pgUrl: process.env.PG_URL || 'postgres://localhost/abacash',
     nodeEnv: process.env.NODE_ENV || 'production',
     defaultCustomerRole: process.env.DEFAULT_CUSTOMER_ROLE || 'customer',

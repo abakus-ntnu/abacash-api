@@ -8,6 +8,7 @@ sentryClient.on('error', sentryError => {
 });
 
 export function handleError(error) {
+    console.log(error);
     sentryClient.captureError(error);
 }
 
