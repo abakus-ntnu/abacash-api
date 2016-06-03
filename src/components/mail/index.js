@@ -12,14 +12,12 @@ let transport;
 if (config.nodeEnv === 'production') transport = config.smtpUrl;
 else transport = stubTransport();
 
-const transporter = nodemailer.createTransport(transport);
-
 const options = hbs({
     viewEngine: handlebars.create({}),
     viewPath: path.resolve(__dirname)
 });
 
-Promise.promisifyAll(transporter);
+const transporter = Promise.promisifyAll(nodemailer.createTransport(transport));
 transporter.use('compile', options);
 
 export function sendReset(user, token) {
