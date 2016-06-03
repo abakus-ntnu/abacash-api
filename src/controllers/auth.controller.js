@@ -37,6 +37,7 @@ export function retrieveInvite(req, res, next) {
     }
     return res.json(req.user);
 }
+
 export function invite(req, res, next) {
     const { password } = req.body;
     if (!req.user.invite) {

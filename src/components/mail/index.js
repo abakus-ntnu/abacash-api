@@ -36,6 +36,7 @@ export function sendReset(user, token) {
             }
         }
     };
+
     return transporter.sendMailAsync(mailOptions)
         .then(value => {
             logger.info(`Message sendt: ${value.response}`);
@@ -59,6 +60,7 @@ export function sendInvite(user, token) {
             }
         }
     };
+
     return transporter.sendMailAsync(mailOptions)
         .then(value => {
             logger.info(`Message sendt: ${value.response}`);
