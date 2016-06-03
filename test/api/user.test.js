@@ -49,11 +49,10 @@ describe('Users API', () => {
     });
 
     describe('Create', () => {
-        it('should create a user', done => {
+        it('should create an invite and send it to a new user', done => {
             const payload = {
                 email: 'test@test.com',
-                name: 'testuser',
-                password: 'testpassword'
+                name: 'testuser'
             };
 
             request(app)
@@ -71,7 +70,7 @@ describe('Users API', () => {
             });
         });
 
-        it('should create a user and add a system to it', done => {
+        it('should invite a new user and add a system to it', done => {
             const payload = {
                 email: 'test@test.com',
                 name: 'testuser',

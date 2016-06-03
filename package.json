@@ -51,6 +51,7 @@
     "eslint-plugin-import": "^1.6.1",
     "mocha": "^2.4.5",
     "mongodb": "^2.1.16",
+    "nodemailer-stub-transport": "^1.0.0",
     "sequelize-fixtures": "git+https://github.com/abakusbackup/sequelize-fixtures.git",
     "sinon": "^1.17.4",
     "supertest": "^1.2.0"

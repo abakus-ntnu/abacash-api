@@ -39,9 +39,7 @@ export default function(sequelize, DataTypes) {
                 }));
             },
             invite(body) {
-                return User.create({
-                    ...body
-                })
+                return User.create(body)
                 .then(user => user.sendInvite());
             }
         },

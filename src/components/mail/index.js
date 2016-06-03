@@ -3,11 +3,16 @@ import config from '../../config';
 import handlebars from 'express-handlebars';
 import Promise from 'bluebird';
 import hbs from 'nodemailer-express-handlebars';
+import stubTransport from 'nodemailer-stub-transport';
 import { handleError } from './../errors';
 import logger from 'winston';
 import path from 'path';
 
-const transporter = nodemailer.createTransport(config.smtpUrl);
+let transport;
+if (config.nodeEnv === 'production') transport = config.smtpUrl;
+else transport = stubTransport();
+
+const transporter = nodemailer.createTransport(transport);
 
 const options = hbs({
     viewEngine: handlebars.create({}),
@@ -29,7 +34,7 @@ export function sendReset(user, token) {
                  sendt denne forespørselen kan du ignorere denne eposten.`,
             action: {
                 text: 'Reset passord',
-                url: `${config.web}/password/reset/${token}`
+                url: `${config.web}/login/reset/?token=${token}`
             }
         }
     };
@@ -52,7 +57,7 @@ export function sendInvite(user, token) {
                 for å fullføre registreringen.`,
             action: {
                 text: 'Registrer bruker',
-                url: `${config.web}/invite/${token}`
+                url: `${config.web}/login/invite?token=${token}`
             }
         }
     };
