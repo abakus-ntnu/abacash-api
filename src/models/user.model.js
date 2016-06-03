@@ -47,7 +47,7 @@ export default function(sequelize, DataTypes) {
                 return bcrypt.compareAsync(password, this.hash);
             },
             toJSON() {
-                const values = this.get();
+                const values = this.get({ plain: true });
                 return _.omit(values, 'hash');
             },
             sendInvite() {

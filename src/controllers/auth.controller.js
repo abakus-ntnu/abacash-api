@@ -19,7 +19,7 @@ export function login(req, res, next) {
     })
     .then(user => {
         if (!user) throwAuthError();
-        currentUser = user.get({ plain: true });
+        currentUser = user.toJSON();
         return user.authenticate(password);
     })
     .then(valid => {
@@ -51,7 +51,7 @@ export function invite(req, res, next) {
         if (!user) throw new NotFoundError();
         return user.updatePassword(password);
     })
-    .then(user => createToken(user))
+    .then(user => createToken(user.toJSON()))
     .then(token => res.json({ token }))
     .catch(next);
 }
