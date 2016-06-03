@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 import config from '../../config';
 import handlebars from 'express-handlebars';
-import Promise from 'bluebird';
+import Bluebird from 'bluebird';
 import hbs from 'nodemailer-express-handlebars';
 import stubTransport from 'nodemailer-stub-transport';
 import { handleError } from './../errors';
@@ -14,13 +14,13 @@ else transport = stubTransport();
 
 const options = hbs({
     viewEngine: handlebars.create({}),
-    viewPath: path.resolve(__dirname)
+    viewPath: path.resolve(__dirname.replace('/dist/', '/src/'))
 });
 
-const transporter = Promise.promisifyAll(nodemailer.createTransport(transport));
+const transporter = Bluebird.promisifyAll(nodemailer.createTransport(transport));
 transporter.use('compile', options);
 
-export function sendReset(user, token) {
+export function sendResetEmail(user, token) {
     const mailOptions = {
         to: user.email,
         from: 'Abacash <abacash@abakus.no>',
@@ -38,14 +38,14 @@ export function sendReset(user, token) {
     };
 
     return transporter.sendMailAsync(mailOptions)
-        .then(value => {
-            logger.info(`Message sendt: ${value.response}`);
-            return user;
-        })
-        .catch(err => handleError(err));
+    .then(value => {
+        logger.info(`Message sendt: ${value.response}`);
+        return user;
+    })
+    .catch(handleError);
 }
 
-export function sendInvite(user, token) {
+export function sendInviteEmail(user, token) {
     const mailOptions = {
         to: user.email,
         from: 'Abacash <abacash@abakus.no>',
@@ -62,9 +62,9 @@ export function sendInvite(user, token) {
     };
 
     return transporter.sendMailAsync(mailOptions)
-        .then(value => {
-            logger.info(`Message sendt: ${value.response}`);
-            return user;
-        })
-        .catch(err => handleError(err));
+    .then(value => {
+        logger.info(`Message sendt: ${value.response}`);
+        return user;
+    })
+    .catch(handleError);
 }
