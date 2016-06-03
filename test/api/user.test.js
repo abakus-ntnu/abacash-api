@@ -74,7 +74,6 @@ describe('Users API', () => {
             const payload = {
                 email: 'test@test.com',
                 name: 'testuser',
-                password: 'testpassword',
                 systemId: 1
             };
 

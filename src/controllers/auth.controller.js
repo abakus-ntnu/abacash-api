@@ -1,8 +1,6 @@
-import _ from 'lodash';
-import jwt from 'jsonwebtoken';
+import { createToken } from '../auth';
 import { AuthenticationError, NotFoundError, ValidationError } from '../components/errors';
 import db from '../models';
-import config from '../config';
 
 export function login(req, res, next) {
     const { email, password } = req.body;
@@ -26,15 +24,7 @@ export function login(req, res, next) {
     })
     .then(valid => {
         if (!valid) throwAuthError();
-        const cleanUser = _.omit(currentUser, 'hash');
-
-        // Even though jwt has a callback method,
-        // there's no point in using it as the functions
-        // it executes are synchronous:
-        return jwt.sign(cleanUser, config.jwtSecret, {
-            expiresIn: config.jwtExpiresIn,
-            subject: String(currentUser.id)
-        });
+        return createToken(currentUser);
     })
     .then(token => res.json({ token }))
     .catch(next);
@@ -60,16 +50,7 @@ export function invite(req, res, next) {
         if (!user) throw new NotFoundError();
         return user.updatePassword(password);
     })
-    .then(user => {
-        const cleanUser = _.omit(user, 'hash');
-        // Even though jwt has a callback method,
-        // there's no point in using it as the functions
-        // it executes are synchronous:
-        return jwt.sign(cleanUser, config.jwtSecret, {
-            expiresIn: config.jwtExpiresIn,
-            subject: String(user.id)
-        });
-    })
+    .then(user => createToken(user))
     .then(token => res.json({ token }))
     .catch(next);
 }

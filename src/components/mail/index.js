@@ -26,14 +26,14 @@ export function sendReset(user, token) {
     const mailOptions = {
         to: user.email,
         from: 'Abacash <abacash@abakus.no>',
-        subject: 'Velkommen til Abacash!',
+        subject: 'Tilbakestill passord, Abacash',
         template: 'action',
         context: {
             content: `Du har forespurt en tilbakestilling av passordet ditt.
                  Trykk på knappen nedenfor for å sette nytt passord. Dersom du ikke har
                  sendt denne forespørselen kan du ignorere denne eposten.`,
             action: {
-                text: 'Reset passord',
+                text: 'Tilbakestill passord',
                 url: `${config.web}/login/reset/?token=${token}`
             }
         }

@@ -1,8 +1,7 @@
 import Bluebird from 'bluebird';
 import bcrypt from 'bcrypt';
 import _ from 'lodash';
-import jwt from 'jsonwebtoken';
-import config from '../config';
+import { createToken } from '../auth';
 import { sendInvite, sendReset } from '../components/mail';
 Bluebird.promisifyAll(bcrypt);
 
@@ -47,23 +46,17 @@ export default function(sequelize, DataTypes) {
             authenticate(password) {
                 return bcrypt.compareAsync(password, this.hash);
             },
+            toJSON() {
+                const values = this.get();
+                return _.omit(values, 'hash');
+            },
             sendInvite() {
-                const cleanUser = _.omit(this, 'hash');
-                const userObject = cleanUser.toJSON();
-                const token = jwt.sign({ ...userObject, invite: true }, config.jwtSecret, {
-                    expiresIn: '1h',
-                    subject: String(this.id)
-                });
-                return sendInvite(cleanUser, token);
+                const token = createToken({ ...this.toJSON(), invite: true }, '1h');
+                return sendInvite(this, token);
             },
             passwordReset() {
-                const cleanUser = _.omit(this, 'hash');
-                const userObject = cleanUser.toJSON();
-                const token = jwt.sign({ ...userObject, reset: true }, config.jwtSecret, {
-                    expiresIn: '1h',
-                    subject: String(this.id)
-                });
-                return sendReset(cleanUser, token);
+                const token = createToken({ ...this.toJSON(), reset: true }, '1h');
+                return sendReset(this, token);
             },
             updatePassword(password) {
                 return bcrypt.genSaltAsync()

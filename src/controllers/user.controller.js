@@ -42,21 +42,19 @@ export function retrieve(req, res, next) {
 export function create(req, res, next) {
     const body = _.omit(req.body, 'password');
 
-    const clean = user => _.omit(user.get({ plain: true }), 'hash');
-
     db.User.invite(body)
     .then(user => {
         if (!req.body.systemId) {
-            return res.status(201).json(clean(user));
+            return res.status(201).json(user);
         }
 
         return user.addSystem(req.body.systemId)
         // For some reason this returns an array of arrays,
         // so we'll destructure it:
         .then(([[system]]) => {
-            const plain = clean(user);
-            plain.role = system.role;
-            res.status(201).json(plain);
+            const payload = user.toJSON();
+            payload.role = system.role;
+            res.status(201).json(payload);
         });
     })
     .catch(Sequelize.ValidationError, err => {
