@@ -1,5 +1,8 @@
 import Bluebird from 'bluebird';
 import bcrypt from 'bcrypt';
+import _ from 'lodash';
+import { createToken } from '../auth';
+import { sendInvite, sendReset } from '../components/mail';
 Bluebird.promisifyAll(bcrypt);
 
 export default function(sequelize, DataTypes) {
@@ -33,11 +36,27 @@ export default function(sequelize, DataTypes) {
                     ...body,
                     hash
                 }));
+            },
+            invite(body) {
+                return User.create(body)
+                .then(user => user.sendInvite());
             }
         },
         instanceMethods: {
             authenticate(password) {
                 return bcrypt.compareAsync(password, this.hash);
+            },
+            toJSON() {
+                const values = this.get();
+                return _.omit(values, 'hash');
+            },
+            sendInvite() {
+                const token = createToken({ ...this.toJSON(), invite: true }, '1h');
+                return sendInvite(this, token);
+            },
+            passwordReset() {
+                const token = createToken({ ...this.toJSON(), reset: true }, '1h');
+                return sendReset(this, token);
             },
             updatePassword(password) {
                 return bcrypt.genSaltAsync()

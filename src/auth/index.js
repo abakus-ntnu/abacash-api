@@ -63,6 +63,17 @@ export function authenticate(auth, req) {
     }
 }
 
+export function createToken(payload, duration) {
+    // Even though jwt has a callback method,
+    // there's no point in using it as the functions
+    // it executes are synchronous:
+    const expiresIn = duration || config.jwtExpiresIn;
+    return jwt.sign(payload, config.jwtSecret, {
+        expiresIn,
+        subject: String(payload.id)
+    });
+}
+
 export function createAuthMiddleware(auth) {
     return (req, res, next) => {
         let aboveLevel = false;

@@ -51,4 +51,20 @@ describe('User Model', () => {
             );
         });
     });
+
+    describe('#invite()', () => {
+        it('should send an invite email', () => {
+            const body = {
+                email: 'test@eh.com',
+                name: 'test user'
+            };
+
+            return db.User.invite(body)
+            .then(response => {
+                const user = response.toJSON();
+                user.name.should.equal(body.name);
+                should.not.exist(user.hash);
+            });
+        });
+    });
 });

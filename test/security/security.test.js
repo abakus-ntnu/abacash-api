@@ -48,6 +48,11 @@ describe('Security', () => {
         'systems.json',
         'api-tokens.json'
     ]));
+    describe('Auth API', () => {
+        testSecurity('/authenticate/reset', 'POST', MODERATOR);
+        testSecurity('/authenticate/invite', 'GET', MODERATOR);
+        testSecurity('/authenticate/invite', 'POST', MODERATOR);
+    });
     describe('Account API', () => {
         testSecurity('/account', 'GET', MODERATOR);
     });
