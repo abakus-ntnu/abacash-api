@@ -21,7 +21,7 @@ function authenticateToken(req) {
     const token = getToken(authString, 'Token');
     if (!token) return Bluebird.resolve(false);
     return db.APIToken.findOne({
-        where: { token }
+        where: { token, active: true }
     })
     .then(apiToken => !!apiToken);
 }

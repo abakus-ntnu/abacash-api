@@ -4,6 +4,7 @@ import { authenticate } from '../../src/auth';
 import { TOKEN, MODERATOR, ADMINISTRATOR } from '../../src/auth/constants';
 import { loadFixtures } from '../helpers';
 import config from '../../src/config';
+import db from '../../src/models';
 
 chai.should();
 
@@ -13,21 +14,33 @@ const mockRequest = header => ({
 
 describe('Auth', () => {
     describe('Token', () => {
+        const token = 'd54f9200b680ff11eb1ffcb01a99bde2';
         const fixtures = [
             'systems.json',
             'api-tokens.json'
         ];
 
         beforeEach(() => loadFixtures(fixtures));
+
         it('should accept valid token', () =>
-            authenticate(TOKEN, mockRequest('Token d54f9200b680ff11eb1ffcb01a99bde2'))
+            authenticate(TOKEN, mockRequest(`Token ${token}`))
             .then(res => {
                 res.should.equal(true);
             })
         );
 
+        it('should reject inactive tokens', () =>
+            db.APIToken.update({ active: false }, {
+                where: { token }
+            })
+            .then(() => authenticate(TOKEN, mockRequest(`Token ${token}`)))
+            .then(res => {
+                res.should.equal(false);
+            })
+        );
+
         it('should reject invalid bearer', () =>
-            authenticate(TOKEN, mockRequest('Invalid d54f9200b680ff11eb1ffcb01a99bde2'))
+            authenticate(TOKEN, mockRequest(`Invalid ${token}`))
             .then(res => {
                 res.should.equal(false);
             })
@@ -40,6 +53,7 @@ describe('Auth', () => {
             })
         );
     });
+
     describe('Moderator', () => {
         it('should accept valid moderator token', () => {
             const token = jwt.sign({
