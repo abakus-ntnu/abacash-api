@@ -124,4 +124,3 @@ clearPostgresDB(program.systemId)
       console.log(err);
       process.exit(1);
   });
-
