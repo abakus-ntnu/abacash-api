@@ -11,9 +11,9 @@ const headers = {
 };
 
 describe('Customer API', () => {
-    describe('List customers', () => {
-        beforeEach(() => loadFixtures());
+    beforeEach(() => loadFixtures());
 
+    describe('List customers', () => {
         it('should list customers', done => {
             request(app)
             .get('/1/customers')
@@ -44,8 +44,6 @@ describe('Customer API', () => {
     });
 
     describe('Retrieve one customer', () => {
-        beforeEach(() => loadFixtures());
-
         it('should retrieve a customer', done => {
             request(app)
             .get('/1/customers/1')
@@ -66,12 +64,9 @@ describe('Customer API', () => {
     });
 
     describe('Create a new customer ', () => {
-        beforeEach(() => loadFixtures());
-
         it('should create a new customer', done => {
             const newCustomer = {
                 displayName: 'New Customer',
-                customerRoleId: 1,
                 username: 'newcus',
                 rfid: 'dd:dd:dd:dd',
                 balance: 524
@@ -113,8 +108,6 @@ describe('Customer API', () => {
     });
 
     describe('Update a customer ', () => {
-        beforeEach(() => loadFixtures());
-
         it('should update the customer', done => {
             const newCustomer = {
                 displayName: 'Updated Customer',
@@ -177,8 +170,6 @@ describe('Customer API', () => {
     });
 
     describe('Delete a customer ', () => {
-        beforeEach(() => loadFixtures());
-
         it('should delete a customer', done => {
             request(app)
             .delete('/1/customers/1')

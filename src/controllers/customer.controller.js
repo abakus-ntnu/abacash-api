@@ -44,6 +44,7 @@ function populateCustomerRole(customer) {
 export function create(req, res, next) {
     db.Customer.create({
         ...req.body,
+        customerRoleId: req.system.defaultCustomerRoleId,
         systemId: req.system.id
     })
     .then(populateCustomerRole)
