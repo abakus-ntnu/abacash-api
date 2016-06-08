@@ -1,7 +1,9 @@
 import db from '../models';
 import { NotFoundError, ModelValidationError, ValidationError } from '../components/errors';
+import ConflictError from '../components/errors';
 import Sequelize from 'sequelize';
 import Bluebird from 'bluebird';
+import SERIALIZATION_FAILURE from '../components/constants';
 
 function checkIfSellerIsSeller(sellerId, needSeller) {
     if (needSeller) {
@@ -109,6 +111,13 @@ export function add(req, res, next) {
         res.status(201).json(currentTransaction);
     }).catch(Sequelize.ValidationError, err => {
         throw new ModelValidationError(err);
+    }).catch(err => {
+        if (err.parent) {
+            return err.parent.code === SERIALIZATION_FAILURE;
+        }
+        return false;
+    }, err => {
+        throw new ConflictError(err);
     })
     .catch(next);
 }
