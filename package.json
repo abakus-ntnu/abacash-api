@@ -1,6 +1,26 @@
 {
-  "name": "abacash",
-  "version": "0.0.0",
+  "name": "abacash-api",
+  "productName": "AbaCash API",
+  "description": "AbaCash API",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abakusbackup/abacash-api.git"
+  },
+  "author": {
+    "name": "Abakus Backup",
+    "email": "backup@abakus.no",
+    "url": "https://github.com/abakusbackup"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/abakusbackup/abacash-api/issues"
+  },
+  "keywords": [
+    "Abakus",
+    "Abaash"
+  ],
+  "homepage": "https://github.com/abakusbackup/abacash-client#readme",
   "scripts": {
     "start": "node dist/index.js",
     "start:watch": "nodemon src/index.js --exec babel-node",
