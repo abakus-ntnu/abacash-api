@@ -109,12 +109,15 @@ export function add(req, res, next) {
             }
             return currentCustomer.save();
         });
-    }).then(result => {
+    })
+    .then(result => {
         // entire database transaction OK, return newly created transaction
         res.status(201).json(currentTransaction);
-    }).catch(Sequelize.ValidationError, err => {
+    })
+    .catch(Sequelize.ValidationError, err => {
         throw new errors.ModelValidationError(err);
-    }).catch(err => err.parent && err.parent.code === SERIALIZATION_FAILURE, err => {
+    })
+    .catch(err => err.parent && err.parent.code === SERIALIZATION_FAILURE, err => {
         throw new errors.ConflictError(err);
     })
     .catch(next);
