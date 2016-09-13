@@ -1,5 +1,43 @@
 # AbaCash API [![Build status](https://ci.frigg.io/badges/abakusbackup/abacash-api/)](https://ci.frigg.io/abakusbackup/abacash-api/last/) [![Coverage status](https://ci.frigg.io/badges/coverage/abakusbackup/abacash-api/)](https://ci.frigg.io/abakusbackup/abacash-api/last/)
 
+## Setup
+Install npm modules
+```bash
+npm install
+```
+
+### Setup database
+#### Install [PostgreSQL](https://www.postgresql.org/)
+##### Mac
+```bash
+brew install postgresql
+```
+
+##### Ubuntu
+```bash
+sudo apt-get update
+sudo apt-get install postgresql postgresql-contrib
+```
+
+###### Configuration on Ubuntu
+First, open `/etc/postgresql/X.X/main/pg_hba.conf`.
+Edit the METHOD of the lines following `# IPv4 local connections` and `# IPv6 local connections` to `trust`.
+
+Then create a role for your user
+```bash
+sudo creatuser -s $USER
+```
+
+#### Create the AbaCash database
+Enter psql shell in default database template1
+```bash
+psql -d template1
+```
+In the psql shell run this command:
+```bash
+CREATE DATABASE abacash
+```
+
 ## Getting Started
 ```bash
 # With reloading (development):
