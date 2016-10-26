@@ -1,9 +1,10 @@
-# AbaCash API [![Build status](https://ci.frigg.io/badges/abakusbackup/abacash-api/)](https://ci.frigg.io/abakusbackup/abacash-api/last/) [![Coverage status](https://ci.frigg.io/badges/coverage/abakusbackup/abacash-api/)](https://ci.frigg.io/abakusbackup/abacash-api/last/)
+# AbaCash API [![CircleCI](https://circleci.com/gh/abakusbackup/abacash-api/tree/master.svg?style=svg&circle-token=b60d965e77f1a62dd4e85f65aaf90bae3865bd15)](https://circleci.com/gh/abakusbackup/abacash-api/tree/master)
 
 ## Setup
 Install npm modules
 ```bash
-npm install
+npm install -g yarnpkg
+yarn
 ```
 
 ### Setup database
@@ -41,32 +42,32 @@ CREATE DATABASE abacash
 ## Getting Started
 ```bash
 # With reloading (development):
-$ npm run start:watch
+$ yarn run start:watch
 
 # Or without reloading (production):
-$ npm run build
-$ npm start
+$ yarn run build
+$ yarn start
 ```
 
 ## Tests
 ```bash
-$ npm test
+$ yarn test
 ```
 
 To run tests with file watch:
 ```bash
-$ npm run test:watch
+$ yarn run test:watch
 ```
 
 To run a test a subset of the tests:
 ```bash
-$ npm test -- -g *pattern*
+$ yarn test -- -g *pattern*
 ```
-Here, *pattern* is a regex for the test descriptions. This also works on `npm run test:watch`.
+Here, *pattern* is a regex for the test descriptions. This also works on `yarn run test:watch`.
 
 ## Load database with test data
 ```
-$ npm run load-data
+$ yarn run load-data
 ```
 Will fill the `abacash` postgres database with fixtures from `./fixtures/`. Connection string can be set by setting environment variable `PG_URL`. Contents in the `fixtures` are not (and should not be) used for automatic testing, which means the fixtures can be edited to test the client.
 
