@@ -44,10 +44,10 @@ CREATE DATABASE abacash
 ## Getting Started
 ```bash
 # With reloading (development):
-$ yarn run start:watch
+$ yarn start:watch
 
 # Or without reloading (production):
-$ yarn run build
+$ yarn build
 $ yarn start
 ```
 
@@ -58,31 +58,25 @@ $ yarn test
 
 To run tests with file watch:
 ```bash
-$ yarn run test:watch
+$ yarn test:watch
 ```
 
 To run a test a subset of the tests:
 ```bash
 $ yarn test -- -g *pattern*
 ```
-Here, *pattern* is a regex for the test descriptions. This also works on `yarn run test:watch`.
+Here, *pattern* is a regex for the test descriptions. This also works on `yarn test:watch`.
+
+## Linting
+ESLint is used to maintain high code quality and a unified code style.
+To run the linter, use:
+
+```bash
+$ yarn lint
+```
 
 ## Load database with test data
 ```
-$ yarn run load-db
+$ yarn load-db
 ```
 Will fill the `abacash` postgres database with fixtures from `./fixtures/`. Connection string can be set by setting environment variable `PG_URL`. Contents in the `fixtures` are not (and should not be) used for automatic testing, which means the fixtures can be edited to test the client.
-
-## Transfer data from existing Mongodb documents
-```
-$ node scripts/transfer.js -d *database url* -s *system id* [-k]
-```
-The `-d` and `-s` options are required, `-k` is optional. The options are defined like this:
-```
--h, --help              output usage information
--V, --version           output the version number
--d, --database [value]  MongoDB connection string (i.e. mongodb://localhost:27017/labamba
--s, --system-id <n>     System ID to transfer to
--k, --keep-stock        Keep stock?
-```
-The transfer script is dependent on an existing system.
