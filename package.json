@@ -54,7 +54,7 @@
     "nodemailer": "2.6.4",
     "nodemailer-express-handlebars": "^2.0.0",
     "pg": "^6.1.0",
-    "raven": "1.0.1",
+    "raven": "1.1.1",
     "sequelize": "3.26.0",
     "superagent": "2.3.0",
     "winston": "^2.2.0"
