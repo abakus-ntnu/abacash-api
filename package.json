@@ -37,7 +37,7 @@
     "clean": "rm -rf /dist"
   },
   "dependencies": {
-    "bcrypt": "1.0.1",
+    "bcrypt": "1.0.2",
     "bluebird": "3.4.6",
     "body-parser": "1.15.1",
     "continuation-local-storage": "3.2.0",
