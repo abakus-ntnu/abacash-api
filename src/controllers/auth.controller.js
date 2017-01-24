@@ -15,9 +15,11 @@ export function login(req, res, next) {
 
     let currentUser;
     db.User.findOne({
-        where: { email }
+        where: { email },
+        include: [db.System]
     })
     .then(user => {
+        console.log(user);
         if (!user) throwAuthError();
         currentUser = user.toJSON();
         return user.authenticate(password);
@@ -26,7 +28,7 @@ export function login(req, res, next) {
         if (!valid) throwAuthError();
         return createToken(currentUser);
     })
-    .then(token => res.json({ token }))
+    .then(token => res.json({ token, user: currentUser }))
     .catch(next);
 }
 
