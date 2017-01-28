@@ -17,7 +17,10 @@ export default function(sequelize, DataTypes) {
                 return Number(this.getDataValue('internalPrice'));
             }
         },
-        name: DataTypes.STRING,
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         active: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
