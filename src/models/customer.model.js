@@ -1,4 +1,4 @@
-import { createEvent } from '../stats';
+import { createEvent } from '../components/stats';
 
 export default function(sequelize, DataTypes) {
     const Customer = sequelize.define('customer', {
@@ -41,7 +41,8 @@ export default function(sequelize, DataTypes) {
                 {
                     measurement: 'saldo',
                     tags: {
-                        user: customer.username
+                        user: customer.username,
+                        displayName: customer.displayName
                     },
                     fields: {
                         saldo: Number(customer.balance)

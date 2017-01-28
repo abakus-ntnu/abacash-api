@@ -3,7 +3,7 @@
     "model": "APIToken",
     "data": {
       "name": "Kontoret API Token",
-        "token": "d54f9200b680ff11eb1ffcb01a99bde2",
+      "token": "d54f9200b680ff11eb1ffcb01a99bde2",
       "systemId": 2
     }
   },

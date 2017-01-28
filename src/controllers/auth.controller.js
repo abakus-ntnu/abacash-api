@@ -19,7 +19,6 @@ export function login(req, res, next) {
         include: [db.System]
     })
     .then(user => {
-        console.log(user);
         if (!user) throwAuthError();
         currentUser = user.toJSON();
         return user.authenticate(password);

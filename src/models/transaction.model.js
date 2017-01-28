@@ -1,4 +1,4 @@
-import { createEvent } from '../stats';
+import { createEvent } from '../components/stats';
 
 export default function(sequelize, DataTypes) {
     const Transaction = sequelize.define('transaction', {
@@ -21,17 +21,19 @@ export default function(sequelize, DataTypes) {
     }, {
         hooks: {
             afterCreate: transaction => transaction.getCustomer()
-                .then(customer => createEvent([
+                .then(customer => transaction.total > 0 ? createEvent([
                     {
                         measurement: 'transaction',
                         tags: {
-                            user: customer.username
+                            user: customer.username,
+                            displayName: customer.displayName
                         },
                         fields: {
-                            total: Number(transaction.total)
+                            total: Number(transaction.total),
+                            user_id: Number(customer.id)
                         }
                     }
-                ])
+                ]) : Promise.resolve()
             )
         },
 
