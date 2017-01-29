@@ -136,7 +136,7 @@ export function add(req, res, next) {
             return currentCustomer.save();
         });
     })
-    .then(result => {
+    .then(() => {
         // entire database transaction OK, return newly created transaction
         res.status(201).json(currentTransaction);
     })

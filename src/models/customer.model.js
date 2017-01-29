@@ -1,3 +1,5 @@
+import { createEvent } from '../stats';
+
 export default function(sequelize, DataTypes) {
     const Customer = sequelize.define('customer', {
         rfid: {
@@ -33,6 +35,20 @@ export default function(sequelize, DataTypes) {
                 Customer.belongsTo(models.System);
                 Customer.belongsTo(models.CustomerRole);
             }
+        },
+        hooks: {
+            afterUpdate: customer => createEvent([
+                {
+                    measurement: 'saldo',
+                    tags: {
+                        user: customer.username,
+                        displayName: customer.displayName
+                    },
+                    fields: {
+                        saldo: Number(customer.balance)
+                    }
+                }
+            ])
         }
     });
 
