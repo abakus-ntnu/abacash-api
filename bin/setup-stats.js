@@ -34,12 +34,12 @@ const createDatasource = () => request.agent()
 /**
  * Upload the dashboard to grafana.
  */
-const createDashboard = () => request.agent()
+const createDashboard = () => !config.nodeEnv === 'test' ? request.agent()
     .post(`${grafanaBaseUrl}/dashboards/db`)
     .send({
         overwrite: true,
         dashboard
-    });
+    }) : Promise.resolve();
 
 createDatabase()
     .then(createDatasource)

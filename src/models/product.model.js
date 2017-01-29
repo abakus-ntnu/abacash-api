@@ -1,6 +1,5 @@
 export default function(sequelize, DataTypes) {
     const Product = sequelize.define('product', {
-        type: DataTypes.STRING,
         price: {
             type: DataTypes.DECIMAL,
             get() {
@@ -41,6 +40,7 @@ export default function(sequelize, DataTypes) {
                         allowNull: false
                     }
                 });
+                Product.belongsTo(models.ProductGroup);
                 Product.belongsToMany(models.Transaction, {
                     through: models.TransactionProduct
                 });

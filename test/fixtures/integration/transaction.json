@@ -3,7 +3,7 @@
     "model": "Product",
     "data": {
       "name": "Product 1",
-      "type": "Foo",
+      "productGroupId": 1,
       "price": 20.0,
       "internalPrice": 15.0,
       "active": true,
@@ -16,7 +16,7 @@
     "model": "Product",
     "data": {
       "name": "Product 2",
-      "type": "Foo",
+      "productGroupId": 1,
       "price": 35.0,
       "internalPrice": 27.99,
       "active": true,
@@ -29,7 +29,7 @@
     "model": "Product",
     "data": {
       "name": "Product 3",
-      "type": "Foo",
+      "productGroupId": 1,
       "price": 10.0,
       "internalPrice": 10.0,
       "active": true,
@@ -42,13 +42,20 @@
     "model": "Product",
     "data": {
       "name": "Product 4",
-      "type": "Foo",
+      "productGroupId": 1,
       "price": 10.0,
       "internalPrice": 10.0,
       "active": true,
       "stock": null,
       "keepStock": false,
       "systemId": 1
+    }
+  },
+  {
+    "model": "ProductGroup",
+    "data": {
+      "name": "Foo  ",
+      "systemId": 1,
     }
   },
   {

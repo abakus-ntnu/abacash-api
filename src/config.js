@@ -1,4 +1,4 @@
-const config = {
+export default {
     port: process.env.PORT || 9000,
     web: process.env.WEB_URL || 'https://abacash.abakus.no',
     pgUrl: process.env.PG_URL || 'postgres://abacash:@localhost/abacash',
@@ -9,12 +9,10 @@ const config = {
         apiKey: process.env.NERD_TOKEN
     },
     secret: process.env.SECRET || 'secret',
-    jwtExpiresIn: '7 days',
+    jwtExpiresIn: process.env.JWT_EXPIRE || '7 days',
     jwtSecret: process.env.JWT_SECRET || 'hemmelig',
     smtpUrl: process.env.SMTP_URL || 'smtp://127.0.0.1:25',
     sentryDsn: process.env.SENTRY_DSN || null,
     influx: process.env.INFLUX || null,
     influxDatabase: process.env.INFLUX_DATABASE || 'abacash'
 };
-
-export default config;
