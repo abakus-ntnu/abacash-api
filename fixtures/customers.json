@@ -31,5 +31,16 @@
       "systemId": 2,
       "customerRoleId": 4
     }
+  },
+  {
+    "model": "Customer",
+    "data": {
+      "rfid": "1338",
+      "displayName": "test customer 4",
+      "username": "testcustomer4",
+      "balance": 200.00,
+      "systemId": 2,
+      "customerRoleId": 4
+    }
   }
 ]
