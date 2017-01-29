@@ -1,7 +1,7 @@
 const config = {
     port: process.env.PORT || 9000,
     web: process.env.WEB_URL || 'https://abacash.abakus.no',
-    pgUrl: process.env.PG_URL || 'postgres://localhost/abacash',
+    pgUrl: process.env.PG_URL || 'postgres://abacash:@localhost/abacash',
     nodeEnv: process.env.NODE_ENV || 'production',
     defaultCustomerRole: process.env.DEFAULT_CUSTOMER_ROLE || 'customer',
     nerd: {
@@ -12,7 +12,9 @@ const config = {
     jwtExpiresIn: '7 days',
     jwtSecret: process.env.JWT_SECRET || 'hemmelig',
     smtpUrl: process.env.SMTP_URL || 'smtp://127.0.0.1:25',
-    sentryDsn: process.env.SENTRY_DSN || null
+    sentryDsn: process.env.SENTRY_DSN || null,
+    influx: process.env.INFLUX || null,
+    influxDatabase: process.env.INFLUX_DATABASE || 'abacash'
 };
 
 export default config;
