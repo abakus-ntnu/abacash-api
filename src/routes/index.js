@@ -7,11 +7,9 @@ import user from './user.routes';
 import product from './product.routes';
 import account from './account.routes';
 import nerd from './nerd.routes';
-import customerRole from './customer-role.routes';
 import productGroup from './product-group.routes';
 import transaction from './transaction.routes';
 import apiToken from './api-token.routes';
-import systemRole from './system-role.routes';
 import * as errors from '../components/errors';
 import raven from 'raven';
 import config from '../config';
@@ -41,9 +39,7 @@ apiRouter.use('/nerd', nerd);
 
 apiRouter.use('/:system/api-tokens', apiToken);
 apiRouter.use('/:system/customers', customer);
-apiRouter.use('/:system/roles', customerRole);
 apiRouter.use('/:system/product-groups', productGroup);
-apiRouter.use('/:system/users', systemRole);
 apiRouter.use('/:system/products', product);
 apiRouter.use('/:system/transactions', transaction);
 

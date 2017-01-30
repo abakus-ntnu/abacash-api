@@ -1,28 +1,12 @@
 import db from '../models';
 import { NotFoundError, ValidationError } from '../components/errors';
 import Sequelize from 'sequelize';
-import _ from 'lodash';
-
-const attributes = _.without(Object.keys(db.User.attributes), 'hash');
+import Promise from 'bluebird';
+import { omit } from 'lodash';
 
 export function list(req, res, next) {
-    db.User.findAll({
-        attributes
-    })
+    db.User.findAll()
     .then(res.json.bind(res))
-    .catch(next);
-}
-
-export function systems(req, res, next) {
-    db.User.findOne({ where: {
-        id: req.params.id
-    },
-        include: [{ model: db.System, as: 'systems' }]
-    })
-    .then(user => {
-        if (!user) throw new NotFoundError();
-        res.json(user.systems);
-    })
     .catch(next);
 }
 
@@ -30,7 +14,7 @@ export function retrieve(req, res, next) {
     db.User.findOne({ where: {
         id: req.params.id
     },
-        attributes
+        include: [db.System]
     })
     .then(user => {
         if (!user) throw new NotFoundError();
@@ -40,22 +24,21 @@ export function retrieve(req, res, next) {
 }
 
 export function create(req, res, next) {
-    const body = _.omit(req.body, 'password');
+    const body = omit(req.body, 'password');
 
     db.User.invite(body)
     .then(user => {
-        if (!req.body.systemId) {
-            return res.status(201).json(user);
+        if (!body.systems) {
+            return user;
         }
 
-        return user.addSystem(req.body.systemId)
-        // For some reason this returns an array of arrays,
-        // so we'll destructure it:
-        .then(([[system]]) => {
-            const payload = user.toJSON();
-            payload.role = system.role;
-            res.status(201).json(payload);
-        });
+        return Promise.map(body.systems, system => {
+            const systemId = Object.keys(system)[0];
+            return user.setSystems(systemId, { role: system[systemId] });
+        }).then(() => user);
+    })
+    .then(user => {
+        res.json(user);
     })
     .catch(Sequelize.ValidationError, err => {
         throw new ValidationError(err);
@@ -64,16 +47,30 @@ export function create(req, res, next) {
 }
 
 export function update(req, res, next) {
-    db.User.update(req.body, {
+    const { body, params } = req;
+
+    db.User.update(body, {
         where: {
-            id: req.params.id
+            id: params.id
         },
-        returning: true,
-        fields: _.without(Object.keys(req.body), 'id', 'hash')
+        returning: true
     })
     .spread((count, user) => {
-        if (!count) throw new NotFoundError();
-        res.json(_.pick(user[0], attributes));
+        if (!count) {
+            throw new NotFoundError();
+        }
+
+        if (!body.systems) {
+            return user[0];
+        }
+
+        return Promise.map(body.systems, system => {
+            const systemId = Object.keys(system)[0];
+            return user[0].setSystems(systemId, { role: system[systemId] });
+        }).then(() => user[0]);
+    })
+    .then(user => {
+        res.json(user);
     })
     .catch(next);
 }

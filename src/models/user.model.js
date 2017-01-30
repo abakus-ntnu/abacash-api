@@ -38,8 +38,13 @@ export default function(sequelize, DataTypes) {
                 }));
             },
             invite(body) {
+                let userInstance;
                 return User.create(body)
-                .then(user => user.sendInvite());
+                .then(user => {
+                    userInstance = user;
+                    return user.sendInvite();
+                })
+                .then(() => userInstance);
             }
         },
         instanceMethods: {
@@ -51,11 +56,11 @@ export default function(sequelize, DataTypes) {
                 return _.omit(values, 'hash');
             },
             sendInvite() {
-                const token = createToken({ ...this.toJSON(), invite: true }, '1h');
+                const token = createToken({ ...this.toJSON(), invite: true }, '5h');
                 return sendInviteEmail(this, token);
             },
             passwordReset() {
-                const token = createToken({ ...this.toJSON(), reset: true }, '1h');
+                const token = createToken({ ...this.toJSON(), reset: true }, '5h');
                 return sendResetEmail(this, token);
             },
             updatePassword(password) {

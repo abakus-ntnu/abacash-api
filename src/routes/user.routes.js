@@ -7,7 +7,6 @@ const router = express.Router();
 
 router.use(createAuthMiddleware(ADMINISTRATOR));
 router.get('/', controller.list);
-router.get('/:id/systems', controller.systems);
 router.get('/:id', controller.retrieve);
 router.post('/', controller.create);
 router.put('/:id', controller.update);

@@ -17,6 +17,8 @@ export function retrieve(req, res, next) {
         lookupParam = 'id';
     }
 
+    console.log(req.param);
+
     db.Customer.findOne({
         where: {
             [lookupParam]: req.params.lookup,
