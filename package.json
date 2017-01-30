@@ -78,7 +78,7 @@
     "nodemailer-stub-transport": "^1.0.0",
     "nyc": "^10.1.2",
     "sequelize-fixtures": "^0.5.5",
-    "supertest": "^2.0.1"
+    "supertest": "^3.0.0"
   },
   "private": true
 }
