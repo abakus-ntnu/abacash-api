@@ -7,7 +7,14 @@ module.exports = [
             isAdmin: false,
             // Password: test
             hash: '$2a$10$Gm09SZEHzdqx4eBV06nNheenfKpw3R1rXrMzmYfjX/.9UFPHnaAn6',
-            systems: [1]
+            systems: [
+                {
+                    id: 1,
+                    _through: {
+                        role: 'USER'
+                    }
+                }
+            ]
         }
     },
     {
@@ -18,7 +25,19 @@ module.exports = [
             isAdmin: true,
             // Password: test
             hash: '$2a$10$Gm09SZEHzdqx4eBV06nNheenfKpw3R1rXrMzmYfjX/.9UFPHnaAn6',
-            systems: [1, 2]
+            systems: [
+                {
+                    id: 1,
+                    _through: {
+                        role: 'MODERATOR'
+                    }
+                },
+                { id: 2,
+                    _through: {
+                        role: 'MODERATOR'
+                    }
+                }
+            ]
         }
     }
 ];

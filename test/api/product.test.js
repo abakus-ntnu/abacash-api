@@ -69,15 +69,16 @@ describe('Product API', () => {
 
         it('should list active products', done => {
             request(app)
-            .get('/1/products/?type=Type 2&active=true')
+            .get('/1/products/?productGroupId=1&active=true')
             .set(headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
                 if (err) return done(err);
+                console.log(res.body);
                 const products = res.body;
                 products.length.should.equal(1);
-                products[0].type.should.equal('Type 2');
+                products[0].productGroupId.should.equal(1);
                 done();
             });
         });

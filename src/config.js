@@ -1,8 +1,8 @@
 export default {
     port: process.env.PORT || 9000,
-    web: process.env.WEB_URL || 'https://abacash.abakus.no',
+    web: process.env.WEB_URL || 'localhost:4000',
     pgUrl: process.env.PG_URL || 'postgres://abacash:@localhost/abacash',
-    nodeEnv: process.env.NODE_ENV || 'production',
+    nodeEnv: process.env.NODE_ENV || 'development',
     defaultCustomerRole: process.env.DEFAULT_CUSTOMER_ROLE || 'customer',
     nerd: {
         url: process.env.NERD_URL || 'https://abakus.no/api/',

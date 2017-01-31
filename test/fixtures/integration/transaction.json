@@ -1,61 +1,9 @@
 [
   {
-    "model": "Product",
-    "data": {
-      "name": "Product 1",
-      "productGroupId": 1,
-      "price": 20.0,
-      "internalPrice": 15.0,
-      "active": true,
-      "stock": 5,
-      "keepStock": true,
-      "systemId": 1
-    }
-  },
-  {
-    "model": "Product",
-    "data": {
-      "name": "Product 2",
-      "productGroupId": 1,
-      "price": 35.0,
-      "internalPrice": 27.99,
-      "active": true,
-      "stock": 8,
-      "keepStock": true,
-      "systemId": 1
-    }
-  },
-  {
-    "model": "Product",
-    "data": {
-      "name": "Product 3",
-      "productGroupId": 1,
-      "price": 10.0,
-      "internalPrice": 10.0,
-      "active": true,
-      "stock": 8,
-      "keepStock": false,
-      "systemId": 1
-    }
-  },
-  {
-    "model": "Product",
-    "data": {
-      "name": "Product 4",
-      "productGroupId": 1,
-      "price": 10.0,
-      "internalPrice": 10.0,
-      "active": true,
-      "stock": null,
-      "keepStock": false,
-      "systemId": 1
-    }
-  },
-  {
     "model": "ProductGroup",
     "data": {
-      "name": "Foo  ",
-      "systemId": 1,
+      "name": "Foo",
+      "systemId": 1
     }
   },
   {
@@ -89,12 +37,64 @@
     }
   },
   {
+    "model": "Product",
+    "data": {
+      "name": "Product 1",
+      "productGroupId": 1,
+      "price": 20,
+      "internalPrice": 15,
+      "active": true,
+      "stock": 5,
+      "keepStock": true,
+      "systemId": 1
+    }
+  },
+  {
+    "model": "Product",
+    "data": {
+      "name": "Product 2",
+      "productGroupId": 1,
+      "price": 35,
+      "internalPrice": 27.99,
+      "active": true,
+      "stock": 8,
+      "keepStock": true,
+      "systemId": 1
+    }
+  },
+  {
+    "model": "Product",
+    "data": {
+      "name": "Product 3",
+      "productGroupId": 1,
+      "price": 10,
+      "internalPrice": 10,
+      "active": true,
+      "stock": 8,
+      "keepStock": false,
+      "systemId": 1
+    }
+  },
+  {
+    "model": "Product",
+    "data": {
+      "name": "Product 4",
+      "productGroupId": 1,
+      "price": 10,
+      "internalPrice": 10,
+      "active": true,
+      "stock": null,
+      "keepStock": false,
+      "systemId": 1
+    }
+  },
+  {
     "model": "Customer",
     "data": {
       "rfid": "1234",
       "displayName": "Seller",
       "username": "seller",
-      "balance": 0.0,
+      "balance": 0,
       "systemId": 1,
       "customerRoleId": 1
     }
@@ -105,7 +105,7 @@
       "rfid": "12345",
       "displayName": "Internal",
       "username": "Internal",
-      "balance": 100.0,
+      "balance": 100,
       "systemId": 1,
       "customerRoleId": 2
     }
