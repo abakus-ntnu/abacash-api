@@ -19,27 +19,39 @@ if (!config.influx) {
 /**
  * Create the InfluxDB datasource in grafana.
  */
-const createDatasource = () => request.agent()
-    .post(`${grafanaBaseUrl}/datasources`)
-    .send({
-        name: 'abacash',
-        type: 'influxdb',
-        url: 'http://influxdb:8086',
-        access: 'proxy',
-        basicAuth: false,
-        database: 'abacash',
-        isDefault: true
-    });
+const createDatasource = () => {
+    if (config.nodeEnv === 'test') {
+        return Promise.resolve();
+    }
+
+    return request.agent()
+        .post(`${grafanaBaseUrl}/datasources`)
+        .send({
+            name: 'abacash',
+            type: 'influxdb',
+            url: 'http://influxdb:8086',
+            access: 'proxy',
+            basicAuth: false,
+            database: 'abacash',
+            isDefault: true
+        });
+};
 
 /**
  * Upload the dashboard to grafana.
  */
-const createDashboard = () => !config.nodeEnv === 'test' ? request.agent()
-    .post(`${grafanaBaseUrl}/dashboards/db`)
-    .send({
-        overwrite: true,
-        dashboard
-    }) : Promise.resolve();
+const createDashboard = () => {
+    if (config.nodeEnv === 'test') {
+        return Promise.resolve();
+    }
+
+    return request.agent()
+        .post(`${grafanaBaseUrl}/dashboards/db`)
+        .send({
+            overwrite: true,
+            dashboard
+        });
+};
 
 createDatabase()
     .then(createDatasource)
