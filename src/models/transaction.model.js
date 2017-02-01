@@ -1,3 +1,4 @@
+/* eslint-disable no-confusing-arrow */
 import { createEvent } from '../components/stats';
 
 export default function(sequelize, DataTypes) {
