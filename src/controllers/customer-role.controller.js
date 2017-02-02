@@ -1,9 +1,13 @@
 import _ from 'lodash';
 import db from '../models';
+import Promise from 'bluebird';
 import { NotFoundError } from '../components/errors';
 
 export function list(req, res, next) {
     req.system.getCustomerRoles()
+    .map(role => Promise.all([role.countCustomers(), role.toJSON()])
+        .spread((customerCount, customerRole) => ({ ...customerRole, customerCount }))
+    )
     .then(res.json.bind(res))
     .catch(next);
 }

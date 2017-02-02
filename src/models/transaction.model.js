@@ -10,7 +10,6 @@ export default function(sequelize, DataTypes) {
                 return Math.round(Number(this.getDataValue('total')) * 100) / 100.0;
             }
         },
-
         customerId: {
             type: DataTypes.INTEGER,
             allowNull: false
@@ -37,7 +36,6 @@ export default function(sequelize, DataTypes) {
                 ]) : Promise.resolve()
             )
         },
-
         classMethods: {
             associate(models) {
                 Transaction.belongsToMany(models.Product, {
