@@ -1,6 +1,7 @@
 version: '2'
 
 services:
+
   postgres:
     image: postgres:9.5
     ports:
@@ -22,3 +23,10 @@ services:
       - "5000:3000"
     links:
       - influxdb
+
+  fakesmtp:
+    image: digiplant/fake-smtp
+    ports:
+      - "25:25"
+    volumes:
+      - ./email:/var/mail

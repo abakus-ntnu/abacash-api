@@ -69,7 +69,7 @@ export class ConflictError extends Error {
 }
 
 export function errorMiddleware(err, req, res, next) {
-    if (process.env.NODE_ENV === 'development') {
+    if (config.nodeEnv === 'development') {
         console.log(err.stack);
     }
 

@@ -4,51 +4,63 @@
  * in production.
  */
 
-import 'isomorphic-fetch';
+import request from 'superagent';
 import config from '../src/config';
-import { createDatabase } from '../src/stats';
+import { createDatabase } from '../src/components/stats';
+import dashboard from '../dashboard.json';
 
-const influx = config.influx;
-const dashboard = require('../dashboard.json');
 const grafanaBaseUrl = 'http://admin:admin@127.0.0.1:5000/api';
 
-if (!influx) {
-    throw new Error('You need to set the influx property in src/config.');
+if (!config.influx) {
+    console.error('You need to set the influx property in src/config.');
+    process.exit(1);
 }
 
 /**
  * Create the InfluxDB datasource in grafana.
  */
-const createDatasource = () => fetch(`${grafanaBaseUrl}/datasources`, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        name: 'abacash',
-        type: 'influxdb',
-        url: 'http://influxdb:8086',
-        access: 'proxy',
-        basicAuth: false,
-        database: 'abacash',
-        isDefault: true
-    })
-});
+const createDatasource = () => {
+    if (config.nodeEnv === 'test') {
+        return Promise.resolve();
+    }
+
+    return request.agent()
+        .post(`${grafanaBaseUrl}/datasources`)
+        .send({
+            name: 'abacash',
+            type: 'influxdb',
+            url: 'http://influxdb:8086',
+            access: 'proxy',
+            basicAuth: false,
+            database: 'abacash',
+            isDefault: true
+        });
+};
 
 /**
  * Upload the dashboard to grafana.
  */
-const createDashboard = () => fetch(`${grafanaBaseUrl}/dashboards/db`, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        overwrite: true,
-        dashboard
-    })
-});
+const createDashboard = () => {
+    if (config.nodeEnv === 'test') {
+        return Promise.resolve();
+    }
+
+    return request.agent()
+        .post(`${grafanaBaseUrl}/dashboards/db`)
+        .send({
+            overwrite: true,
+            dashboard
+        });
+};
 
 createDatabase()
     .then(createDatasource)
-    .then(createDashboard);
+    .then(createDashboard)
+    .then(() => {
+        console.log('Statistics successfully initialized!');
+        process.exit(0);
+    })
+    .catch(err => {
+        console.error(err);
+        process.exit(1);
+    });

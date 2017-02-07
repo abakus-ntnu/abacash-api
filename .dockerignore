@@ -1,6 +1,7 @@
 .git/
-
+email
 node_modules
+coverage
 .tmp
 .idea
 /src/config/local.env.js

@@ -42,5 +42,71 @@
       "systemId": 2,
       "customerRoleId": 4
     }
+  },
+  {
+    "model": "Customer",
+    "data": {
+      "rfid": "13371",
+      "displayName": "test customer 33",
+      "username": "testcustomer34",
+      "balance": 200.00,
+      "systemId": 2,
+      "customerRoleId": 4
+    }
+  },
+  {
+    "model": "Customer",
+    "data": {
+      "rfid": "13381",
+      "displayName": "test customer 34",
+      "username": "testcustomer34",
+      "balance": 200.00,
+      "systemId": 2,
+      "customerRoleId": 4
+    }
+  },
+  {
+    "model": "Customer",
+    "data": {
+      "rfid": "13372",
+      "displayName": "test customer 331",
+      "username": "testcustomer31",
+      "balance": 200.00,
+      "systemId": 2,
+      "customerRoleId": 4
+    }
+  },
+  {
+    "model": "Customer",
+    "data": {
+      "rfid": "13382",
+      "displayName": "test customer 41",
+      "username": "testcustomer41",
+      "balance": 200.00,
+      "systemId": 2,
+      "customerRoleId": 4
+    }
+  },
+  {
+    "model": "Customer",
+    "data": {
+      "rfid": "13374",
+      "displayName": "test customer 34",
+      "username": "testcustomer34",
+      "balance": 200.00,
+      "systemId": 2,
+      "customerRoleId": 4
+    }
+  },
+  {
+    "model": "Customer",
+    "data": {
+      "rfid": "13384",
+      "displayName": "test customer 45",
+      "username": "testcustomer45",
+      "balance": 200.00,
+      "systemId": 2,
+      "customerRoleId": 4
+    }
   }
 ]

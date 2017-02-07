@@ -14,6 +14,7 @@ const fixtures = [
     'api-tokens.json',
     'customer-roles.json',
     'customers.json',
+    'product-groups.json',
     'products.json',
     'transactions.json',
     'users.js'

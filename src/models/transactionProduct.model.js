@@ -1,5 +1,5 @@
 import db from '.';
-import { createEvent } from '../stats';
+import { createEvent } from '../components/stats';
 
 const trackProductUsage = transactionProduct => {
     db.Product.findOne({

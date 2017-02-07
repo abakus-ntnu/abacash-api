@@ -18,7 +18,6 @@
       "name": "Kontoret",
       "info": "Dette er Kontoret sitt awesome system",
       "status": true,
-      "productTypes": ["Innskudd", "Type 2", "Type 1"],
       "defaultCustomerRoleId": 4,
       "email": "labamba@abakus.no",
       "allowExternalCustomers": false,

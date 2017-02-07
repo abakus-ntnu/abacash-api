@@ -6,7 +6,15 @@ module.exports = [
             name: 'Test Bruker',
             isAdmin: false,
             // Password: test
-            hash: '$2a$10$Gm09SZEHzdqx4eBV06nNheenfKpw3R1rXrMzmYfjX/.9UFPHnaAn6'
+            hash: '$2a$10$Gm09SZEHzdqx4eBV06nNheenfKpw3R1rXrMzmYfjX/.9UFPHnaAn6',
+            systems: [
+                {
+                    id: 1,
+                    _through: {
+                        role: 'USER'
+                    }
+                }
+            ]
         }
     },
     {
@@ -16,7 +24,20 @@ module.exports = [
             name: 'Backup bruker',
             isAdmin: true,
             // Password: test
-            hash: '$2a$10$Gm09SZEHzdqx4eBV06nNheenfKpw3R1rXrMzmYfjX/.9UFPHnaAn6'
+            hash: '$2a$10$Gm09SZEHzdqx4eBV06nNheenfKpw3R1rXrMzmYfjX/.9UFPHnaAn6',
+            systems: [
+                {
+                    id: 1,
+                    _through: {
+                        role: 'MODERATOR'
+                    }
+                },
+                { id: 2,
+                    _through: {
+                        role: 'MODERATOR'
+                    }
+                }
+            ]
         }
     }
 ];

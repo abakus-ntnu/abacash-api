@@ -74,7 +74,7 @@ describe('Users API', () => {
             const payload = {
                 email: 'test@test.com',
                 name: 'testuser',
-                systemId: 1
+                systems: [{ 1: 'USER' }]
             };
 
             request(app)
@@ -87,7 +87,6 @@ describe('Users API', () => {
                 if (err) return done(err);
                 const user = res.body;
                 user.name.should.equal(payload.name);
-                user.role.should.equal('USER');
                 done();
             });
         });
@@ -98,7 +97,7 @@ describe('Users API', () => {
             const payload = {
                 email: 'test@test.com',
                 name: 'newname',
-                password: 'testpassword'
+                systems: [{ 1: 'MODERATOR' }, { 2: 'USER' }]
             };
 
             request(app)
