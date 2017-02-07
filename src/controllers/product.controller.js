@@ -5,7 +5,8 @@ import { NotFoundError, ModelValidationError } from '../components/errors';
 
 export function list(req, res, next) {
     req.system.getProducts({
-        where: req.query
+        where: req.query,
+        include: [{ model: db.ProductGroup, as: 'productGroup' }]
     })
     .then(res.json.bind(res))
     .catch(next);
@@ -16,7 +17,8 @@ export function retrieve(req, res, next) {
         where: {
             systemId: req.system.id,
             id: req.params.id
-        }
+        },
+        include: [{ model: db.ProductGroup, as: 'productGroup' }]
     })
     .then(product => {
         if (!product) {

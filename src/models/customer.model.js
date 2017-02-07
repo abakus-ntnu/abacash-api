@@ -1,4 +1,4 @@
-import { createEvent } from '../stats';
+import { createEvent } from '../components/stats';
 
 export default function(sequelize, DataTypes) {
     const Customer = sequelize.define('customer', {

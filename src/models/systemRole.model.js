@@ -2,7 +2,7 @@ import { ROLE_TYPES } from './../components/constants';
 import _ from 'lodash';
 
 export default function(sequelize, DataTypes) {
-    const SystemRole = sequelize.define('systemRole', {
+    return sequelize.define('systemRole', {
         systemId: {
             type: DataTypes.INTEGER,
             unique: 'compositeIndex'
@@ -17,6 +17,4 @@ export default function(sequelize, DataTypes) {
             defaultValue: ROLE_TYPES.USER
         }
     });
-
-    return SystemRole;
 }

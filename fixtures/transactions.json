@@ -1,2 +1,58 @@
 [
+  {
+    "model": "Transaction",
+    "data": {
+      "total": 250.00,
+      "systemId": 1,
+      "customerId": 1,
+      "sellerId": 2,
+      "products": [
+        {
+          "id": 2,
+          "_through": {
+            "count": 1
+          }
+        },
+        { "id": 3,
+          "_through": {
+            "count": 1
+          }
+        }
+      ]
+    }
+  },
+  {
+    "model": "Transaction",
+    "data": {
+      "total": 20.00,
+      "systemId": 1,
+      "customerId": 2,
+      "sellerId": 2,
+      "products": [
+        {
+          "id": 1,
+          "_through": {
+            "count": 1
+          }
+        }
+      ]
+    }
+  },
+  {
+    "model": "Transaction",
+    "data": {
+      "total": 200.00,
+      "systemId": 2,
+      "customerId": 3,
+      "sellerId": 3,
+      "products": [
+        {
+          "id": 4,
+          "_through": {
+            "count": 1
+          }
+        }
+      ]
+    }
+  }
 ]

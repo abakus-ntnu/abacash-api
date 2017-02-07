@@ -1,19 +1,19 @@
 import _ from 'lodash';
-import db from '../models';
 import Promise from 'bluebird';
+import db from '../models';
 import { NotFoundError } from '../components/errors';
 
 export function list(req, res, next) {
-    req.system.getCustomerRoles()
-    .map(role => Promise.all([role.countCustomers(), role.toJSON()])
-        .spread((customerCount, customerRole) => ({ ...customerRole, customerCount }))
+    req.system.getProductGroups()
+    .map(group => Promise.all([group.countProducts(), group.toJSON()])
+        .spread((productCount, productGroup) => ({ ...productGroup, productCount }))
     )
     .then(res.json.bind(res))
     .catch(next);
 }
 
 export function create(req, res, next) {
-    db.CustomerRole.create({
+    db.ProductGroup.create({
         ...req.body,
         systemId: req.system.id
     })
@@ -25,7 +25,7 @@ export function create(req, res, next) {
 
 export function update(req, res, next) {
     const { id } = req.params;
-    db.CustomerRole.update(req.body, {
+    db.ProductGroup.update(req.body, {
         where: { id },
         returning: true,
         fields: _.without(Object.keys(req.body), 'id')
@@ -39,7 +39,7 @@ export function update(req, res, next) {
 
 export function destroy(req, res, next) {
     const { id } = req.params;
-    db.CustomerRole.destroy({
+    db.ProductGroup.destroy({
         where: { id }
     })
     .then(count => {

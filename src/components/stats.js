@@ -1,5 +1,5 @@
 import Influx from 'influx';
-import config from './config';
+import config from '../config';
 
 const influx = config.influx ? new Influx.InfluxDB({
     host: config.influx,

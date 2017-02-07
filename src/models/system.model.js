@@ -1,6 +1,9 @@
 export default function(sequelize, DataTypes) {
     const System = sequelize.define('system', {
-        name: DataTypes.STRING,
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         info: DataTypes.STRING,
         status: {
             type: DataTypes.BOOLEAN,
@@ -9,11 +12,6 @@ export default function(sequelize, DataTypes) {
         },
         email: {
             type: DataTypes.STRING,
-            lowercase: true
-        },
-        productTypes: {
-            type: DataTypes.ARRAY(DataTypes.STRING),
-            defaultValue: ['Innskudd'],
             lowercase: true
         },
         needSeller: {
@@ -36,6 +34,7 @@ export default function(sequelize, DataTypes) {
             associate(models) {
                 System.hasMany(models.Customer);
                 System.hasMany(models.CustomerRole);
+                System.hasMany(models.ProductGroup);
                 System.hasMany(models.APIToken);
                 System.hasMany(models.Product);
                 System.hasMany(models.Transaction);

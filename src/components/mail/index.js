@@ -3,21 +3,16 @@ import config from '../../config';
 import handlebars from 'express-handlebars';
 import Bluebird from 'bluebird';
 import hbs from 'nodemailer-express-handlebars';
-import stubTransport from 'nodemailer-stub-transport';
 import { handleError } from './../errors';
 import logger from 'winston';
 import path from 'path';
-
-let transport;
-if (config.nodeEnv === 'production') transport = config.smtpUrl;
-else transport = stubTransport();
 
 const options = hbs({
     viewEngine: handlebars.create({}),
     viewPath: path.resolve(__dirname.replace('/dist/', '/src/'))
 });
 
-const transporter = Bluebird.promisifyAll(nodemailer.createTransport(transport));
+const transporter = Bluebird.promisifyAll(nodemailer.createTransport(config.smtpUrl));
 transporter.use('compile', options);
 
 export function sendResetEmail(user, token) {

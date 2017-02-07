@@ -53,9 +53,6 @@ describe('Security', () => {
         testSecurity('/authenticate/invite', 'GET', MODERATOR);
         testSecurity('/authenticate/invite', 'POST', MODERATOR);
     });
-    describe('Account API', () => {
-        testSecurity('/account', 'GET', MODERATOR);
-    });
     describe('API Token API', () => {
         testSecurity('/1/api-tokens', 'GET', MODERATOR);
         testSecurity('/1/api-tokens', 'POST', MODERATOR);
@@ -84,16 +81,11 @@ describe('Security', () => {
         testSecurity('/1/products', 'POST', MODERATOR);
         testSecurity('/1/products/1', 'DELETE', MODERATOR);
     });
-    describe('System Role API', () => {
-        testSecurity('/1/users/1', 'POST', ADMINISTRATOR);
-        testSecurity('/1/users/1', 'PUT', ADMINISTRATOR);
-        testSecurity('/1/users/1', 'DELETE', ADMINISTRATOR);
-    });
     describe('System API', () => {
         testSecurity('/systems', 'GET', TOKEN);
         testSecurity('/systems/1', 'GET', TOKEN);
         testSecurity('/systems', 'POST', ADMINISTRATOR);
-        testSecurity('/systems/1', 'PUT', ADMINISTRATOR);
+        testSecurity('/systems/1', 'PUT', MODERATOR);
     });
     describe('Transaction API', () => {
         testSecurity('/1/transactions', 'GET', MODERATOR);
@@ -101,11 +93,10 @@ describe('Security', () => {
         testSecurity('/1/transactions', 'POST', TOKEN);
     });
     describe('Users API', () => {
-        testSecurity('/users', 'GET', ADMINISTRATOR);
-        testSecurity('/users/1/systems', 'GET', ADMINISTRATOR);
-        testSecurity('/users/1', 'GET', ADMINISTRATOR);
-        testSecurity('/users', 'GET', ADMINISTRATOR);
-        testSecurity('/users/1', 'PUT', ADMINISTRATOR);
-        testSecurity('/users/1', 'DELETE', ADMINISTRATOR);
+        testSecurity('/users', 'GET', MODERATOR);
+        testSecurity('/users/1', 'GET', MODERATOR);
+        testSecurity('/users', 'GET', MODERATOR);
+        testSecurity('/users/1', 'PUT', MODERATOR);
+        testSecurity('/users/1', 'DELETE', MODERATOR);
     });
 });
