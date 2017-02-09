@@ -49,7 +49,7 @@
     "errorhandler": "1.5.0",
     "express": "4.14.1",
     "express-handlebars": "3.0.0",
-    "influx": "5.0.0-alpha.4",
+    "influx": "5.0.4",
     "jsonfile": "^2.4.0",
     "jsonwebtoken": "7.2.1",
     "lodash": "4.17.2",
