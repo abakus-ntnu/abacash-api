@@ -141,10 +141,15 @@ export function add(req, res, next) {
         res.status(201).json(currentTransaction);
     })
     .catch(Sequelize.ValidationError, err => {
+        errors.handleError(err);
         throw new errors.ModelValidationError(err);
     })
     .catch(err => err.parent && err.parent.code === SERIALIZATION_FAILURE, err => {
+        errors.handleError(err);
         throw new errors.ConflictError(err);
     })
-    .catch(next);
+    .catch(err => {
+        errors.handleError(err);
+        next(err);
+    });
 }
