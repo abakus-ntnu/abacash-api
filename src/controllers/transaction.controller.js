@@ -148,7 +148,7 @@ export function add(req, res, next) {
         errors.handleError(err);
         throw new errors.ConflictError(err);
     })
-    .catch((err) => {
+    .catch(err => {
         errors.handleError(err);
         next(err);
     });
