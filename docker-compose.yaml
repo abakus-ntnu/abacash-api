@@ -9,21 +9,6 @@ services:
     environment:
       - POSTGRES_USER=abacash
 
-  influxdb:
-    image: influxdb:alpine
-    ports:
-      - "8083:8083"
-      - "8086:8086"
-    environment:
-      - INFLUXDB_ADMIN_ENABLED=true
-
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - "5000:3000"
-    links:
-      - influxdb
-
   fakesmtp:
     image: digiplant/fake-smtp
     ports:

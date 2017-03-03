@@ -9,7 +9,6 @@ pipeline:
       - npm install -g yarn
       - yarn
 
-      - yarn setup-stats
       - yarn test -- --timeout 0
       - yarn run lint
       - yarn coverage
@@ -34,5 +33,3 @@ services:
     image: postgres:9.5
     environment:
       - POSTGRES_USER=abacash
-  influxdb:
-    image: influxdb:alpine

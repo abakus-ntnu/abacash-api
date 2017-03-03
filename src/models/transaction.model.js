@@ -1,5 +1,5 @@
 /* eslint-disable no-confusing-arrow */
-import { createEvent } from '../components/stats';
+import analytics from '../components/stats';
 
 export default function(sequelize, DataTypes) {
     const Transaction = sequelize.define('transaction', {
@@ -21,19 +21,19 @@ export default function(sequelize, DataTypes) {
     }, {
         hooks: {
             afterCreate: transaction => transaction.getCustomer()
-                .then(customer => transaction.total > 0 ? createEvent([
-                    {
-                        measurement: 'transaction',
-                        tags: {
-                            user: customer.username,
-                            displayName: customer.displayName
-                        },
-                        fields: {
-                            total: Number(transaction.total),
-                            user_id: Number(customer.id)
-                        }
+                .then(customer => analytics.track({
+                    userId: customer.username,
+                    event: 'transaction',
+                    properties: {
+                        systemId: customer.systemId,
+                        customerId: customer.id,
+                        transactionId: transaction.id,
+                        total: Number(transaction.total)
+                    },
+                    context: {
+                        app: 'abacash'
                     }
-                ]) : Promise.resolve()
+                })
             )
         },
         classMethods: {
