@@ -16,16 +16,17 @@ pipeline:
   docker:
     image: plugins/docker
     when:
-      branch: release
-      event: push
+      event: tag
     repo: abakus/abacash-api
-    tag: latest
+    tags:
+      - ${DRONE_TAG##v}
+      - latest
 
   slack:
     image: plugins/slack
     when:
       status: [ success, failure ]
-      event: push
+      event: [ push, tag ]
     channel: abacash
 
 services:
