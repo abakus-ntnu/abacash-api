@@ -13,6 +13,5 @@ export default {
     jwtSecret: process.env.JWT_SECRET || 'hemmelig',
     smtpUrl: process.env.SMTP_URL || 'smtp://127.0.0.1:25',
     sentryDsn: process.env.SENTRY_DSN || null,
-    influx: process.env.INFLUX || null,
-    influxDatabase: process.env.INFLUX_DATABASE || 'abacash'
+    analyticsDomain: process.env.ANALYTICS_DOMAIN || 'http://127.0.0.1:8000'
 };

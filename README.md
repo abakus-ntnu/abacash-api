@@ -51,10 +51,3 @@ $ yarn lint
 $ yarn load-db
 ```
 Will fill the `abacash` postgres database with fixtures from `./fixtures/`. Connection string can be set by setting environment variable `PG_URL`. Contents in the `fixtures` are not (and should not be) used for automatic testing, which means the fixtures can be edited to test the client.
-
-## Setup the stats backend
-```
-$ yarn setup-stats
-```
-This command prepares InfluxDB and Grafana for stats ingestion.
-You can visit Grafana at http://127.0.0.1:5000. Credentials admin:admin.

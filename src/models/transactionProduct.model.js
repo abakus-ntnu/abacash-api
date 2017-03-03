@@ -1,5 +1,5 @@
 import db from '.';
-import { createEvent } from '../components/stats';
+import analytics from '../components/stats';
 
 const trackProductUsage = transactionProduct => {
     db.Product.findOne({
@@ -9,18 +9,19 @@ const trackProductUsage = transactionProduct => {
     })
     .then(product => {
         if (product) {
-            return createEvent([
-                {
-                    measurement: 'product_sale',
-                    tags: {
-                        name: product.name,
-                        type: product.type
-                    },
-                    fields: {
-                        count: Number(transactionProduct.count)
-                    }
+            return analytics.track({
+                anonymousId: 'system',
+                event: 'product_sale',
+                properties: {
+                    productId: product.id,
+                    name: product.name,
+                    type: product.type,
+                    count: Number(transactionProduct.count)
+                },
+                context: {
+                    app: 'abacash'
                 }
-            ]);
+            });
         }
     });
 };

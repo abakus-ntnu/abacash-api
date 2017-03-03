@@ -1,4 +1,4 @@
-import { createEvent } from '../components/stats';
+import analytics from '../components/stats';
 
 export default function(sequelize, DataTypes) {
     const Customer = sequelize.define('customer', {
@@ -37,18 +37,18 @@ export default function(sequelize, DataTypes) {
             }
         },
         hooks: {
-            afterUpdate: customer => createEvent([
-                {
-                    measurement: 'saldo',
-                    tags: {
-                        user: customer.username,
-                        displayName: customer.displayName
-                    },
-                    fields: {
-                        saldo: Number(customer.balance)
-                    }
+            afterUpdate: customer => analytics.track({
+                userId: customer.username,
+                event: 'balance',
+                properties: {
+                    customerId: customer.id,
+                    systemId: customer.systemId,
+                    balance: Number(customer.balance)
+                },
+                context: {
+                    app: 'abacash'
                 }
-            ])
+            })
         }
     });
 
