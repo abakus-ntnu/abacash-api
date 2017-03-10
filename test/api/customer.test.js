@@ -106,25 +106,6 @@ describe('Customer API', () => {
             });
         });
 
-        it('should return a validation error for missing username', done => {
-            const newCustomer = {
-                displayName: 'New Customer'
-            };
-            request(app)
-            .post('/1/customers/')
-            .send(newCustomer)
-            .set(headers)
-            .expect('Content-Type', /json/)
-            .expect(400)
-            .end((err, res) => {
-                if (err) return done(err);
-                res.body.message.should.equal('notNull Violation: username cannot be null');
-                res.body.errors.length.should.equal(1);
-                done();
-            });
-        });
-    });
-
     describe('Update a customer ', () => {
         it('should update the customer', done => {
             const newCustomer = {
