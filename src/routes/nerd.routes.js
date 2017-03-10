@@ -8,6 +8,5 @@ const router = express.Router();
 
 router.use(createAuthMiddleware(TOKEN));
 router.get('/', controller.list);
-router.get('/:username', controller.retrieve);
 
 export default router;
