@@ -10,7 +10,6 @@ export function list(req, res, next) {
     .query({ surname: req.query.surname })
     .end((err, response) => {
         if (err) next(err);
-        console.log(response);
         res.json(response.body.users || []);
     });
 }
