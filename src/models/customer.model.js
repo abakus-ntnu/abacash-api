@@ -12,9 +12,11 @@ export default function(sequelize, DataTypes) {
         },
         username: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             set(value) {
-                this.setDataValue('username', value.toLowerCase());
+                if (value) {
+                    this.setDataValue('username', value.toLowerCase());
+                }
             }
         },
         systemId: {
@@ -38,10 +40,11 @@ export default function(sequelize, DataTypes) {
         },
         hooks: {
             afterUpdate: customer => analytics.track({
-                userId: customer.username,
+                userId: customer.id,
                 event: 'balance',
                 properties: {
-                    customerId: customer.id,
+                    username: customer.username,
+                    displayName: customer.displayName,
                     systemId: customer.systemId,
                     balance: Number(customer.balance)
                 },

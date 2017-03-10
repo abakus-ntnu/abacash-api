@@ -22,11 +22,13 @@ export default function(sequelize, DataTypes) {
         hooks: {
             afterCreate: transaction => transaction.getCustomer()
                 .then(customer => analytics.track({
-                    userId: customer.username,
+                    userId: customer.id,
                     event: 'transaction',
                     properties: {
                         systemId: customer.systemId,
-                        customerId: customer.id,
+                        username: customer.username,
+                        displayName: customer.displayName,
+                        sellerId: transaction.sellerId,
                         transactionId: transaction.id,
                         total: Number(transaction.total)
                     },
