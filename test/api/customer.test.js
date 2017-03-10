@@ -105,6 +105,7 @@ describe('Customer API', () => {
                 done();
             });
         });
+    });
 
     describe('Update a customer ', () => {
         it('should update the customer', done => {
