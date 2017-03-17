@@ -1,14 +1,10 @@
-import raven from 'raven';
 import config from '../config';
 import logger from 'winston';
-
-export const sentryClient = new raven.Client(config.sentryDsn);
-sentryClient.on('error', sentryError => {
-    logger.error('Failed to report to Sentry', sentryError);
-});
+import Raven from 'raven';
 
 export function handleError(error) {
-    sentryClient.captureError(error);
+    logger.error('Handle Error', error);
+    Raven.captureException(error);
 }
 
 export class ModelValidationError extends Error {
