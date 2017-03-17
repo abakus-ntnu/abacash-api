@@ -10,12 +10,16 @@ import customerRole from './customer-role.routes';
 import productGroup from './product-group.routes';
 import transaction from './transaction.routes';
 import apiToken from './api-token.routes';
+import health from './health.routes';
 import * as errors from '../components/errors';
-import raven from 'raven';
+import Raven from 'raven';
 import config from '../config';
 
 const router = Router();
 const apiRouter = Router();
+
+Raven.config(config.sentryDsn).install();
+router.use(Raven.requestHandler());
 
 router.use(apiRouter);
 
@@ -35,6 +39,7 @@ apiRouter.use('/authenticate', auth);
 apiRouter.use('/users', user);
 apiRouter.use('/systems', system);
 apiRouter.use('/nerd', nerd);
+apiRouter.use('/health', health);
 
 apiRouter.use('/:system/api-tokens', apiToken);
 apiRouter.use('/:system/customers', customer);
@@ -44,7 +49,7 @@ apiRouter.use('/:system/products', product);
 apiRouter.use('/:system/transactions', transaction);
 
 router.use(errors.pageNotFoundMiddleware);
-router.use(raven.middleware.express.errorHandler(config.sentryDsn));
+router.use(Raven.errorHandler());
 router.use(errors.errorMiddleware);
 
 export default router;
