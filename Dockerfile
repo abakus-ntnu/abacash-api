@@ -1,17 +1,13 @@
-FROM node:6
+FROM node:7
 MAINTAINER Abakus backup <backup@abakus.no>
 
-# Create app directory
 RUN mkdir -p /app
 WORKDIR /app
-
-EXPOSE 9000
-
-# Copy application
 COPY . /app
 
-# Build image
-RUN npm install
-RUN npm run build
+RUN npm install -g yarn && yarn
 
-ENTRYPOINT ["npm", "start"]
+ENV NODE_ENV production
+RUN yarn build
+
+ENTRYPOINT ["yarn", "start"]
