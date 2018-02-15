@@ -4,13 +4,12 @@ import { NotFoundError, ModelValidationError } from '../components/errors';
 import Sequelize from 'sequelize';
 
 export function list(req, res, next) {
-    req.system.getAPITokens()
+    db.APIToken.findAll()
     .then(res.json.bind(res))
     .catch(next);
 }
 
 export function create(req, res, next) {
-    req.body.systemId = req.system.id;
     db.APIToken.generate(req.body)
     .then(token => res.status(201).json(token))
     .catch(Sequelize.ValidationError, err => {
@@ -20,7 +19,6 @@ export function create(req, res, next) {
 }
 
 export function update(req, res, next) {
-    req.body.systemId = req.system.id;
     db.APIToken.update(req.body, {
         where: {
             id: req.params.id

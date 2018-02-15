@@ -6,7 +6,6 @@
       "displayName": "test customer",
       "username": "testcustomer",
       "balance": 123.34,
-      "systemId": 1,
       "customerRoleId": 4
     }
   },
@@ -17,7 +16,6 @@
       "displayName": "test customer 2",
       "username": "testcustomer2",
       "balance": 100,
-      "systemId": 1,
       "customerRoleId": 2
     }
   },
@@ -27,8 +25,7 @@
       "rfid": "1337",
       "displayName": "test customer 3",
       "username": "testcustomer3",
-      "balance": 200.00,
-      "systemId": 2,
+      "balance": 200.0,
       "customerRoleId": 4
     }
   },
@@ -38,8 +35,7 @@
       "rfid": "1338",
       "displayName": "test customer 4",
       "username": "testcustomer4",
-      "balance": 200.00,
-      "systemId": 2,
+      "balance": 200.0,
       "customerRoleId": 4
     }
   },
@@ -49,8 +45,7 @@
       "rfid": "13371",
       "displayName": "test customer 33",
       "username": "testcustomer34",
-      "balance": 200.00,
-      "systemId": 2,
+      "balance": 200.0,
       "customerRoleId": 4
     }
   },
@@ -60,8 +55,7 @@
       "rfid": "13381",
       "displayName": "test customer 34",
       "username": "testcustomer34",
-      "balance": 200.00,
-      "systemId": 2,
+      "balance": 200.0,
       "customerRoleId": 4
     }
   },
@@ -71,7 +65,7 @@
       "rfid": "13372",
       "displayName": "test customer 331",
       "username": "testcustomer31",
-      "balance": 200.00,
+      "balance": 200.0,
       "systemId": 2,
       "customerRoleId": 4
     }
@@ -82,7 +76,7 @@
       "rfid": "13382",
       "displayName": "test customer 41",
       "username": "testcustomer41",
-      "balance": 200.00,
+      "balance": 200.0,
       "systemId": 2,
       "customerRoleId": 4
     }
@@ -93,7 +87,7 @@
       "rfid": "13374",
       "displayName": "test customer 34",
       "username": "testcustomer34",
-      "balance": 200.00,
+      "balance": 200.0,
       "systemId": 2,
       "customerRoleId": 4
     }
@@ -104,7 +98,7 @@
       "rfid": "13384",
       "displayName": "test customer 45",
       "username": "testcustomer45",
-      "balance": 200.00,
+      "balance": 200.0,
       "systemId": 2,
       "customerRoleId": 4
     }

@@ -1,5 +1,9 @@
 import db from '../models';
-import { NotFoundError, AuthenticationError, ValidationError } from '../components/errors';
+import {
+  NotFoundError,
+  AuthenticationError,
+  ValidationError
+} from '../components/errors';
 import Sequelize from 'sequelize';
 import Promise from 'bluebird';
 import { omit } from 'lodash';
@@ -11,10 +15,10 @@ export function list(req, res, next) {
 }
 
 export function retrieve(req, res, next) {
-    db.User.findOne({ where: {
-        id: req.params.id
-    },
-        include: [db.System]
+    db.User.findOne({
+        where: {
+            id: req.params.id
+        }
     })
     .then(user => {
         if (!user) throw new NotFoundError();
@@ -76,9 +80,11 @@ export function update(req, res, next) {
 }
 
 export function destroy(req, res, next) {
-    db.User.destroy({ where: {
-        id: req.params.id
-    } })
+    db.User.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
     .then(count => {
         if (!count) throw new NotFoundError();
         res.status(204).send();

@@ -2,42 +2,36 @@
   {
     "model": "ProductGroup",
     "data": {
-      "systemId": 1,
       "name": "Type 1"
     }
   },
   {
     "model": "ProductGroup",
     "data": {
-      "systemId": 1,
       "name": "Type 2"
     }
   },
   {
     "model": "ProductGroup",
     "data": {
-      "systemId": 1,
       "name": "Type 3"
     }
   },
   {
     "model": "ProductGroup",
     "data": {
-      "systemId": 2,
       "name": "Type 4"
     }
   },
   {
     "model": "ProductGroup",
     "data": {
-      "systemId": 2,
       "name": "Type 5"
     }
   },
   {
     "model": "ProductGroup",
     "data": {
-      "systemId": 2,
       "name": "Type 6"
     }
   }
