@@ -1,4 +1,6 @@
 import cls from 'continuation-local-storage';
+import Promise from 'bluebird';
+import clsBluebird from 'cls-bluebird';
 import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
@@ -9,7 +11,8 @@ const logging = config.env === 'development' ? console.log : false;
 const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
 
 // create sequelize instance with continuation local storage
-Sequelize.cls = namespace;
+clsBluebird(namespace, Promise);
+Sequelize.useCLS(namespace);
 const sequelize = new Sequelize(config.pgUrl, { logging });
 
 const db = fs
@@ -21,16 +24,13 @@ const db = fs
     return total;
   }, {});
 
-/**
- * Sets up the associations for each model.
- * @param  {string} modelName
- */
 Object.keys(db).forEach(modelName => {
   if ('associate' in db[modelName]) {
     db[modelName].associate(db);
   }
 });
 
+console.log(db.APIToken);
 const total = {
   namespace,
   sequelize,

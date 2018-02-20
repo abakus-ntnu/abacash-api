@@ -16,10 +16,18 @@
   "bugs": {
     "url": "https://github.com/abakusbackup/abacash-api/issues"
   },
-  "keywords": ["Abakus", "Abacash", "Sequelize", "Express", "REST"],
+  "keywords": [
+    "Abakus",
+    "Abacash",
+    "Sequelize",
+    "Express",
+    "REST"
+  ],
   "eslintConfig": {
     "parser": "babel-eslint",
-    "plugins": ["prettier"],
+    "plugins": [
+      "prettier"
+    ],
     "rules": {
       "prettier/prettier": "error"
     }
@@ -28,7 +36,10 @@
     "singleQuote": true
   },
   "babel": {
-    "presets": ["es2015", "stage-0"]
+    "presets": [
+      "es2015",
+      "stage-0"
+    ]
   },
   "homepage": "https://github.com/abakusbackup/abacash-client#readme",
   "scripts": {
@@ -37,10 +48,8 @@
     "build": "npm run clean && npm run dist",
     "dist": "babel src --out-dir dist",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "load-db":
-      "PG_URL=${PG_URL:-'postgres://abacash:@localhost/abacash'} babel-node bin/load-db.js",
-    "test":
-      "PG_URL=${PG_URL:-'postgres://abacash:@localhost/abacash'} NODE_ENV=test nyc --require babel-register --require babel-polyfill mocha $(find test -name '*.test.js')",
+    "load-db": "PG_URL=${PG_URL:-'postgres://abacash:@localhost/abacash'} babel-node bin/load-db.js",
+    "test": "PG_URL=${PG_URL:-'postgres://abacash:@localhost/abacash'} NODE_ENV=test nyc --require babel-register --require babel-polyfill mocha $(find test -name '*.test.js')",
     "test:watch": "npm test -- --watch --reporter min",
     "lint": "yarn run lint:js && yarn run lint:prettier",
     "lint:js": "eslint . --ignore-path .gitignore",
@@ -52,6 +61,7 @@
     "bcrypt": "^1.0.3",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
+    "cls-bluebird": "^2.1.0",
     "continuation-local-storage": "^3.2.1",
     "cookie-parser": "1.4.3",
     "cors": "^2.8.4",

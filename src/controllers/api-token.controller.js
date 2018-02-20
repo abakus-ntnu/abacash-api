@@ -10,7 +10,6 @@ export function list(req, res, next) {
 }
 
 export function create(req, res, next) {
-  console.log(db.APIToken.generate);
   db.APIToken.generate(req.body)
     .then(token => res.status(201).json(token))
     .catch(Sequelize.ValidationError, err => {

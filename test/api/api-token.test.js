@@ -54,9 +54,7 @@ describe('APIToken API', () => {
     });
 
     it('should return a validation error for missing info', done => {
-      const auth = {
-        systemId: 1
-      };
+      const auth = {};
 
       request(app)
         .post('/api-tokens/')
@@ -66,8 +64,8 @@ describe('APIToken API', () => {
         .expect(400)
         .end((err, res) => {
           if (err) return done(err);
-          res.body.message.should.equal(
-            'notNull Violation: name cannot be null'
+          res.body.errors[0].message.should.equal(
+            'APIToken.name cannot be null'
           );
           res.body.errors.length.should.equal(1);
           done();
