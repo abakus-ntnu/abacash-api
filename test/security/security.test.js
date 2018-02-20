@@ -65,7 +65,7 @@ function testSecurity(controller, httpVerb, authId) {
 }
 
 describe('Security', () => {
-  beforeEach(() => loadFixtures(['systems.json', 'api-tokens.json']));
+  beforeEach(() => loadFixtures(['api-tokens.json']));
   describe('Auth API', () => {
     testSecurity('/authenticate/reset', 'POST', MODERATOR);
     testSecurity('/authenticate/invite', 'GET', MODERATOR);
