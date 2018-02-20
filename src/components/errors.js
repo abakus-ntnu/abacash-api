@@ -63,11 +63,11 @@ export class ConflictError extends Error {
 }
 
 export function errorMiddleware(err, req, res, next) {
-  if (config.env === 'development') {
-    logger.error(err.stack);
+  const status = err.status || 500;
+  if (['development', 'test'].includes(config.env) && status >= 500) {
+    logger.error(err);
   }
 
-  const status = err.status || 500;
   return res.status(status).json(
     err.payload || {
       name: err.name,

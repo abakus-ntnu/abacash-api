@@ -23,10 +23,11 @@ const config = {
   sentryDsn: process.env.SENTRY_DSN || null
 };
 
-const logger = pino({ prettyPrint: config.env === 'development' });
+const logger = pino({ prettyPrint: config.env !== 'production' });
 
 const apm = APM.start({
   logger,
+  active: config.env === 'production',
   serviceName: 'abacash-api',
   secretToken: config.apmToken,
   serverUrl: config.apmServer
