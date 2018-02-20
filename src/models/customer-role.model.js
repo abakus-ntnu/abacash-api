@@ -1,39 +1,33 @@
 import config from '../config';
 
 export default function(sequelize, DataTypes) {
-  const CustomerRole = sequelize.define(
-    'customerRole',
-    {
-      role: {
-        type: DataTypes.STRING,
-        defaultValue: config.defaultCustomerRole
-      },
-      internalSales: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
-      },
-      isSeller: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
-      },
-      isDefaultRole: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
-      },
-      allowCredit: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-        allowNull: false
-      }
+  const CustomerRole = sequelize.define('customerRole', {
+    role: {
+      type: DataTypes.STRING,
+      defaultValue: config.defaultCustomerRole
     },
-    {
-      classMethods: {
-        associate(models) {
-          CustomerRole.hasMany(models.Customer);
-        }
-      }
+    internalSales: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    isSeller: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    isDefaultRole: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    allowCredit: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false
     }
-  );
+  });
+
+  CustomerRole.associate = function(models) {
+    CustomerRole.hasMany(models.Customer);
+  };
 
   return CustomerRole;
 }
