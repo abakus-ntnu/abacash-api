@@ -8,63 +8,59 @@ chai.use(chaiAsPromised);
 const should = chai.should();
 
 describe('User Model', () => {
-    beforeEach(() => syncDB({ force: true }));
+  beforeEach(() => syncDB({ force: true }));
 
-    describe('#register()', () => {
-        it('should create a hashed password', () => {
-            const body = {
-                email: 'eh@eh.com',
-                name: 'testuser'
-            };
+  describe('#register()', () => {
+    it('should create a hashed password', () => {
+      const body = {
+        email: 'eh@eh.com',
+        name: 'testuser'
+      };
 
-            return db.User.register(body, 'testpassword')
-            .then(user => {
-                should.exist(user.hash);
-                user.name.should.equal(body.name);
-            });
-        });
+      return db.User.register(body, 'testpassword').then(user => {
+        should.exist(user.hash);
+        user.name.should.equal(body.name);
+      });
+    });
+  });
+
+  describe('#authenticate()', () => {
+    it('should authenticate valid pws', () => {
+      const password = 'testpw';
+      const body = {
+        email: 'eh@eh.com',
+        name: 'testuser'
+      };
+
+      return db.User.register(body, password).then(
+        user => user.authenticate(password).should.eventually.be.true
+      );
     });
 
-    describe('#authenticate()', () => {
-        it('should authenticate valid pws', () => {
-            const password = 'testpw';
-            const body = {
-                email: 'eh@eh.com',
-                name: 'testuser'
-            };
+    it('should not authenticate invalid pws', () => {
+      const body = {
+        email: 'eh@eh.com',
+        name: 'testuser'
+      };
 
-            return db.User.register(body, password)
-            .then(user =>
-                user.authenticate(password).should.eventually.be.true
-            );
-        });
-
-        it('should not authenticate invalid pws', () => {
-            const body = {
-                email: 'eh@eh.com',
-                name: 'testuser'
-            };
-
-            return db.User.register(body, 'password')
-            .then(user =>
-                user.authenticate('notpassword').should.eventually.be.false
-            );
-        });
+      return db.User.register(body, 'password').then(
+        user => user.authenticate('notpassword').should.eventually.be.false
+      );
     });
+  });
 
-    describe('#invite()', () => {
-        it('should send an invite email', () => {
-            const body = {
-                email: 'test@eh.com',
-                name: 'test user'
-            };
+  describe('#invite()', () => {
+    it('should send an invite email', () => {
+      const body = {
+        email: 'test@eh.com',
+        name: 'test user'
+      };
 
-            return db.User.invite(body)
-            .then(response => {
-                const user = response.toJSON();
-                user.name.should.equal(body.name);
-                should.not.exist(user.hash);
-            });
-        });
+      return db.User.invite(body).then(response => {
+        const user = response.toJSON();
+        user.name.should.equal(body.name);
+        should.not.exist(user.hash);
+      });
     });
+  });
 });

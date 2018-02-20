@@ -25,14 +25,5 @@
       "internalSales": false,
       "allowCredit": false
     }
-  },
-  {
-    "model": "CustomerRole",
-    "data": {
-      "role": "Normal kunde",
-      "isSeller": false,
-      "internalSales": false,
-      "allowCredit": false
-    }
   }
 ]

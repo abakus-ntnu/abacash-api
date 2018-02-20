@@ -1,17 +1,19 @@
-FROM node:6
+FROM node:9-alpine
 MAINTAINER Abakus backup <backup@abakus.no>
 
-# Create app directory
+ARG RELEASE
+
 RUN mkdir -p /app
 WORKDIR /app
 
-EXPOSE 9000
-
-# Copy application
-COPY . /app
+COPY yarn.lock yarn.lock
+COPY package.json package.json
+COPY src src
 
 # Build image
-RUN npm install
-RUN npm run build
+RUN yarn --production
+RUN yarn build
 
-ENTRYPOINT ["npm", "start"]
+ENV NODE_ENV production
+ENV RELEASE $RELEASE
+ENTRYPOINT ["yarn", "start"]

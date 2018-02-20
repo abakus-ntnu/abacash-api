@@ -6,7 +6,7 @@
       "displayName": "test customer",
       "username": "testcustomer",
       "balance": 123.34,
-      "customerRoleId": 4
+      "customerRoleId": 1
     }
   },
   {
@@ -26,7 +26,7 @@
       "displayName": "test customer 3",
       "username": "testcustomer3",
       "balance": 200.0,
-      "customerRoleId": 4
+      "customerRoleId": 3
     }
   },
   {
@@ -36,7 +36,7 @@
       "displayName": "test customer 4",
       "username": "testcustomer4",
       "balance": 200.0,
-      "customerRoleId": 4
+      "customerRoleId": 3
     }
   },
   {
@@ -44,9 +44,9 @@
     "data": {
       "rfid": "13371",
       "displayName": "test customer 33",
-      "username": "testcustomer34",
+      "username": "testcustomer314",
       "balance": 200.0,
-      "customerRoleId": 4
+      "customerRoleId": 3
     }
   },
   {
@@ -56,7 +56,7 @@
       "displayName": "test customer 34",
       "username": "testcustomer34",
       "balance": 200.0,
-      "customerRoleId": 4
+      "customerRoleId": 3
     }
   },
   {
@@ -66,8 +66,7 @@
       "displayName": "test customer 331",
       "username": "testcustomer31",
       "balance": 200.0,
-      "systemId": 2,
-      "customerRoleId": 4
+      "customerRoleId": 3
     }
   },
   {
@@ -77,8 +76,7 @@
       "displayName": "test customer 41",
       "username": "testcustomer41",
       "balance": 200.0,
-      "systemId": 2,
-      "customerRoleId": 4
+      "customerRoleId": 3
     }
   },
   {
@@ -86,10 +84,9 @@
     "data": {
       "rfid": "13374",
       "displayName": "test customer 34",
-      "username": "testcustomer34",
+      "username": "testcustomer344",
       "balance": 200.0,
-      "systemId": 2,
-      "customerRoleId": 4
+      "customerRoleId": 3
     }
   },
   {
@@ -99,8 +96,7 @@
       "displayName": "test customer 45",
       "username": "testcustomer45",
       "balance": 200.0,
-      "systemId": 2,
-      "customerRoleId": 4
+      "customerRoleId": 3
     }
   }
 ]

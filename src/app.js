@@ -1,36 +1,49 @@
 import express from 'express';
 import cors from 'cors';
+import db from './models';
+import forest from 'forest-express-sequelize';
 import morgan from 'morgan';
 import errorHandler from 'errorhandler';
-import bodyParser from 'body-parser';
+import { urlencoded, json } from 'body-parser';
 import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
 import routes from './routes';
-import raven from 'raven';
-import { sentryClient } from './components/errors';
-import config from './config';
+import config, { logger } from './config';
 
-// Global sentry patch
-// Setup server
 const app = express();
 
-if (config.nodeEnv === 'production' && config.sentryDsn) {
-    app.use(raven.middleware.express.requestHandler(config.sentryDsn));
-    sentryClient.patchGlobal(() => {
-        process.exit(1);
-    });
-}
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(urlencoded({ extended: false }));
+app.use(json());
 app.use(methodOverride());
 app.use(cookieParser());
 app.use(cors());
-app.use(morgan('dev'));
+app.use(
+  morgan((tokens, req, res) => {
+    logger.info(
+      {
+        method: tokens.method(req, res),
+        url: tokens.url(req, res),
+        status: tokens.status(req, res),
+        'content-length': tokens.res(req, res, 'content-length'),
+        'response-time': tokens['response-time'](req, res)
+      },
+      'request'
+    );
+  })
+);
 
-if (app.get('env') === 'development') {
-    app.use(errorHandler());
+if (config.env === 'development') {
+  app.use(errorHandler());
 }
+
+app.use(
+  forest.init({
+    modelsDir: `${__dirname}/models`,
+    envSecret: config.forestEnv,
+    authSecret: config.forestSecret,
+    sequelize: db.sequelize
+  })
+);
 
 app.use('/', routes);
 
