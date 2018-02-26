@@ -6,7 +6,7 @@ import _ from 'lodash';
 import config from '../config';
 
 export function list(req, res, next) {
-  db.CustomerRole.findAll({ include: [db.CustomerRole] })
+  db.Customer.findAll({ include: [db.CustomerRole] })
     .then(res.json.bind(res))
     .catch(next);
 }
@@ -41,10 +41,7 @@ function populateCustomerRole(customer) {
 }
 
 export function create(req, res, next) {
-  db.Customer.create({
-    ...req.body,
-    customerRoleId: config.defaultCustomerRoleId // todo
-  })
+  db.Customer.create(req.body)
     .then(populateCustomerRole)
     .then(customer => {
       res.status(201).json(customer);

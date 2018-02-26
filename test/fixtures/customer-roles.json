@@ -2,7 +2,7 @@
   {
     "model": "CustomerRole",
     "data": {
-      "role": "testrole",
+      "role": "Customer",
       "isSeller": false,
       "internalSales": false,
       "allowCredit": false

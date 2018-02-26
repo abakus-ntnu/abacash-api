@@ -24,7 +24,6 @@ describe('Customer API', () => {
           if (err) return done(err);
           const customers = res.body;
           customers.length.should.equal(3);
-          customers[0].id.should.equal(1);
           done();
         });
     });
@@ -56,7 +55,8 @@ describe('Customer API', () => {
         displayName: 'New Customer',
         username: 'newcus',
         rfid: 'dd:dd:dd:dd',
-        balance: 524
+        balance: 524,
+        customerRoleId: 1
       };
       request(app)
         .post('/customers/')
@@ -67,17 +67,18 @@ describe('Customer API', () => {
         .end((err, res) => {
           if (err) return done(err);
           const customer = res.body;
-          customer.customerRole.role.should.equal('testrole');
+          customer.customerRole.role.should.equal('Customer');
           customer.displayName.should.equal(newCustomer.displayName);
           done();
         });
     });
 
-    it('should not create a new customer with identical systemId + rfid', done => {
+    it('should not create a new customer with identical rfid', done => {
       const newCustomer = {
         username: 'newcust',
         displayName: 'New Customer',
-        rfid: 'cb:51:34:49'
+        rfid: 'cb:51:34:49',
+        customerRoleId: 1
       };
       request(app)
         .post('/customers/')
@@ -87,8 +88,7 @@ describe('Customer API', () => {
         .expect(400)
         .end((err, res) => {
           if (err) return done(err);
-          res.body.message.should.equal('Validation error');
-          res.body.errors.length.should.equal(2);
+          res.body.errors[0].message.should.equal('rfid must be unique');
           done();
         });
     });
@@ -111,7 +111,7 @@ describe('Customer API', () => {
           if (err) return done(err);
           const customer = res.body;
           customer.displayName.should.equal(newCustomer.displayName);
-          customer.customerRole.role.should.equal('testrole');
+          customer.customerRole.role.should.equal('Customer');
           customer.rfid.should.equal(newCustomer.rfid);
           done();
         });

@@ -7,7 +7,6 @@ const config = {
   pgUrl: process.env.PG_URL || 'postgres://abacash:@localhost/abacash',
   env: process.env.NODE_ENV || 'development',
   release: process.env.RELEASE || null,
-  defaultCustomerRole: process.env.DEFAULT_CUSTOMER_ROLE || 'customer',
   secret: process.env.SECRET || 'secret',
   jwtExpiresIn: process.env.JWT_EXPIRE || '7 days',
   jwtSecret: process.env.JWT_SECRET || 'hemmelig',
