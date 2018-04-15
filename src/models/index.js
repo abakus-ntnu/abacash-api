@@ -30,12 +30,9 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
-console.log(db.APIToken);
-const total = {
+export default {
   namespace,
   sequelize,
   Sequelize,
   ...db
 };
-
-export default total;

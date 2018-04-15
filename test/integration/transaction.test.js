@@ -81,7 +81,7 @@ function checkCustomerBalance(customerId, expectedBalance) {
   // check if customer has new balance
   return new Bluebird((resolve, reject) => {
     request(app)
-      .get(`/1/customers/${customerId}`)
+      .get(`/customers/${customerId}`)
       .set(headers)
       .expect(200)
       .end((err, res) => {
@@ -95,7 +95,7 @@ function checkCustomerBalance(customerId, expectedBalance) {
 function checkProductStock(productId, expectedStock) {
   return new Bluebird((resolve, reject) => {
     request(app)
-      .get(`/1/products/${productId}`)
+      .get(`/products/${productId}`)
       .set(headers)
       .expect(200)
       .end((err, res) => {

@@ -50,7 +50,7 @@ export function update(req, res, next) {
     returning: true
   })
     .spread((count, user) => {
-      res.json(user);
+      res.json(user[0]);
     })
     .catch(next);
 }

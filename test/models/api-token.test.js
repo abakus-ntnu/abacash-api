@@ -22,8 +22,10 @@ describe('APIToken Model', () => {
     it('should throw validation errors', done => {
       const body = {};
 
-      return db.APIToken.generate(body).catch(err => {
-        err.message.should.equal('notNull Violation: name cannot be null');
+      db.APIToken.generate(body).catch(err => {
+        err.message.should.equal(
+          'notNull Violation: APIToken.name cannot be null'
+        );
         done();
       });
     });

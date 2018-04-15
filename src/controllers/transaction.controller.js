@@ -51,7 +51,6 @@ export function add(req, res, next) {
   let currentCustomer;
   let currentTotal;
   let currentCustomerRole;
-
   // start database transaction
   db.sequelize
     .transaction(t => {
@@ -126,14 +125,18 @@ export function add(req, res, next) {
           // store total and create transaction
           .then(total => {
             currentTotal = total;
-            return db.Transaction.create({
-              ...req.body,
-              total
-            }).then(transaction => {
+            return db.Transaction.create(
+              {
+                ...req.body,
+                total
+              },
+              { transaction: t }
+            ).then(transaction => {
               const productValues = countBy(req.body.products);
               return Bluebird.map(Object.keys(productValues), product =>
                 transaction.addProduct(product, {
-                  count: productValues[product]
+                  transaction: t,
+                  through: { count: productValues[product] }
                 })
               ).then(() => transaction);
             });
