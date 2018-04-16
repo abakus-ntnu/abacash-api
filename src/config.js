@@ -4,9 +4,10 @@ import APM from 'elastic-apm-node';
 const config = {
   port: process.env.PORT || 9000,
   web: process.env.WEB_URL || 'localhost:4000',
-  pgUrl: process.env.PG_URL || 'postgres://abacash:@localhost/abacash',
+  pgUrl: process.env.PG_URL || 'postgres://abacash:@127.0.0.1/abacash',
   env: process.env.NODE_ENV || 'development',
   needSeller: process.env.NEED_SELLER || false,
+  defaultCustomerRole: process.env.DEFAULT_CUSTOMER_ROLE || 'customer',
   release: process.env.RELEASE || null,
   secret: process.env.SECRET || 'secret',
   jwtExpiresIn: process.env.JWT_EXPIRE || '7 days',

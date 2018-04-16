@@ -4,10 +4,10 @@ import clsBluebird from 'cls-bluebird';
 import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
-import config from '../config';
+import config, { logger } from '../config';
 
 const namespace = cls.createNamespace('abacash-api');
-const logging = config.env === 'development' ? console.log : false;
+const logging = data => logger.debug(data);
 const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
 
 // create sequelize instance with continuation local storage

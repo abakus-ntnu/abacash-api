@@ -32,7 +32,7 @@ app.use(
   })
 );
 
-if (config.env === 'development') {
+if (['test', 'development'].includes(config.env)) {
   app.use(errorHandler());
 }
 
