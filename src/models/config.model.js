@@ -1,5 +1,5 @@
 export default function(sequelize, DataTypes) {
-  const Config = sequelize.define('Config', {
+  const Config = sequelize.define('config', {
     needSeller: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,

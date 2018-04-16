@@ -6,18 +6,20 @@ import { countBy } from 'lodash';
 import SERIALIZATION_FAILURE from '../components/constants';
 import config from '../config';
 
-function checkIfSellerIsSeller(sellerId, needSeller) {
-  if (needSeller) {
-    return db.Customer.findById(sellerId)
-      .then(seller => {
-        if (!seller) {
-          throw new errors.ValidationError('This seller does not exist.');
-        }
-        return seller.getCustomerRole();
-      })
-      .then(role => role.isSeller);
-  }
-  return Bluebird.resolve(true);
+function checkIfSellerIsSeller(sellerId) {
+  return db.Config.findById(1).then(config => {
+    if (config.needSeller) {
+      return db.Customer.findById(sellerId)
+        .then(seller => {
+          if (!seller) {
+            throw new errors.ValidationError('This seller does not exist.');
+          }
+          return seller.getCustomerRole();
+        })
+        .then(role => role.isSeller);
+    }
+    return Bluebird.resolve(true);
+  });
 }
 
 export function list(req, res, next) {
@@ -73,7 +75,7 @@ export function add(req, res, next) {
       }
       // find and store customer
       return (
-        checkIfSellerIsSeller(req.body.sellerId, db.Config.needSeller)
+        checkIfSellerIsSeller(req.body.sellerId)
           .then(isSeller => {
             if (!isSeller) {
               throw new errors.ValidationError(
