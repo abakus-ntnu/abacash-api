@@ -27,13 +27,6 @@ pipeline:
     build_args:
       - RELEASE=${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7}
 
-  slack:
-    image: plugins/slack
-    when:
-      status: [ success, failure ]
-      event: [ push, tag ]
-    channel: abacash
-
 services:
   database:
     image: postgres:9.5
