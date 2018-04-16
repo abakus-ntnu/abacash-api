@@ -1,11 +1,8 @@
 import { Router } from 'express';
-import db from '../models';
 import auth from './auth.routes';
 import customer from './customer.routes';
-import system from './system.routes';
 import user from './user.routes';
 import product from './product.routes';
-import nerd from './nerd.routes';
 import customerRole from './customer-role.routes';
 import productGroup from './product-group.routes';
 import transaction from './transaction.routes';
@@ -16,37 +13,19 @@ import Raven from 'raven';
 import config from '../config';
 
 const router = Router();
-const apiRouter = Router();
 
 Raven.config(config.sentryDsn).install();
 router.use(Raven.requestHandler());
 
-router.use(apiRouter);
-
-apiRouter.param('system', (req, res, next, id) => {
-    db.System.findOne({
-        where: { id }
-    })
-    .then(systemInstance => {
-        if (!systemInstance) throw new errors.NotFoundError();
-        req.system = systemInstance;
-        next();
-    })
-    .catch(next);
-});
-
-apiRouter.use('/authenticate', auth);
-apiRouter.use('/users', user);
-apiRouter.use('/systems', system);
-apiRouter.use('/nerd', nerd);
-apiRouter.use('/health', health);
-
-apiRouter.use('/:system/api-tokens', apiToken);
-apiRouter.use('/:system/customers', customer);
-apiRouter.use('/:system/roles', customerRole);
-apiRouter.use('/:system/product-groups', productGroup);
-apiRouter.use('/:system/products', product);
-apiRouter.use('/:system/transactions', transaction);
+router.use('/authenticate', auth);
+router.use('/users', user);
+router.use('/api-tokens', apiToken);
+router.use('/customers', customer);
+router.use('/roles', customerRole);
+router.use('/product-groups', productGroup);
+router.use('/products', product);
+router.use('/transactions', transaction);
+router.use('/health', health);
 
 router.use(errors.pageNotFoundMiddleware);
 router.use(Raven.errorHandler());

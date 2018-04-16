@@ -9,6 +9,10 @@ router.get('/:lookup', createAuthMiddleware(TOKEN), controller.retrieve);
 router.post('/', createAuthMiddleware(TOKEN), controller.create);
 router.get('/', createAuthMiddleware(TOKEN), controller.list);
 router.put('/:customerId', createAuthMiddleware(TOKEN), controller.update);
-router.delete('/:customerId', createAuthMiddleware(MODERATOR), controller.destroy);
+router.delete(
+  '/:customerId',
+  createAuthMiddleware(MODERATOR),
+  controller.destroy
+);
 
 export default router;

@@ -7,7 +7,6 @@
       "name": "Test product 1",
       "active": true,
       "stock": 5,
-      "systemId": 1,
       "productGroupId": 1
     }
   },
@@ -19,7 +18,6 @@
       "name": "Test product 2",
       "active": true,
       "stock": 10,
-      "systemId": 1,
       "productGroupId": 1
     }
   },
@@ -31,7 +29,6 @@
       "name": "Innskudd 200",
       "active": true,
       "stock": 0,
-      "systemId": 1,
       "productGroupId": 2
     }
   },
@@ -43,7 +40,6 @@
       "name": "Test product 3",
       "active": false,
       "stock": 10,
-      "systemId": 2,
       "productGroupId": 4
     }
   },
@@ -55,7 +51,6 @@
       "name": "Test product 3",
       "active": true,
       "stock": 0,
-      "systemId": 2,
       "productGroupId": 4
     }
   },
@@ -67,7 +62,6 @@
       "name": "Innskudd 200",
       "active": true,
       "stock": 0,
-      "systemId": 2,
       "productGroupId": 5
     }
   },
@@ -79,7 +73,6 @@
       "name": "Test product 1",
       "active": true,
       "stock": 5,
-      "systemId": 2,
       "productGroupId": 6
     }
   }

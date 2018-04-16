@@ -1,26 +1,31 @@
 pipeline:
   tests:
-    image: node:6
+    image: node:9
     when:
       event: push
     environment:
       - NODE_ENV=test
+      - PG_URL=postgres://abacash:@database/abacash
+    secrets: [ segment_write_key ]
     commands:
-      - npm install -g yarn
       - yarn
-
-      - yarn test -- --timeout 0
-      - yarn run lint
-      - yarn coverage
+      - yarn test
+      - yarn lint
+      - yarn build
 
   docker:
     image: plugins/docker
     when:
-      event: tag
-    repo: abakus/abacash-api
+      branch:
+        - master
+      event: push
+    registry: https://registry.abakus.no
+    repo: registry.abakus.no/abakusbackup/abacash-api
+    secrets: [ docker_username, docker_password ]
     tags:
-      - ${DRONE_TAG##v}
-      - latest
+      - ${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7}
+    build_args:
+      - RELEASE=${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7}
 
   slack:
     image: plugins/slack

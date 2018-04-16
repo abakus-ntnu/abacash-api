@@ -1,18 +1,24 @@
 import app from './app';
-import config from './config';
+import Raven from 'raven';
+import config, { logger } from './config';
 import { syncDB } from './model-helpers';
-import logger from 'winston';
 
-if (process.env.NODE_ENV === 'development') {
-    logger.level = 'debug';
-}
+Raven.config(config.sentryDsn, {
+  release: config.release,
+  environment: config.env,
+  tags: {
+    git_commit: config.release
+  }
+}).install();
 
 function listen() {
-    app.listen(config.port, () => {
-        logger.info('Express server listening on %d, in %s mode',
-            config.port, app.get('env'));
-    });
+  app.listen(config.port, () => {
+    logger.info(
+      'Express server listening on %d, in %s mode',
+      config.port,
+      config.env
+    );
+  });
 }
 
-syncDB()
-    .then(() => listen());
+syncDB().then(() => listen());

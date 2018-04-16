@@ -2,7 +2,6 @@
   {
     "model": "CustomerRole",
     "data": {
-      "systemId": 1,
       "role": "Selger",
       "isSeller": true,
       "internalSales": false,
@@ -12,7 +11,6 @@
   {
     "model": "CustomerRole",
     "data": {
-      "systemId": 1,
       "role": "Internkunde",
       "isSeller": false,
       "internalSales": true,
@@ -22,22 +20,10 @@
   {
     "model": "CustomerRole",
     "data": {
-      "systemId": 1,
-      "role": "Normal kunde",
-      "isSeller": false,
-      "internalSales": false,
-      "allowCredit": false
-    }
-  },
-  {
-    "model": "CustomerRole",
-    "data": {
-      "systemId": 2,
       "role": "Normal kunde",
       "isSeller": false,
       "internalSales": false,
       "allowCredit": false
     }
   }
-
 ]
