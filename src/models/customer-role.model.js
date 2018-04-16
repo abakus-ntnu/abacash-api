@@ -4,7 +4,7 @@ export default function(sequelize, DataTypes) {
   const CustomerRole = sequelize.define('customerRole', {
     role: {
       type: DataTypes.STRING,
-      defaultValue: config.defaultCustomerRole
+      defaultValue: 'customer'
     },
     internalSales: {
       type: DataTypes.BOOLEAN,

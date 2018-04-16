@@ -1,0 +1,8 @@
+[
+  {
+    "model": "Config",
+    "data": {
+      "needSeller": true
+    }
+  }
+]

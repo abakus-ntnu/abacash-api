@@ -73,7 +73,7 @@ export function add(req, res, next) {
       }
       // find and store customer
       return (
-        checkIfSellerIsSeller(req.body.sellerId, config.needSeller)
+        checkIfSellerIsSeller(req.body.sellerId, db.Config.needSeller)
           .then(isSeller => {
             if (!isSeller) {
               throw new errors.ValidationError(

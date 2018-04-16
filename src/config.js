@@ -1,20 +1,15 @@
 import pino from 'pino';
-import APM from 'elastic-apm-node';
 
 const config = {
   port: process.env.PORT || 9000,
   web: process.env.WEB_URL || 'localhost:4000',
-  pgUrl: process.env.PG_URL || 'postgres://abacash:@127.0.0.1/abacash',
+  pgUrl: process.env.PG_URL || 'postgres://abacash:@localhost/abacash',
   env: process.env.NODE_ENV || 'development',
-  needSeller: process.env.NEED_SELLER || false,
-  defaultCustomerRole: process.env.DEFAULT_CUSTOMER_ROLE || 'customer',
   release: process.env.RELEASE || null,
   secret: process.env.SECRET || 'secret',
   jwtExpiresIn: process.env.JWT_EXPIRE || '7 days',
   jwtSecret: process.env.JWT_SECRET || 'hemmelig',
   smtpUrl: process.env.SMTP_URL || 'smtp://127.0.0.1:25',
-  apmServer: process.env.APM_SERVER || 'http://localhost:8200',
-  apmToken: process.env.APM_TOKEN || undefined,
   segmentKey: process.env.SEGMENT_WRITE_KEY || null,
   forestEnv:
     process.env.FOREST_ENV_SECRET ||
@@ -26,13 +21,5 @@ const config = {
 
 const logger = pino({ prettyPrint: config.env !== 'production' });
 
-const apm = APM.start({
-  logger,
-  active: config.env === 'production',
-  serviceName: 'abacash-api',
-  secretToken: config.apmToken,
-  serverUrl: config.apmServer
-});
-
 export default config;
-export { apm, logger };
+export { logger };
