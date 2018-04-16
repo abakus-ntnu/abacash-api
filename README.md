@@ -9,7 +9,7 @@ The Abacash backend is built using Node.js, and needs
 done, the server can be built using:
 
 ```bash
-yarn
+yarn testfffgf
 yarn build
 ```
 
