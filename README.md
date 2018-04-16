@@ -19,7 +19,6 @@ You can use docker-compose to start up required backend services, such as
 PostgreSQL (the database). For that to work Docker and Docker Compose needs to
 be installed.
 
-
 ```bash
 # Start required backend services with docker-compose:
 $ docker-compose up -d
@@ -65,7 +64,6 @@ To run the linters, use:
 $ yarn prettier
 $ yarn lint
 ```
-
 
 ## Load database with test data
 
